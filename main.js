@@ -15,6 +15,11 @@ app.use("/fonts", express.static("./public/fonts"));
 app.use("/html", express.static("./app/html"));
 app.use("/media", express.static("./public/media"));
 
+app.get("/", (req, res) => {
+    let doc = fs.readFileSync("./app/html/users.html", "utf-8");
+    res.send(doc);
+});
+
 //starts the server
 let port = 8000;
 app.listen(port, function () {

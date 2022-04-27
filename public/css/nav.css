@@ -1,0 +1,36 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #00394f;
+    box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
+    padding: .25rem .25rem;
+    margin-bottom: 1rem;
+    height: 60px;
+}
+
+.navbar ul {
+    margin: 0;
+    padding: 0;
+    top: 0%;
+    display: flex;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+.navbar li a {
+    text-decoration: none;
+    display: block;
+    color: white;
+    width: 100%;
+    padding: 1rem;
+    font-family: 'archivo';
+}
+
+.navbar li:hover,
+#navbar a:hover {
+    background-color: #014f86;
+    color: #333;
+}
