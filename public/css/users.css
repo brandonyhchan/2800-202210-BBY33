@@ -5,11 +5,14 @@
 
 body {
     background-color: #01171b;
+    overflow-x: hidden;
+}
+
+.container {
     display: grid;
     grid-template-columns: 15% 85%;
     grid-template-areas: 
     "cart" "map";
-    overflow-x: hidden;
 }
 
 .cart {
