@@ -34,7 +34,7 @@ app.get("/", function(req, res) {
 
     if (req.session.loggedIn) {
         if (isAdmin === false) {
-            res.redirect("/users");
+            res.redirect("/landing");
             
         } else {
             res.redirect("/admin");
@@ -62,9 +62,9 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/users", async (req, res) => {
+app.get("/landing", async (req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
-        let profile = fs.readFileSync("./app/html/users.html", "utf-8");
+        let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
         res.set("Server", "Wazubi Engine");
