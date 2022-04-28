@@ -17,7 +17,9 @@ app.use("/fonts", express.static("./public/fonts"));
 app.use("/html", express.static("./app/html"));
 app.use("/media", express.static("./public/media"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 
 app.use(session({
     secret: "eclipse is the worse IDE",
@@ -29,17 +31,17 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function(req, res) {   
+app.get("/", function (req, res) {
     console.log("1" + isAdmin);
 
     if (req.session.loggedIn) {
         if (isAdmin === false) {
             res.redirect("/landing");
-            
+
         } else {
             res.redirect("/admin");
         }
-        
+
     } else {
 
         let doc = fs.readFileSync("./app/html/login.html", "utf8");
@@ -89,7 +91,7 @@ app.get("/nav", (req, res) => {
 })
 
 
-app.post("/login", function(req, res) {
+app.post("/login", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -106,38 +108,44 @@ app.post("/login", function(req, res) {
         database: "project2"
     });
 
-    connection.connect(function(err) {
+    connection.connect(function (err) {
         if (err) throw err;
         console.log('Database is connected successfully !');
     });
 
     connection.execute(
         "SELECT * FROM user WHERE user.user_name = ? AND user.password = ?", [usr, pwd],
-        function(error, results, fields) {
+        function (error, results, fields) {
             myResults = results;
             console.log("results:", myResults);
-            
+
 
 
 
             if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
                 if (myResults[0].admin_user === 'y') {
                     isAdmin = true;
-                    
+
                 }
                 console.log(isAdmin);
                 req.session.loggedIn = true;
                 req.session.user_name = myResults[0].user_name;
                 req.session.password = myResults[0].password;
                 req.session.name = myResults[0].first_name;
-                req.session.save(function(err) {
+                req.session.save(function (err) {
 
                 });
 
-                res.send({ status: "success", msg: "Logged in." });
+                res.send({
+                    status: "success",
+                    msg: "Logged in."
+                });
             } else {
 
-                res.send({ status: "fail", msg: "User account not found." });
+                res.send({
+                    status: "fail",
+                    msg: "User account not found."
+                });
 
             }
 
@@ -163,9 +171,45 @@ app.post("/login", function(req, res) {
 
 });
 
+app.get("/table", function (req, res) {
+    const mysql = require("mysql2");
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "project2"
+    });
+    let myResults = null;
+    connection.connect();
+    connection.query(
+        "SELECT * FROM user WHERE user_removed = 'n'",
+        function (error, results) {
+            console.log(req.session.username);
+            myResults = results;
+            if (error) {
+                console.log(error);
+            }
+            let table = "<table><tr><th>Date</th><th>Post</th><th>Views</th>";
+            for (let i = 0; i < results.length; i++) {
+                table += "<tr>"
+                for (const property in results[i]) {
+                    table += "<td>" + results[i][property] + "</td>";
+                }
+                table += "</tr>";
+            }
+            table += "</table>";
+            res.send(table);
+            console.log(table);
+            connection.end();
+        }
+    );
+    console.log(myResults, "why is this null?");
+});
+
+
 
 //starts the server
 let port = 8000;
-app.listen(port, function() {
+app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
