@@ -1,3 +1,4 @@
+'use strict';
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
@@ -6,6 +7,7 @@ const fs = require("fs");
 const {
     JSDOM
 } = require('jsdom');
+var isAdmin = false;
 
 //path mapping 
 app.use("/js", express.static("./public/js"));
@@ -17,19 +19,6 @@ app.use("/media", express.static("./public/media"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.get("/", (req, res) => {
-    let doc = fs.readFileSync("./app/html/login.html", "utf-8");
-    res.send(doc);
-});
-
-
-app.get("/users", (req, res) => {
-    let doc = fs.readFileSync("./app/html/users.html", "utf-8");
-    res.send(doc);
-});
-
-
 app.use(session({
     secret: "eclipse is the worse IDE",
     name: "stanleySessionID",
@@ -40,10 +29,17 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function(req, res) {
+app.get("/", function(req, res) {   
+    console.log("1" + isAdmin);
 
     if (req.session.loggedIn) {
-        res.redirect("/users");
+        if (isAdmin === false) {
+            res.redirect("/users");
+            
+        } else {
+            res.redirect("/admin");
+        }
+        
     } else {
 
         let doc = fs.readFileSync("./app/html/login.html", "utf8");
@@ -53,7 +49,31 @@ app.get("/", function(req, res) {
     }
 });
 
+app.get("/admin", async (req, res) => {
+    if (req.session.loggedIn && isAdmin === true) {
+        let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
 
+        res.set("Server", "Wazubi Engine");
+        res.set("X-Powered-By", "Wazubi");
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.get("/users", async (req, res) => {
+    if (req.session.loggedIn && isAdmin === false) {
+        let profile = fs.readFileSync("./app/html/users.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
+
+        res.set("Server", "Wazubi Engine");
+        res.set("X-Powered-By", "Wazubi");
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
 
 
 app.post("/login", function(req, res) {
@@ -70,7 +90,7 @@ app.post("/login", function(req, res) {
         host: "localhost",
         user: "root",
         password: "",
-        database: "assignment6"
+        database: "project2"
     });
 
     connection.connect(function(err) {
@@ -79,15 +99,20 @@ app.post("/login", function(req, res) {
     });
 
     connection.execute(
-        "SELECT * FROM a01266659_user WHERE a01266659_user.user_name = ? AND a01266659_user.password = ?", [usr, pwd],
+        "SELECT * FROM user WHERE user.user_name = ? AND user.password = ?", [usr, pwd],
         function(error, results, fields) {
             myResults = results;
             console.log("results:", myResults);
+            
 
 
 
             if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
-
+                if (myResults[0].admin_user === 'y') {
+                    isAdmin = true;
+                    
+                }
+                console.log(isAdmin);
                 req.session.loggedIn = true;
                 req.session.user_name = myResults[0].user_name;
                 req.session.password = myResults[0].password;
