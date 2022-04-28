@@ -75,6 +75,19 @@ app.get("/users", async (req, res) => {
     }
 });
 
+app.get("/nav", (req, res) => {
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/nav.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
+
+        res.set("Server", "Wazubi Engine");
+        res.set("X-Powered-By", "Wazubi");
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+})
+
 
 app.post("/login", function(req, res) {
     res.setHeader("Content-Type", "application/json");
