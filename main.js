@@ -182,19 +182,21 @@ app.get("/table", function (req, res) {
     let myResults = null;
     connection.connect();
     connection.query(
-        "SELECT * FROM user WHERE user_removed = 'n'",
+        "SELECT user.user_name, user.email_adress, user.first_name, user.last_name  FROM user WHERE user_removed = 'n'",
         function (error, results) {
             console.log(req.session.username);
             myResults = results;
             if (error) {
                 console.log(error);
             }
-            let table = "<table><tr><th>Date</th><th>Post</th><th>Views</th>";
+            let table = "<table><tr><th>Username</th><th>Email</th><th>First Name</th><th>Last Name</th>";
             for (let i = 0; i < results.length; i++) {
                 table += "<tr>"
                 for (const property in results[i]) {
-                    table += "<td>" + results[i][property] + "</td>";
+                    table += "<td>" + results[i][property] +"</td>";
                 }
+                table += "<td>" + "<input type='button' class='remove' value='Remove'>" + "</td>";
+                table += "<td>" + "<input type='button' class='view' value='View'>" + "</td>";
                 table += "</tr>";
             }
             table += "</table>";
