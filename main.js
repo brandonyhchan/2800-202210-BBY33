@@ -48,7 +48,7 @@ app.get("/", function (req, res) {
     }
 });
 
-app.get("/admin", async(req, res) => {
+app.get("/admin", async (req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -122,8 +122,7 @@ app.post("/login", function (req, res) {
                 req.session.user_name = myResults[0].user_name;
                 req.session.password = myResults[0].password;
                 req.session.name = myResults[0].first_name;
-                req.session.save(function (err) {
-                });
+                req.session.save(function (err) {});
                 res.send({
                     status: "success",
                     msg: "Logged in."
@@ -163,7 +162,7 @@ app.get("/table", function (req, res) {
             for (let i = 0; i < results.length; i++) {
                 table += "<tr>"
                 for (const property in results[i]) {
-                    table += "<td>" + results[i][property] +"</td>";
+                    table += "<td>" + results[i][property] + "</td>";
                 }
                 table += "<td>" + `<input type='button' id='${results[i].user_name}' class='remove' value='Remove'>" + "</td>`;
                 table += "<td>" + "<input type='button' class='view' value='View'>" + "</td>";
@@ -178,15 +177,16 @@ app.get("/table", function (req, res) {
     console.log(myResults, "why is this null?");
 });
 
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
 
     if (req.session) {
-        req.session.destroy(function(error) {
+        req.session.destroy(function (error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
-
-                return res.redirect("/");
+                isAdmin = false;
+                let doc = fs.readFileSync("./app/html/login.html", "utf8");
+                res.send(doc);
             }
         });
     }
@@ -200,11 +200,11 @@ app.get("/user-update", function (req, res) {
         password: "",
         database: "project2"
     });
-    
+
     // connection.connect();
     // connection.query('UPDATE user SET user_removed = ? WHERE id = ?', ['y', ], (err, rows) => {
     //     if (!err) {
-          
+
     //     } else {
     //       console.log(err);
     //     }
