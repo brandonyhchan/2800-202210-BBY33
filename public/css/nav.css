@@ -1,12 +1,22 @@
+html, body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
 .navbar {
     position: sticky;
     top: 0;
     left: 0;
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
-    padding: .25rem .25rem;
+    padding: 0.5%;
     margin-bottom: 1rem;
     height: 60px;
+}
+
+.logo{
+    margin-left:2%;
+    max-width: 10%;
 }
 
 .navbar ul {

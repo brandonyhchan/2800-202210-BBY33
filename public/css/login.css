@@ -52,7 +52,7 @@ html, body{
     border-style: none;
 }
 
-#login{
+#submit{
     display: flex;
     margin-top: 6%;
     margin-bottom: 4%;
