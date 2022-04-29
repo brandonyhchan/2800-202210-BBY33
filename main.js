@@ -29,17 +29,17 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function(req, res) {   
+app.get("/", function(req, res) {
     console.log("1" + isAdmin);
 
     if (req.session.loggedIn) {
         if (isAdmin === false) {
             res.redirect("/users");
-            
+
         } else {
             res.redirect("/admin");
         }
-        
+
     } else {
 
         let doc = fs.readFileSync("./app/html/login.html", "utf8");
@@ -49,7 +49,7 @@ app.get("/", function(req, res) {
     }
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", async(req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -62,7 +62,7 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/users", async (req, res) => {
+app.get("/users", async(req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/users.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -116,14 +116,14 @@ app.post("/login", function(req, res) {
         function(error, results, fields) {
             myResults = results;
             console.log("results:", myResults);
-            
+
 
 
 
             if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
                 if (myResults[0].admin_user === 'y') {
                     isAdmin = true;
-                    
+
                 }
                 console.log(isAdmin);
                 req.session.loggedIn = true;
@@ -161,6 +161,23 @@ app.post("/login", function(req, res) {
 
 
 
+});
+
+
+
+
+app.get("/logout", function(req, res) {
+
+    if (req.session) {
+        req.session.destroy(function(error) {
+            if (error) {
+                res.status(400).send("Unable to log out")
+            } else {
+
+                return res.redirect("/");
+            }
+        });
+    }
 });
 
 
