@@ -1,0 +1,91 @@
+html, body{
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    background-color: rgb(14, 76, 109);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#container{
+    max-width: 100%;
+    text-align:center;
+    padding-top: 13%;
+}
+
+#logo{
+    display: inline-block;
+    max-width: 25%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+#login-container{
+    display: inline-block;
+    margin-left: 3%;
+    margin-right: 3%;
+    background-color:rgb(114,186,213);
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    border-radius: 8px;
+}
+
+#user_name{
+    display: flex;
+    margin-bottom: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    border-radius: 3px;
+    border-style: none;
+}
+
+#password{
+    display: flex;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    border-radius: 3px;
+    border-style: none;
+}
+
+#submit{
+    display: flex;
+    margin-top: 6%;
+    margin-bottom: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-radius: 7px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+#forgot{
+    text-decoration: none;
+    color:white;
+}
+
+#create{
+    display: flex;
+    margin-top: 6%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    border-radius: 7px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+}

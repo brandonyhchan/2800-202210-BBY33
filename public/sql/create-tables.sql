@@ -5,6 +5,7 @@ CREATE TABLE user (
   last_name VARCHAR(50),
   email_adress VARCHAR(50),
   admin_user VARCHAR(1),
+  user_removed VARCHAR(1),
   password VARCHAR(50),
   PRIMARY KEY (USER_ID)
 );
@@ -12,6 +13,7 @@ CREATE TABLE user (
 CREATE TABLE cart (
   CART_ID int NOT NULL AUTO_INCREMENT,
   product_id int NOT NULL,
+  product_quantity int NOT NULL,
   user_id int NOT NULL,
   quantity int NOT NULL,
   PRIMARY KEY (CART_ID),
@@ -20,12 +22,14 @@ CREATE TABLE cart (
 
 CREATE TABLE package (
   PACKAGE_ID int NOT NULL AUTO_INCREMENT,
+  user_id int NOT NULL,
   cart_id int NOT NULL,
   package_name VARCHAR(50),
   package_price int NOT NULL,
   description_of_package VARCHAR(500),
   PRIMARY KEY (PACKAGE_ID),
-  FOREIGN KEY (cart_id) REFERENCES cart(CART_ID) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY (cart_id) REFERENCES cart(CART_ID) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES user(USER_ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 

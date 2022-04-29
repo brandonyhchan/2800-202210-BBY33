@@ -1,3 +1,3 @@
-INSERT INTO user (USER_ID, user_name, first_name, last_name, email_adress, admin_user, password) VALUES (1, 'dude', 'Dude', 'Kim', 'dudek@gmail.com', 'y', '12345');
-INSERT INTO user (USER_ID, user_name, first_name, last_name, email_adress, admin_user, password) VALUES (2, 'sonny', 'Son', 'Woo', 'sowoo@gmail.com', 'n', 'damn');
-INSERT INTO user (USER_ID, user_name, first_name, last_name, email_adress, admin_user, password) VALUES (3, 'paw', 'Paw', 'Carter', 'paw@gmail.com', 'n', 'password');
+INSERT INTO user (USER_ID, user_name, first_name, last_name, email_adress, admin_user, user_removed, password) VALUES (1, 'dude', 'Dude', 'Kim', 'dudek@gmail.com', 'n', 'y', '12345');
+INSERT INTO user (USER_ID, user_name, first_name, last_name, email_adress, admin_user, user_removed, password) VALUES (2, 'sonny', 'Son', 'Woo', 'sowoo@gmail.com', 'n', 'n', 'damn');
+INSERT INTO user (USER_ID, user_name, first_name, last_name, email_adress, admin_user, user_removed, password) VALUES (3, 'paw', 'Paw', 'Carter', 'paw@gmail.com', 'n', 'n', 'password');

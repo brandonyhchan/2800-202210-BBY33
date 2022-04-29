@@ -12,12 +12,14 @@ var isAdmin = false;
 //path mapping 
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
-app.use("/img", express.static("./public/imgs"));
+app.use("/img", express.static("./public/img"));
 app.use("/fonts", express.static("./public/fonts"));
 app.use("/html", express.static("./app/html"));
 app.use("/media", express.static("./public/media"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 
 app.use(session({
     secret: "eclipse is the worse IDE",
@@ -29,12 +31,20 @@ app.use(session({
 
 
 // redirects user after successful login
+<<<<<<< HEAD
 app.get("/", function(req, res) {
+=======
+app.get("/", function (req, res) {
+>>>>>>> 736ade4e6f4a692b511ea3de127710488a3e79c4
     console.log("1" + isAdmin);
 
     if (req.session.loggedIn) {
         if (isAdmin === false) {
+<<<<<<< HEAD
             res.redirect("/users");
+=======
+            res.redirect("/landing");
+>>>>>>> 736ade4e6f4a692b511ea3de127710488a3e79c4
 
         } else {
             res.redirect("/admin");
@@ -62,9 +72,13 @@ app.get("/admin", async(req, res) => {
     }
 });
 
+<<<<<<< HEAD
 app.get("/users", async(req, res) => {
+=======
+app.get("/landing", async (req, res) => {
+>>>>>>> 736ade4e6f4a692b511ea3de127710488a3e79c4
     if (req.session.loggedIn && isAdmin === false) {
-        let profile = fs.readFileSync("./app/html/users.html", "utf-8");
+        let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
         res.set("Server", "Wazubi Engine");
@@ -89,7 +103,7 @@ app.get("/nav", (req, res) => {
 })
 
 
-app.post("/login", function(req, res) {
+app.post("/login", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -106,14 +120,14 @@ app.post("/login", function(req, res) {
         database: "project2"
     });
 
-    connection.connect(function(err) {
+    connection.connect(function (err) {
         if (err) throw err;
         console.log('Database is connected successfully !');
     });
 
     connection.execute(
         "SELECT * FROM user WHERE user.user_name = ? AND user.password = ?", [usr, pwd],
-        function(error, results, fields) {
+        function (error, results, fields) {
             myResults = results;
             console.log("results:", myResults);
 
@@ -130,14 +144,20 @@ app.post("/login", function(req, res) {
                 req.session.user_name = myResults[0].user_name;
                 req.session.password = myResults[0].password;
                 req.session.name = myResults[0].first_name;
-                req.session.save(function(err) {
+                req.session.save(function (err) {
 
                 });
 
-                res.send({ status: "success", msg: "Logged in." });
+                res.send({
+                    status: "success",
+                    msg: "Logged in."
+                });
             } else {
 
-                res.send({ status: "fail", msg: "User account not found." });
+                res.send({
+                    status: "fail",
+                    msg: "User account not found."
+                });
 
             }
 
@@ -163,6 +183,44 @@ app.post("/login", function(req, res) {
 
 });
 
+app.get("/table", function (req, res) {
+    const mysql = require("mysql2");
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "project2"
+    });
+    let myResults = null;
+    connection.connect();
+    connection.query(
+        "SELECT user.user_name, user.email_adress, user.first_name, user.last_name  FROM user WHERE user_removed = 'n'",
+        function (error, results) {
+            console.log(req.session.username);
+            myResults = results;
+            if (error) {
+                console.log(error);
+            }
+            let table = "<table><tr><th>Username</th><th>Email</th><th>First Name</th><th>Last Name</th>";
+            for (let i = 0; i < results.length; i++) {
+                table += "<tr>"
+                for (const property in results[i]) {
+                    table += "<td>" + results[i][property] +"</td>";
+                }
+                table += "<td>" + "<input type='button' class='remove' value='Remove'>" + "</td>";
+                table += "<td>" + "<input type='button' class='view' value='View'>" + "</td>";
+                table += "</tr>";
+            }
+            table += "</table>";
+            res.send(table);
+            console.log(table);
+            connection.end();
+        }
+    );
+    console.log(myResults, "why is this null?");
+});
+
+
 
 
 
@@ -183,6 +241,6 @@ app.get("/logout", function(req, res) {
 
 //starts the server
 let port = 8000;
-app.listen(port, function() {
+app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
