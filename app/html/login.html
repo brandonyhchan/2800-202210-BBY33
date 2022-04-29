@@ -5,18 +5,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hope in a Box</title>
+    <title>Hope in a Box- login</title>
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
-    <link rel="stylesheet" type="text/css" src="/css/login.css">
-    
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+
 </head>
 
 <body>
-    <div id="login-container">
-        <input id="user_name" type="user_name" required="required" placeholder="Username" value="" />
-        <input id="password" type="password" required="required" placeholder="Password" value="" />
-        <input type="button" value="Login" id="submit" />
+    <div id="container">
+
+        <img id="logo" src="img/logo-blank.png">
+        <div id="login-container">
+            <input id="user_name" type="user_name" required="required" placeholder="username" value="" />
+            <input id="password" type="password" required="required" placeholder="password" value="" />
+            <input type="button" value="Login" id="login" />
+            <a id="forgot" href="#forgot">Forgot username or login? Click here</a>
+            <input type="button" value="Create account" id="create">
+
+        </div>
     </div>
+
 
     <script src="js/client.js"></script>
 </body>
