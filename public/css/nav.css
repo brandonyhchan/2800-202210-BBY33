@@ -1,7 +1,7 @@
-html, body{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html,
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 
 .navbar {
     position: sticky;
@@ -14,9 +14,19 @@ html, body{
     height: 60px;
 }
 
-.logo{
-    margin-left:2%;
+.logo {
+    margin-left: 2%;
     max-width: 10%;
+}
+
+input[value="Logout"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
 }
 
 .navbar ul {
