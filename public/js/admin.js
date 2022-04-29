@@ -1,3 +1,4 @@
+'use strict';
 function ajaxGET(url, callback) {
 
     const xhr = new XMLHttpRequest();
@@ -12,10 +13,14 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 ajaxGET("/table", function (data) {
-    console.log(data);
-
     let display = document.querySelector("#userTable");
     display.innerHTML = data;
-    console.log("accessed");
-
+    document.querySelector(".remove").addEventListener("click", () => {
+        ajaxGET("/user-update", (data) => {
+            let display = document.querySelector("#userTable");
+            display.innerHTML = data;
+        })
+    })
 });
+
+

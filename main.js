@@ -31,30 +31,19 @@ app.use(session({
 
 
 // redirects user after successful login
-<<<<<<< HEAD
-app.get("/", function(req, res) {
-=======
 app.get("/", function (req, res) {
->>>>>>> 736ade4e6f4a692b511ea3de127710488a3e79c4
     console.log("1" + isAdmin);
 
     if (req.session.loggedIn) {
         if (isAdmin === false) {
-<<<<<<< HEAD
             res.redirect("/users");
-=======
             res.redirect("/landing");
->>>>>>> 736ade4e6f4a692b511ea3de127710488a3e79c4
-
         } else {
             res.redirect("/admin");
         }
 
     } else {
-
         let doc = fs.readFileSync("./app/html/login.html", "utf8");
-
-
         res.send(doc);
     }
 });
@@ -72,11 +61,7 @@ app.get("/admin", async(req, res) => {
     }
 });
 
-<<<<<<< HEAD
-app.get("/users", async(req, res) => {
-=======
 app.get("/landing", async (req, res) => {
->>>>>>> 736ade4e6f4a692b511ea3de127710488a3e79c4
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -102,15 +87,12 @@ app.get("/nav", (req, res) => {
     }
 })
 
-
 app.post("/login", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
     let pwd = req.body.password;
     let myResults = [];
-
-
 
     const mysql = require("mysql2");
     const connection = mysql.createConnection({
@@ -131,13 +113,9 @@ app.post("/login", function (req, res) {
             myResults = results;
             console.log("results:", myResults);
 
-
-
-
             if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
                 if (myResults[0].admin_user === 'y') {
                     isAdmin = true;
-
                 }
                 console.log(isAdmin);
                 req.session.loggedIn = true;
@@ -145,46 +123,26 @@ app.post("/login", function (req, res) {
                 req.session.password = myResults[0].password;
                 req.session.name = myResults[0].first_name;
                 req.session.save(function (err) {
-
                 });
-
                 res.send({
                     status: "success",
                     msg: "Logged in."
                 });
             } else {
-
                 res.send({
                     status: "fail",
                     msg: "User account not found."
                 });
-
             }
-
-
             if (error) {
                 console.log(error);
             }
-
-
             connection.end();
         }
     )
-
-
-
-
-    console.log("What was sent", req.body.user_name, req.body.password);
-
-
-
-
-
-
 });
 
 app.get("/table", function (req, res) {
-    const mysql = require("mysql2");
     const connection = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -207,7 +165,7 @@ app.get("/table", function (req, res) {
                 for (const property in results[i]) {
                     table += "<td>" + results[i][property] +"</td>";
                 }
-                table += "<td>" + "<input type='button' class='remove' value='Remove'>" + "</td>";
+                table += "<td>" + `<input type='button' id='${results[i].user_name}' class='remove' value='Remove'>" + "</td>`;
                 table += "<td>" + "<input type='button' class='view' value='View'>" + "</td>";
                 table += "</tr>";
             }
@@ -219,10 +177,6 @@ app.get("/table", function (req, res) {
     );
     console.log(myResults, "why is this null?");
 });
-
-
-
-
 
 app.get("/logout", function(req, res) {
 
@@ -236,6 +190,26 @@ app.get("/logout", function(req, res) {
             }
         });
     }
+});
+
+app.get("/user-update", function (req, res) {
+    console.log(req.id);
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "project2"
+    });
+    
+    // connection.connect();
+    // connection.query('UPDATE user SET user_removed = ? WHERE id = ?', ['y', ], (err, rows) => {
+    //     if (!err) {
+          
+    //     } else {
+    //       console.log(err);
+    //     }
+    //   });
+
 });
 
 
