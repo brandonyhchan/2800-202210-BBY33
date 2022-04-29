@@ -12,7 +12,7 @@ var isAdmin = false;
 //path mapping 
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
-app.use("/img", express.static("./public/imgs"));
+app.use("/img", express.static("./public/img"));
 app.use("/fonts", express.static("./public/fonts"));
 app.use("/html", express.static("./app/html"));
 app.use("/media", express.static("./public/media"));
