@@ -16,11 +16,16 @@ ajaxGET("/table", function (data) {
     let display = document.querySelector("#userTable");
     display.innerHTML = data;
     document.querySelector(".remove").addEventListener("click", () => {
-        ajaxGET("/user-update", (data) => {
+        ajaxGET("/user-update/:userId", (data) => {
+            
+        })
+        ajaxGET("/table", function (data) {
             let display = document.querySelector("#userTable");
             display.innerHTML = data;
-        })
+        });
     })
 });
+
+
 
 

@@ -164,8 +164,8 @@ app.get("/table", function (req, res) {
                 for (const property in results[i]) {
                     table += "<td>" + results[i][property] + "</td>";
                 }
-                table += "<td>" + `<input type='button' id='${results[i].user_name}' class='remove' value='Remove'>" + "</td>`;
-                table += "<td>" + "<input type='button' class='view' value='View'>" + "</td>";
+                table += "<td>" + `<a href='user-update/${results[i].user_name}'><input type='button' class='remove' value='Remove'></a>" + "</td>`;
+                table += "<td>" + "<a href='update-user/${results[i].user_name}'><input type='button' class='view' value='View'></a>" + "</td>";
                 table += "</tr>";
             }
             table += "</table>";
@@ -174,7 +174,6 @@ app.get("/table", function (req, res) {
             connection.end();
         }
     );
-    console.log(myResults, "why is this null?");
 });
 
 app.get("/logout", function (req, res) {
@@ -192,8 +191,9 @@ app.get("/logout", function (req, res) {
     }
 });
 
-app.get("/user-update", function (req, res) {
-    console.log(req.id);
+app.get("/user-update/:userId", function (req, res) {
+    const userId = req.params['userId'];
+    console.log(userId);
     const connection = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -201,14 +201,14 @@ app.get("/user-update", function (req, res) {
         database: "project2"
     });
 
-    // connection.connect();
-    // connection.query('UPDATE user SET user_removed = ? WHERE id = ?', ['y', ], (err, rows) => {
-    //     if (!err) {
-
-    //     } else {
-    //       console.log(err);
-    //     }
-    //   });
+    connection.connect();
+    connection.query('UPDATE user SET user_removed = ? WHERE user_name = ?', ['y', userId], (err, rows) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/admin");
+        }
+      });
 
 });
 
