@@ -117,7 +117,6 @@ app.post("/login", function (req, res) {
                 if (myResults[0].admin_user === 'y') {
                     isAdmin = true;
                 }
-                console.log(isAdmin);
                 req.session.loggedIn = true;
                 req.session.user_name = myResults[0].user_name;
                 req.session.password = myResults[0].password;
@@ -141,7 +140,7 @@ app.post("/login", function (req, res) {
     )
 });
 
-app.get("/table", function (req, res) {
+app.get("/get-users", function (req, res) {
     const connection = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -151,27 +150,13 @@ app.get("/table", function (req, res) {
     let myResults = null;
     connection.connect();
     connection.query(
-        "SELECT user.user_name, user.email_adress, user.first_name, user.last_name  FROM user WHERE user_removed = 'n'",
+        "SELECT user.USER_ID, user.email_address, user.first_name, user.last_name  FROM user WHERE user_removed = 'n'",
         function (error, results) {
-            console.log(req.session.username);
-            myResults = results;
             if (error) {
                 console.log(error);
             }
-            let table = "<table><tr><th>Username</th><th>Email</th><th>First Name</th><th>Last Name</th>";
-            for (let i = 0; i < results.length; i++) {
-                table += "<tr>"
-                for (const property in results[i]) {
-                    table += "<td>" + results[i][property] + "</td>";
-                }
-                table += "<td>" + `<a href='user-update/${results[i].user_name}'><input type='button' class='remove' value='Remove'></a>" + "</td>`;
-                table += "<td>" + "<a href='update-user/${results[i].user_name}'><input type='button' class='view' value='View'></a>" + "</td>";
-                table += "</tr>";
-            }
-            table += "</table>";
-            res.send(table);
-            console.log(table);
-            connection.end();
+            console.log('Rows returned are: ', results);
+            res.send({ status: "success", rows: results });
         }
     );
 });
@@ -191,7 +176,7 @@ app.get("/logout", function (req, res) {
     }
 });
 
-app.get("/user-update/:userId", function (req, res) {
+app.post("/user-update", function (req, res) {
     const userId = req.params['userId'];
     console.log(userId);
     const connection = mysql.createConnection({
@@ -202,13 +187,14 @@ app.get("/user-update/:userId", function (req, res) {
     });
 
     connection.connect();
-    connection.query('UPDATE user SET user_removed = ? WHERE user_name = ?', ['y', userId], (err, rows) => {
+    console.log(req.body.id + "   ID");
+    connection.query('UPDATE user SET user_removed = ? WHERE USER_ID = ?', ['y', req.body.id], (err, rows) => {
         if (err) {
             console.log(err);
-        } else {
-            res.redirect("/admin");
         }
-      });
+        res.send({ status: "success", msg: "Recorded updated." });
+    });
+    connection.end();
 
 });
 
