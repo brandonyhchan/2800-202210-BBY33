@@ -7,6 +7,7 @@ const fs = require("fs");
 const {
     JSDOM
 } = require('jsdom');
+const { response } = require("express");
 var isAdmin = false;
 
 //path mapping 
@@ -147,7 +148,6 @@ app.get("/get-users", function (req, res) {
         password: "",
         database: "project2"
     });
-    let myResults = null;
     connection.connect();
     connection.query(
         "SELECT user.USER_ID, user.email_address, user.first_name, user.last_name  FROM user WHERE user_removed = 'n'",
@@ -177,6 +177,7 @@ app.get("/logout", function (req, res) {
 });
 
 app.post("/user-update", function (req, res) {
+    let adminUsers = [];
     const userId = req.params['userId'];
     console.log(userId);
     const connection = mysql.createConnection({
@@ -187,14 +188,35 @@ app.post("/user-update", function (req, res) {
     });
 
     connection.connect();
-    console.log(req.body.id + "   ID");
-    connection.query('UPDATE user SET user_removed = ? WHERE USER_ID = ?', ['y', req.body.id], (err, rows) => {
-        if (err) {
-            console.log(err);
+    console.log(req.body.id + "ID");
+    connection.execute(
+        "SELECT * FROM user WHERE admin_user = 'y' AND user_removed = 'n'",
+        function (error, results, fields) {
+            adminUsers = results;
+            let send = {status: "fail", msg: "Recorded updated."};
+            connection.query("UPDATE user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'n'], (err, rows) => {
+                if (err) {
+                    console.log(err);
+                }
+                send.status = "success";
+            });
+            if (adminUsers.length > 1) {
+                connection.query("UPDATE user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'y'], (err, rows) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    send.status = "success";
+                });
+            } else {
+                send.status = "fail";
+            }
+            res.send(send);
+            if (error) {
+                console.log(error);
+            }
+            connection.end();
         }
-        res.send({ status: "success", msg: "Recorded updated." });
-    });
-    connection.end();
+    );
 
 });
 
