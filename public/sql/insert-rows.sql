@@ -1,3 +1,4 @@
-INSERT INTO user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (1, 'dude', 'Dude', 'Kim', 'dudek@gmail.com', 'y', 'n', '12345');
-INSERT INTO user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (2, 'sonny', 'Son', 'Woo', 'sowoo@gmail.com', 'n', 'n', 'damn');
-INSERT INTO user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (3, 'paw', 'Paw', 'Carter', 'paw@gmail.com', 'n', 'n', 'password');
+INSERT INTO BBY_33_user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (1, 'dude', 'Dude', 'Kim', 'dudek@gmail.com', 'y', 'n', '12345');
+INSERT INTO BBY_33_user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (2, 'sonny', 'Son', 'Woo', 'sowoo@gmail.com', 'n', 'n', 'damn');
+INSERT INTO BBY_33_user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (3, 'paw', 'Paw', 'Carter', 'paw@gmail.com', 'n', 'n', 'password');
+INSERT INTO BBY_33_user (USER_ID, user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES (4, 'greg', 'Greg', 'Woo', 'gregW@gmail.com', 'y', 'n', 'woo');
