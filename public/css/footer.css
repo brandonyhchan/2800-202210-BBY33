@@ -1,0 +1,24 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #00394f;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+footer li {
+    list-style: none;
+}
+
+.footer-section {
+    display: grid;
+    padding: 3%;
+}
