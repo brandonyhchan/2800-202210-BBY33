@@ -7,7 +7,9 @@ const fs = require("fs");
 const {
     JSDOM
 } = require('jsdom');
-const { response } = require("express");
+const {
+    response
+} = require("express");
 var isAdmin = false;
 
 //path mapping 
@@ -86,15 +88,15 @@ app.get("/nav", (req, res) => {
     }
 })
 
-app.post("/login", function (req, res) {
+app.post("/login", async function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
     let pwd = req.body.password;
     let myResults = [];
 
-    const mysql = require("mysql2");
-    const connection = mysql.createConnection({
+    const mysql = require("mysql2/promise");
+    const connection = await mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
@@ -106,37 +108,30 @@ app.post("/login", function (req, res) {
         console.log('Database is connected successfully !');
     });
 
-    connection.execute(
+    const [rows, fields] = await connection.execute(
         "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.password = ?", [usr, pwd],
-        function (error, results, fields) {
-            myResults = results;
-            console.log("results:", myResults);
-
-            if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
-                if (myResults[0].admin_user === 'y') {
-                    isAdmin = true;
-                }
-                req.session.loggedIn = true;
-                req.session.user_name = myResults[0].user_name;
-                req.session.password = myResults[0].password;
-                req.session.name = myResults[0].first_name;
-                req.session.save(function (err) {});
-                res.send({
-                    status: "success",
-                    msg: "Logged in."
-                });
-            } else {
-                res.send({
-                    status: "fail",
-                    msg: "User account not found."
-                });
-            }
-            if (error) {
-                console.log(error);
-            }
-            connection.end();
+    );
+    if (rows.length > 0) {
+        if (rows[0].admin_user === 'y') {
+            isAdmin = true;
         }
-    )
+        req.session.loggedIn = true;
+        req.session.user_name = usr;
+        req.session.password = pwd;
+        req.session.name = rows[0].first_name;
+        req.session.save((err) => {
+            console.log(err);
+        });
+        res.send({
+            status: "success",
+            msg: "Logged in."
+        });
+    } else {
+        res.send({
+            status: "fail",
+            msg: "Invalid"
+        });
+    }
 });
 
 app.get("/get-users", function (req, res) {
@@ -154,7 +149,10 @@ app.get("/get-users", function (req, res) {
                 console.log(error);
             }
             console.log('Rows returned are: ', results);
-            res.send({ status: "success", rows: results });
+            res.send({
+                status: "success",
+                rows: results
+            });
         }
     );
 });
@@ -191,7 +189,10 @@ app.post("/user-update", function (req, res) {
         "SELECT * FROM BBY_33_user WHERE admin_user = 'y' AND user_removed = 'n'",
         function (error, results, fields) {
             adminUsers = results;
-            let send = {status: "fail", msg: "Recorded updated."};
+            let send = {
+                status: "fail",
+                msg: "Recorded updated."
+            };
             connection.query("UPDATE BBY_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'n'], (err, rows) => {
                 if (err) {
                     console.log(err);
@@ -223,4 +224,57 @@ app.post("/user-update", function (req, res) {
 let port = 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
+});
+
+app.post("/register", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let usr = req.body.user_name;
+    let pwd = req.body.password;
+    let myResults = [];
+
+    const mysql = require("mysql2");
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "COMP2800"
+    });
+
+    connection.connect(function (err) {
+        if (err) throw err;
+        console.log('Database is connected successfully !');
+    });
+
+    connection.execute(
+        "INSERT INTO BBY_33_user WHERE user_name = ?, first_name = ?, last_name = ?, email_address = ?, admin_user = n, user_removed = n, password = ?", [usr, pwd],
+        function (error, results, fields) {
+            myResults = results;
+            console.log("results:", myResults);
+
+            if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
+                if (myResults[0].admin_user === 'y') {
+                    isAdmin = true;
+                }
+                req.session.loggedIn = true;
+                req.session.user_name = myResults[0].user_name;
+                req.session.password = myResults[0].password;
+                req.session.name = myResults[0].first_name;
+                req.session.save(function (err) {});
+                res.send({
+                    status: "success",
+                    msg: "Logged in."
+                });
+            } else {
+                res.send({
+                    status: "fail",
+                    msg: "User account not found."
+                });
+            }
+            if (error) {
+                console.log(error);
+            }
+            connection.end();
+        }
+    )
 });
