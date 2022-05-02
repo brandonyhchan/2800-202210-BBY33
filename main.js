@@ -73,6 +73,13 @@ app.get("/landing", async (req, res) => {
     }
 });
 
+app.get("/createAccount", async (req, res) => {
+    let doc = fs.readFileSync("./app/html/createAccount.html", "utf-8");
+    res.set("Server", "Wazubi Engine");
+    res.set("X-Powered-By", "Wazubi");
+    res.send(doc);
+});
+
 app.get("/nav", (req, res) => {
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/nav.html", "utf-8");
