@@ -1,0 +1,64 @@
+html, body{
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    background-color: rgb(14, 76, 109);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#container{
+    max-width: 100%;
+    text-align:center;
+    padding-top: 9%;
+}
+
+#logo{
+    display: flex;
+    max-width: 25%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: 1%;
+}
+
+#input_container{
+    display: inline-block;
+    background-color:rgb(114,186,213);
+    margin: auto;
+    text-align: center;
+    padding: 1.25%;
+    border-style: none;
+    border-radius: 4px;
+}
+
+#message{
+    color: white;
+    margin-top: 0%
+}
+
+#first_name, #last_name, #email, #username, #password, #confirm_password{
+    display: flex;
+    font-size: 20px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#submit{
+    background-color:rgb(14, 76, 109);
+    border-style: none;
+    color: white;
+    font-size: 20px;
+    margin-top: 2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 7px;
+}
+
+#redirect{
+    color: white;
+}
+
+
+
+

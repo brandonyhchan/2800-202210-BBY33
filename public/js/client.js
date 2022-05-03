@@ -41,4 +41,6 @@
         }, queryString);
     });
 
-
+    document.getElementById("create").addEventListener("click", function (acc){ 
+        window.location.replace("/createAccount");
+    });

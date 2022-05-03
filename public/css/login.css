@@ -89,3 +89,19 @@ html, body{
     padding-left: 2%;
     padding-right: 2%;
 }
+
+
+@media only screen and (max-width: 720px) {
+    #logo{
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 5%;
+        max-width: 70%;
+    }
+
+    #login-container{
+        padding: 4%;
+        margin-top: 2%;
+    }
+}
