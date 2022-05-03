@@ -4,6 +4,8 @@ var session = require("express-session");
 const mysql = require("mysql2");
 const app = express();
 const fs = require("fs");
+const bcrypt = require("bcrypt");
+const saltRounds = 20;
 const {
     JSDOM
 } = require('jsdom');
@@ -11,6 +13,7 @@ const {
     response
 } = require("express");
 var isAdmin = false;
+
 
 //path mapping 
 app.use("/js", express.static("./public/js"));
@@ -75,12 +78,6 @@ app.get("/landing", async (req, res) => {
     }
 });
 
-app.get("/createAccount", async (req, res) => {
-    let doc = fs.readFileSync("./app/html/createAccount.html", "utf-8");
-    res.set("Server", "Wazubi Engine");
-    res.set("X-Powered-By", "Wazubi");
-    res.send(doc);
-});
 
 app.get("/nav", (req, res) => {
     if (req.session.loggedIn) {
@@ -100,7 +97,8 @@ app.post("/login", async function (req, res) {
 
     let usr = req.body.user_name;
     let pwd = req.body.password;
-    let myResults = [];
+    let salt = 5;
+
 
     const mysql = require("mysql2/promise");
     const connection = await mysql.createConnection({
@@ -114,30 +112,32 @@ app.post("/login", async function (req, res) {
         if (err) throw err;
         console.log('Database is connected successfully !');
     });
-
     const [rows, fields] = await connection.execute(
-        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.password = ?", [usr, pwd],
+        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [usr],
     );
     if (rows.length > 0) {
-        if (rows[0].admin_user === 'y') {
-            isAdmin = true;
+        let hashedPassword = rows[0].password
+        if (bcrypt.compare(pwd, hashedPassword)) {
+            if (rows[0].admin_user === 'y') {
+                isAdmin = true;
+            }
+            req.session.loggedIn = true;
+            req.session.user_name = usr;
+            req.session.password = pwd;
+            req.session.name = rows[0].first_name;
+            req.session.save((err) => {
+                console.log(err);
+            });
+            res.send({
+                status: "success",
+                msg: "Logged in."
+            });
+        } else {
+            res.send({
+                status: "fail",
+                msg: "Invalid"
+            });
         }
-        req.session.loggedIn = true;
-        req.session.user_name = usr;
-        req.session.password = pwd;
-        req.session.name = rows[0].first_name;
-        req.session.save((err) => {
-            console.log(err);
-        });
-        res.send({
-            status: "success",
-            msg: "Logged in."
-        });
-    } else {
-        res.send({
-            status: "fail",
-            msg: "Invalid"
-        });
     }
 });
 
@@ -226,19 +226,20 @@ app.post("/user-update", function (req, res) {
 
 });
 
-
-//starts the server
-let port = 8000;
-app.listen(port, function () {
-    console.log("Server started on " + port + "!");
-});
-
 app.post("/register", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
     let pwd = req.body.password;
-    let myResults = [];
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let email = req.body.email;
+    let confirmPassword = req.body.passwordConfirm;
+    let existingUsers = [];
+    let alreadyExists = true;
+    let salt = 5;
+    let hashedPassword = "";
+
 
     const mysql = require("mysql2");
     const connection = mysql.createConnection({
@@ -249,39 +250,58 @@ app.post("/register", function (req, res) {
     });
 
     connection.connect(function (err) {
-        if (err) throw err;
-        console.log('Database is connected successfully !');
+        if (err) {
+            console.log("failed to connect");
+        };
     });
-
     connection.execute(
-        "INSERT INTO BBY_33_user WHERE user_name = ?, first_name = ?, last_name = ?, email_address = ?, admin_user = n, user_removed = n, password = ?", [usr, pwd],
+        "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
-            myResults = results;
-            console.log("results:", myResults);
-
-            if (req.body.user_name == myResults[0].user_name && req.body.password == myResults[0].password) {
-                if (myResults[0].admin_user === 'y') {
-                    isAdmin = true;
-                }
-                req.session.loggedIn = true;
-                req.session.user_name = myResults[0].user_name;
-                req.session.password = myResults[0].password;
-                req.session.name = myResults[0].first_name;
-                req.session.save(function (err) {});
-                res.send({
-                    status: "success",
-                    msg: "Logged in."
-                });
+            existingUsers = results;
+            let send = {
+                status: "fail",
+                msg: "Recorded updated."
+            };
+            if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
+                console.log("Missing information");
             } else {
-                res.send({
-                    status: "fail",
-                    msg: "User account not found."
-                });
+                if (pwd = confirmPassword) {
+                    for (let i = 0; i < existingUsers.length; i++) {
+                        if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
+                            console.log("user already exists");
+                        } else {
+                            alreadyExists = false;
+                        }
+                    }
+                    if (alreadyExists == false) {
+                        bcrypt.hash(pwd, salt, function (err, hash) {
+                            hashedPassword = hash;
+                            console.log(hashedPassword);
+                            connection.execute(
+                                "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES(?, ?, ?, ?, 'n', 'n', ?)", [usr, firstName, lastName, email, hashedPassword]
+                            );
+                        });
+                    }
+                } else {
+                    console.log("Password does not match");
+                }
             }
-            if (error) {
-                console.log(error);
-            }
-            connection.end();
+
         }
     )
+});
+
+app.get("/createAccount", function (req, res) {
+    let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.set("Server", "Wazubi Engine");
+    res.set("X-Powered-By", "Wazubi");
+    res.send(profileDOM.serialize());
+});
+
+//starts the server
+let port = 8000;
+app.listen(port, function () {
+    console.log("Server started on " + port + "!");
 });

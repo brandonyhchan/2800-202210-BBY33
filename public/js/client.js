@@ -41,6 +41,19 @@
         }, queryString);
     });
 
-    document.getElementById("create").addEventListener("click", function (acc){ 
-        window.location.replace("/createAccount");
-    });
+    async function getCreateAccount() {
+        try {
+            let response = await fetch("/createAccount", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/createAccount");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    document.getElementById("create").addEventListener("click", getCreateAccount);
+
+
