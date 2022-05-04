@@ -59,3 +59,7 @@ body {
     background-color: #014f86;
     color: #333;
 }
+
+#profile {
+    cursor: pointer;
+}

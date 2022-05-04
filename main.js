@@ -12,6 +12,9 @@ const {
     response
 } = require("express");
 var isAdmin = false;
+var userName;
+var userEmail;
+var userID;
 
 
 //path mapping 
@@ -36,10 +39,9 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     if (req.session.loggedIn) {
         if (isAdmin === false) {
-            res.redirect("/users");
             res.redirect("/landing");
         } else {
             res.redirect("/admin");
@@ -108,7 +110,7 @@ app.get("/footer", (req, res) => {
 app.post("/login", async function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
-    let usr = req.body.user_name;
+    userName = req.body.user_name;
     let pwd = req.body.password;
 
 
@@ -158,27 +160,27 @@ app.post("/login", async function(req, res) {
     }
 });
 
-app.get("/get-users", function(req, res) {
-    const connection = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "COMP2800"
-    });
-    connection.connect();
-    connection.query(
-        "SELECT BBY_33_user.USER_ID, BBY_33_user.email_address, BBY_33_user.first_name, BBY_33_user.last_name  FROM BBY_33_user WHERE user_removed = 'n'",
-        function(error, results) {
-            if (error) {
-                console.log(error);
+app.get("/get-users", function (req, res) {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.query(
+            "SELECT bby_33_user.email_address, bby_33_user.first_name, bby_33_user.last_name  FROM bby_33_user WHERE user_removed = ?", ['n'],
+            function (error, results) {
+                if (error) {
+                    console.log(error);
+                }
+                res.send({ status: "success", rows: results });
             }
-            console.log('Rows returned are: ', results);
-            res.send({
-                status: "success",
-                rows: results
-            });
-        }
-    );
+        );
+    } else {
+        res.redirect("/");
+    }
 });
 
 app.get("/logout", function(req, res) {
@@ -196,50 +198,51 @@ app.get("/logout", function(req, res) {
     }
 });
 
-app.post("/user-update", function(req, res) {
-    let adminUsers = [];
-    const userId = req.params['userId'];
-    console.log(userId);
-    const connection = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "COMP2800"
-    });
+app.post("/user-update", function (req, res) {
+    if (req.session.loggedIn) {
+        let adminUsers = [];
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
 
-    connection.connect();
-    console.log(req.body.id + "ID");
-    connection.execute(
-        "SELECT * FROM BBY_33_user WHERE admin_user = 'y' AND user_removed = 'n'",
-        function(error, results, fields) {
-            adminUsers = results;
-            let send = {
-                status: "fail",
-                msg: "Recorded updated."
-            };
-            connection.query("UPDATE BBY_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'n'], (err, rows) => {
-                if (err) {
-                    console.log(err);
-                }
-                send.status = "success";
-            });
-            if (adminUsers.length > 1) {
-                connection.query("UPDATE BBY_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'y'], (err, rows) => {
+        connection.connect();
+        connection.execute(
+            "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
+            function (error, results, fields) {
+                adminUsers = results;
+                let send = { status: "fail", msg: "Record not updated." };
+                connection.query("UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'n'], (err) => {
                     if (err) {
                         console.log(err);
                     }
                     send.status = "success";
+                    send.msg = "Record updated"
                 });
-            } else {
-                send.status = "fail";
+                if (adminUsers.length > 1) {
+                    connection.query("UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'y'], (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                        send.status = "success";
+                        send.msg = "Record updated"
+                    });
+                } else {
+                    send.status = "fail";
+                }
+                res.send(send);
+                if (error) {
+                    console.log(error);
+                }
+                connection.end();
             }
-            res.send(send);
-            if (error) {
-                console.log(error);
-            }
-            connection.end();
-        }
-    );
+        );
+    } else {
+        res.redirect("/");
+    }
+
 
 });
 
@@ -316,6 +319,101 @@ app.get("/createAccount", function (req, res) {
     res.set("X-Powered-By", "Wazubi");
     res.send(profileDOM.serialize());
 });
+app.get("/profile", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/profile.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.set("Server", "Wazubi Engine");
+        res.set("X-Powered-By", "Wazubi");
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.get("/user-name", (req, res) => {
+    if (req.session.loggedIn) {
+        res.send({status: "success", name: userName});
+    }
+})
+
+app.get("/email", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let stat;
+        connection.connect();
+        connection.query(
+            `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    stat = "success";
+                    res.send({status: stat, rows: result});
+                }
+            }
+            
+        )
+    }
+})
+
+app.post("/update-user-name", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = { status: "fail", msg: "Record not updated." };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET user_name = ? WHERE user_name = ?`, [req.body.name, userName], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }            
+        );
+        userName = req.body.name;
+        res.send(send);
+
+    }
+})
+
+app.post("/update-email", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = { status: "fail", msg: "Record not updated." };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET email_address = ? WHERE user_name = ?`, [req.body.email, userName], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }            
+        );
+        userEmail = req.body.email;
+        res.send(send);
+
+    }
+})
 
 //starts the server
 let port = 8000;

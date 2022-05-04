@@ -25,7 +25,6 @@
         let user_name = document.getElementById("user_name");
         let password = document.getElementById("password");
         let queryString = "user_name=" + user_name.value + "&password=" + password.value;
-        const vars = { "user_name": user_name, "password": password }
         ajaxPOST("/login", function (data) {
 
             if (data) {
