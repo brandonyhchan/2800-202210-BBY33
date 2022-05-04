@@ -3,14 +3,14 @@ body {
     height: 100%;
     width: 100%;
     margin: 0%;
-    background-color: rgb(14, 76, 109);
+    background-color: rgb(245, 245, 245);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #container {
     max-width: 100%;
     text-align: center;
-    padding-top: 9%;
+    padding-top: 8%;
 }
 
 #logo {
@@ -18,12 +18,12 @@ body {
     max-width: 25%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1%;
+    margin-bottom: 2%;
 }
 
 #input_container {
     display: inline-block;
-    background-color: rgb(114, 186, 213);
+    background-color: white;
     margin: auto;
     text-align: center;
     padding: 1.25%;
@@ -32,7 +32,7 @@ body {
 }
 
 #message {
-    color: white;
+    color: black;
     margin-top: 0%
 }
 
@@ -44,12 +44,12 @@ body {
 #confirm_password {
     display: flex;
     font-size: 20px;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 3.5%;
+    margin-bottom: 3.5%;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 3px;
-    border-style: none;
+    border-radius: 4px;
+    border-style: solid;
 }
 
 #submit {
@@ -66,7 +66,7 @@ body {
 }
 
 #redirect {
-    color: white;
+    color: black;
     cursor: pointer;
 }
 
