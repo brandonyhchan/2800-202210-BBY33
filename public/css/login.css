@@ -1,9 +1,14 @@
-html, body{
+@font-face{
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+body{
     height: 100%;
     width: 100%;
     margin: 0%;
     background-color: rgb(245, 245, 245);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:'Fonttype';
 }
 
 #container{
@@ -40,6 +45,7 @@ html, body{
     font-size: 20px;
     border-radius: 4px;
     border-style: solid;
+    font-family:'Fonttype';
 }
 
 #password{
@@ -51,6 +57,7 @@ html, body{
     font-size: 20px;
     border-radius: 4px;
     border-style: solid;
+    font-family:'Fonttype';
 }
 
 #submit{
@@ -64,10 +71,11 @@ html, body{
     background-color: rgb(14, 76, 109);
     color: white;
     border-radius: 7px;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    font-family:'Fonttype';
 }
 
 #forgot{
@@ -85,11 +93,12 @@ html, body{
     border-style: none;
     background-color: rgb(14, 76, 109);
     color: white;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    padding-left: 3.5%;
+    padding-right: 3.5%;
     cursor: pointer;
+    font-family:'Fonttype';
 }
 
 

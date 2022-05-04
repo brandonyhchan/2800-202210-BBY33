@@ -1,6 +1,11 @@
+@font-face{
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
 html,
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Fonttype';
 }
 
 .navbar {
@@ -28,10 +33,15 @@ body {
 
 .logout-button{
     border-style: none;
-    border-radius: 3px;
+    border-radius: 4px;
     background-color: rgb(114,186,213);
     color: white;
     font-size: 20px;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-top: 7%;
+    padding-bottom: 7%;
+    font-family: 'Fonttype';
 }
 
 .navbar ul {

@@ -1,12 +1,15 @@
+@font-face{
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
 body {
     height: 100vh;
     overflow-x: hidden;
     margin: 0;
+    font-family: 'Fonttype';
 }
 
-/* Navbar */
-#navbarPlaceholder {
-}
 
 /* Main Container */
 
