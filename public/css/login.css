@@ -77,6 +77,15 @@ body{
     padding-right: 3%;
     cursor: pointer;
     font-family:'Fonttype';
+    transition-duration: 0.7s;
+}
+
+#submit:hover{
+    background-color: rgb(114,186,213);
+}
+
+#submit:active {
+    transform: translateY(4px);
 }
 
 #forgot{
@@ -104,6 +113,15 @@ body{
     padding-right: 3.5%;
     cursor: pointer;
     font-family:'Fonttype';
+    transition-duration: 0.7s;
+}
+
+#create:hover{
+    background-color: rgb(114,186,213);
+}
+
+#create:active {
+    transform: translateY(4px);
 }
 
 footer {
@@ -126,6 +144,11 @@ footer {
 footer a {
     text-decoration: none;
     color: white;
+    transition-duration: 0.5s;
+}
+
+footer a:hover{
+    color:rgb(114,186,213);
 }
 
 .footer-section {

@@ -22,6 +22,11 @@ footer {
 footer a {
     text-decoration: none;
     color: white;
+    transition-duration: 0.5s;
+}
+
+footer a:hover{
+    color:rgb(114,186,213);
 }
 
 .footer-section {
@@ -50,6 +55,7 @@ footer a {
     #mobile-footer {
         display: none;
     }
+
     #mobile-footer {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;

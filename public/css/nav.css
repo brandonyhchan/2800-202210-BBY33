@@ -11,15 +11,15 @@ body {
 .navbar {
     position: sticky;
     top: 0;
-    left: 0;
+    margin-left: auto;
+    margin-right: auto; 
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
-    padding: 0.75%;
-    margin-bottom: 1rem;
+    padding: 1%;
     height: 60px;
     width: 100%;
     display: grid;
-    grid-template-columns: 30% 40% 20%;
+    grid-template-columns: 30% 40% 30%;
 }
 
 .logo {
@@ -33,7 +33,7 @@ body {
 
 .logout-button{
     border-style: none;
-    border-radius: 4px;
+    border-radius: 7px;
     background-color: rgb(114,186,213);
     color: white;
     font-size: 20px;
@@ -45,6 +45,7 @@ body {
     cursor: pointer;
 }
 
+
 .navbar ul {
     margin: auto;
     padding: 0;
@@ -54,7 +55,8 @@ body {
 
 .navbar li {
     list-style: none;
-    font-size: 20px;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 .navbar li a {
@@ -63,14 +65,10 @@ body {
     color: white;
     width: 100%;
     padding: 1rem;
-}
-
-.navbar li:hover,
-#navbar a:hover {
-    background-color: #014f86;
-    color: #333;
-}
-
-#profile {
     cursor: pointer;
+    transition-duration: 0.5s;
+}
+
+.navbar li a:hover {
+    color: rgb(114,186,213);
 }
