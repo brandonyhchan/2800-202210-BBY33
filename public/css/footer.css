@@ -22,6 +22,7 @@
     .footer-section {
         display: grid;
         padding: 3%;
+        justify-content: center;
     }
     
     #mobile-footer {
