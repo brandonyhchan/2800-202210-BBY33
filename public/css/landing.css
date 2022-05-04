@@ -28,7 +28,7 @@ body {
 }
 
 #hero-logo-container {
-    background-color: #00394f;
+    background-color: white;
     display: grid;
     justify-content: center;
     align-items: center;
@@ -36,8 +36,55 @@ body {
     grid-column: 1 / 2;
 }
 
-#hero-text-container {
-    background-color: white;
+#logo {
+    width: 100%;
+    object-fit: cover;
 }
 
-button {}
+#hero-text-container {
+    background-color: #00394f;
+    color: white;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+button {
+    width: 100px;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: #00394f;
+    color: white;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+#button-container {
+    background: #e6e6e6;
+}
+
+@media only screen and (max-width: 720px) {
+    .container {
+        grid-template-columns: 100%;
+        grid-template-rows: auto;
+    }
+    #image-gallery {
+        grid-row: 1 / 2;
+    }
+    #hero-logo-container {
+        grid-row: 2 / 3;
+        padding: 3%;
+    }
+    #hero-text-container {
+        grid-row: 3 / 4;
+        padding: 3%;
+    }
+    #button-container {
+        grid-row: 4 / 5;
+        padding: 5%;
+    }
+}
