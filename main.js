@@ -284,17 +284,20 @@ app.post("/register", function (req, res) {
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
             existingUsers = results;
+            let send = {
+                status: " ",
+                msg: " "
+            }
             if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
-                res.send({
-                    status: "fail",
-                    msg: "Please fill out all the fields."
-                });
+                send.status = "fail";
+                send.msg = "Please Fill Out All The Fields";
             } else {
-                if (pwd = confirmPassword) {
+                if (pwd == confirmPassword) {
                     for (let i = 0; i < existingUsers.length; i++) {
                         if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
-                            console.log("user already exists");
                             alreadyExists = true;
+                            send.status = "fail";
+                            send.msg = "Username or Email Already Exist";
                         } else {
                             alreadyExists = false;
                         }
@@ -307,13 +310,15 @@ app.post("/register", function (req, res) {
                                 "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES(?, ?, ?, ?, 'n', 'n', ?)", [usr, firstName, lastName, email, hashedPassword]
                             );
                         });
+                        send.status = "success";
+                        send.msg = "Registered Successfully";
                     }
                 } else {
-                    res.send({
-                        status: "success",
-                    });
+                    send.status = "fail";
+                    send.msg = "Please Confirm The Password";
                 }
             }
+            res.send(send);
 
         }
     )
