@@ -23,7 +23,6 @@ ready(() => {
     });
 
     ajaxGET("/footer", function(data) {
-        // console.log(data);
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
         console.log("accessed");

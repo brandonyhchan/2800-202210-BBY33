@@ -25,6 +25,7 @@ async function getEmail() {
         });
         if (responseObj.status === 200) {
             let data = await responseObj.json();
+            console.log("rows " + data.rows[0]);
             document.querySelector("#email").innerHTML = data.rows[0].email_address;
         } else {
             console.log(responseObj.status);

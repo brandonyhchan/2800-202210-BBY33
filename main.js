@@ -8,13 +8,11 @@ const bcrypt = require("bcrypt");
 const {
     JSDOM
 } = require('jsdom');
-const {
-    response
-} = require("express");
+
 var isAdmin = false;
 var userName;
 var userEmail;
-var userID;
+
 
 
 //path mapping 
@@ -110,10 +108,8 @@ app.get("/footer", (req, res) => {
 app.post("/login", async function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
-    let userName = req.body.user_name;
+    userName = req.body.user_name;
     let pwd = req.body.password;
-
-
     const mysql = require("mysql2/promise");
     const connection = await mysql.createConnection({
         host: "localhost",
@@ -211,10 +207,11 @@ app.post("/user-update", function (req, res) {
         connection.connect();
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function (error, results, fields) {
+            function (error, results) {
                 adminUsers = results;
                 let send = { status: "fail", msg: "Record not updated." };
-                connection.query("UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'n'], (err) => {
+                console.log("req email " + req.body.email);
+                connection.query("UPDATE bby_33_user SET user_removed = ? WHERE email_address = ? AND admin_user = ?", ['y', req.body.email, 'n'], (err) => {
                     if (err) {
                         console.log(err);
                     }
@@ -222,7 +219,7 @@ app.post("/user-update", function (req, res) {
                     send.msg = "Record updated"
                 });
                 if (adminUsers.length > 1) {
-                    connection.query("UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', req.body.id, 'y'], (err) => {
+                    connection.query("UPDATE bby_33_user SET user_removed = ? WHERE email_address = ? AND admin_user = ?", ['y', req.body.email, 'y'], (err) => {
                         if (err) {
                             console.log(err);
                         }
@@ -260,8 +257,6 @@ app.post("/register", function (req, res) {
     let salt = 5;
     let hashedPassword = "";
 
-
-    const mysql = require("mysql2");
     const connection = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -278,10 +273,6 @@ app.post("/register", function (req, res) {
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
             existingUsers = results;
-            let send = {
-                status: "fail",
-                msg: "Recorded updated."
-            };
             if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
                 console.log("Missing information");
             } else {
@@ -289,6 +280,7 @@ app.post("/register", function (req, res) {
                     for (let i = 0; i < existingUsers.length; i++) {
                         if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
                             console.log("user already exists");
+                            alreadyExists = true;
                         } else {
                             alreadyExists = false;
                         }
@@ -349,6 +341,7 @@ app.get("/email", (req, res) => {
         });
         let stat;
         connection.connect();
+        console.log("user name " + userName);
         connection.query(
             `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
                 if (err) {
@@ -399,6 +392,7 @@ app.post("/update-email", (req, res) => {
         });
         let send = { status: "fail", msg: "Record not updated." };
         connection.connect();
+        console.log("Email req " + req.body.email);
         connection.execute(
             `UPDATE bby_33_user SET email_address = ? WHERE user_name = ?`, [req.body.email, userName], (err) => {
                 if (err) {
@@ -409,7 +403,7 @@ app.post("/update-email", (req, res) => {
                 }
             }            
         );
-        userEmail = req.body.email;
+        // userEmail = req.body.email;
         res.send(send);
 
     }

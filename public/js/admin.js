@@ -17,8 +17,8 @@ function getUsers() {
             str += ("<tr>"
               + "</td><td class='firstName'>" + row.first_name
               + "</td><td class='lastName'>" + row.last_name
-              + "</td><td class='email'><span>"
-              + row.email_address + "</span></td>"
+              + "</td><td class='email'>"
+              + row.email_address + "</td>"
               + "<td><button class='remove'>Delete</button>"
               + "<td><button class='view'>View</button>" + "</tr>");
           }
@@ -40,7 +40,7 @@ getUsers();
 function update(e) {
   let parent = e.target.parentNode;
   let dataToSend = {
-    id: parent.parentNode.querySelector(".id").innerHTML
+    email: parent.parentNode.querySelector(".email").innerHTML
   };
 
   const xhr = new XMLHttpRequest();
@@ -60,7 +60,7 @@ function update(e) {
   xhr.open("POST", "/user-update");
   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.send("id=" + dataToSend.id);
+  xhr.send("email=" + dataToSend.email);
 
 }
 
