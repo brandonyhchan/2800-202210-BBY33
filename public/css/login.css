@@ -75,12 +75,17 @@ body{
     padding-bottom: 2%;
     padding-left: 3%;
     padding-right: 3%;
+    cursor: pointer;
     font-family:'Fonttype';
 }
 
 #forgot{
     text-decoration: none;
     color: black;
+}
+
+#errorMsg{
+    color: red;
 }
 
 #create{

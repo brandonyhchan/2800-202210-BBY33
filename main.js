@@ -290,14 +290,14 @@ app.post("/register", function (req, res) {
             }
             if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
                 send.status = "fail";
-                send.msg = "Please Fill Out All The Fields";
+                send.msg = "Please fill out all fields";
             } else {
                 if (pwd == confirmPassword) {
                     for (let i = 0; i < existingUsers.length; i++) {
                         if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
                             alreadyExists = true;
                             send.status = "fail";
-                            send.msg = "Username or Email Already Exist";
+                            send.msg = "Username or email already exists";
                         } else {
                             alreadyExists = false;
                         }
@@ -315,7 +315,7 @@ app.post("/register", function (req, res) {
                     }
                 } else {
                     send.status = "fail";
-                    send.msg = "Please Confirm The Password";
+                    send.msg = "Passwords do not match";
                 }
             }
             res.send(send);
