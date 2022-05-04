@@ -5,7 +5,6 @@ const mysql = require("mysql2");
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
-const saltRounds = 20;
 const {
     JSDOM
 } = require('jsdom');
@@ -97,7 +96,6 @@ app.post("/login", async function (req, res) {
 
     let usr = req.body.user_name;
     let pwd = req.body.password;
-    let salt = 5;
 
 
     const mysql = require("mysql2/promise");
@@ -108,6 +106,8 @@ app.post("/login", async function (req, res) {
         database: "COMP2800"
     });
 
+    
+
     connection.connect(function (err) {
         if (err) throw err;
         console.log('Database is connected successfully !');
@@ -117,7 +117,12 @@ app.post("/login", async function (req, res) {
     );
     if (rows.length > 0) {
         let hashedPassword = rows[0].password
-        if (bcrypt.compare(pwd, hashedPassword)) {
+        let comparison = await bcrypt.compare(req.body.password, hashedPassword);
+        console.log(rows[0].password);
+        console.log(comparison);
+        console.log(pwd);
+        if (comparison) {
+            console.log(bcrypt.compare(pwd, hashedPassword));
             if (rows[0].admin_user === 'y') {
                 isAdmin = true;
             }
@@ -135,7 +140,7 @@ app.post("/login", async function (req, res) {
         } else {
             res.send({
                 status: "fail",
-                msg: "Invalid"
+                msg: "User account not found."
             });
         }
     }
