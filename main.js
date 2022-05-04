@@ -442,6 +442,49 @@ app.post("/update-email", (req, res) => {
     }
 })
 
+app.post("/update-password", async (req, res) => {
+    if (req.session.loggedIn) {
+        const mysql = require("mysql2/promise");
+        let existingPassword = " ";
+        let salt = 5;
+        let hashedPassword = "";
+        let changed = false;
+        const connection = await mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "",
+            msg: ""
+        };
+        connection.connect();
+        const [rows, fields] = await connection.execute(
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName],
+        );
+        existingPassword = rows[0].password
+        let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
+        if (comparison) {
+            existingPassword = req.body.newPass;
+            bcrypt.hash(existingPassword, salt, function (err, hash) {
+                hashedPassword = hash;
+                console.log(hashedPassword);
+                connection.execute(
+                    "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
+                );
+            });
+            send.status = "success";
+            send.msg = "Password Updated";
+        } else {
+            send.status = "fail";
+            send.msg = "Current Password is Incorrect";
+        }
+        res.send(send);
+
+    }
+})
+
 //starts the server
 let port = 8000;
 app.listen(port, function () {

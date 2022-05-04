@@ -17,10 +17,11 @@ body {
 .container {
     grid-area: main;
     display: grid;
-    grid-template-rows: 5% 5% 30% 60%;
+    grid-template-rows: 5% 5% 5% 30% 55%;
     grid-template-areas: 
     "name"
     "email"
+    "password"
     "profile-pic"
     "order-history";
     height: 100vh;
@@ -40,6 +41,10 @@ body {
 
 .order-history {
     grid-area: order-history;
+}
+
+.display-password {
+    grid-area: password;
 }
 
 /* Main Container End*/
