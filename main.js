@@ -51,7 +51,7 @@ app.get("/", function (req, res) {
     }
 });
 
-app.get("/admin", async(req, res) => {
+app.get("/admin", async (req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -64,7 +64,7 @@ app.get("/admin", async(req, res) => {
     }
 });
 
-app.get("/landing", async(req, res) => {
+app.get("/landing", async (req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -105,7 +105,7 @@ app.get("/footer", (req, res) => {
 })
 
 
-app.post("/login", async function(req, res) {
+app.post("/login", async function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     userName = req.body.user_name;
@@ -118,7 +118,7 @@ app.post("/login", async function(req, res) {
         database: "COMP2800"
     });
 
-    connection.connect(function(err) {
+    connection.connect(function (err) {
         if (err) throw err;
         console.log('Database is connected successfully !');
     });
@@ -150,9 +150,14 @@ app.post("/login", async function(req, res) {
         } else {
             res.send({
                 status: "fail",
-                msg: "User account not found."
+                msg: "Invalid Username or Password."
             });
         }
+    } else {
+        res.send({
+            status: "fail",
+            msg: "Invalid Username or Password."
+        });
     }
 });
 
@@ -171,7 +176,10 @@ app.get("/get-users", function (req, res) {
                 if (error) {
                     console.log(error);
                 }
-                res.send({ status: "success", rows: results });
+                res.send({
+                    status: "success",
+                    rows: results
+                });
             }
         );
     } else {
@@ -179,10 +187,10 @@ app.get("/get-users", function (req, res) {
     }
 });
 
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
 
     if (req.session) {
-        req.session.destroy(function(error) {
+        req.session.destroy(function (error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
@@ -209,7 +217,10 @@ app.post("/user-update", function (req, res) {
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
             function (error, results) {
                 adminUsers = results;
-                let send = { status: "fail", msg: "Record not updated." };
+                let send = {
+                    status: "fail",
+                    msg: "Record not updated."
+                };
                 console.log("req email " + req.body.email);
                 connection.query("UPDATE bby_33_user SET user_removed = ? WHERE email_address = ? AND admin_user = ?", ['y', req.body.email, 'n'], (err) => {
                     if (err) {
@@ -273,14 +284,20 @@ app.post("/register", function (req, res) {
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
             existingUsers = results;
+            let send = {
+                status: " ",
+                msg: " "
+            }
             if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
-                console.log("Missing information");
+                send.status = "fail";
+                send.msg = "Please Fill Out All The Fields";
             } else {
-                if (pwd = confirmPassword) {
+                if (pwd == confirmPassword) {
                     for (let i = 0; i < existingUsers.length; i++) {
                         if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
-                            console.log("user already exists");
                             alreadyExists = true;
+                            send.status = "fail";
+                            send.msg = "Username or Email Already Exist";
                         } else {
                             alreadyExists = false;
                         }
@@ -293,11 +310,15 @@ app.post("/register", function (req, res) {
                                 "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES(?, ?, ?, ?, 'n', 'n', ?)", [usr, firstName, lastName, email, hashedPassword]
                             );
                         });
+                        send.status = "success";
+                        send.msg = "Registered Successfully";
                     }
                 } else {
-                    console.log("Password does not match");
+                    send.status = "fail";
+                    send.msg = "Please Confirm The Password";
                 }
             }
+            res.send(send);
 
         }
     )
@@ -327,7 +348,10 @@ app.get("/profile", function (req, res) {
 
 app.get("/user-name", (req, res) => {
     if (req.session.loggedIn) {
-        res.send({status: "success", name: userName});
+        res.send({
+            status: "success",
+            name: userName
+        });
     }
 })
 
@@ -348,10 +372,13 @@ app.get("/email", (req, res) => {
                     console.log(err);
                 } else {
                     stat = "success";
-                    res.send({status: stat, rows: result});
+                    res.send({
+                        status: stat,
+                        rows: result
+                    });
                 }
             }
-            
+
         )
     }
 })
@@ -364,7 +391,10 @@ app.post("/update-user-name", (req, res) => {
             password: "",
             database: "COMP2800"
         });
-        let send = { status: "fail", msg: "Record not updated." };
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
         connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET user_name = ? WHERE user_name = ?`, [req.body.name, userName], (err, result) => {
@@ -374,7 +404,7 @@ app.post("/update-user-name", (req, res) => {
                     send.status = "success";
                     send.msg = "Record Updated";
                 }
-            }            
+            }
         );
         userName = req.body.name;
         res.send(send);
@@ -390,7 +420,10 @@ app.post("/update-email", (req, res) => {
             password: "",
             database: "COMP2800"
         });
-        let send = { status: "fail", msg: "Record not updated." };
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
         connection.connect();
         console.log("Email req " + req.body.email);
         connection.execute(
@@ -401,7 +434,7 @@ app.post("/update-email", (req, res) => {
                     send.status = "success";
                     send.msg = "Record Updated";
                 }
-            }            
+            }
         );
         // userEmail = req.body.email;
         res.send(send);
