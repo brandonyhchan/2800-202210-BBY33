@@ -20,6 +20,11 @@ ready(() => {
         document.querySelector("#profile").addEventListener("click", () => {
             getProfile();
         })
+
+        document.querySelector("#landing").addEventListener("click", () =>{
+            getLanding();
+        })
+
     });
 
     ajaxGET("/footer", function(data) {
@@ -39,7 +44,19 @@ ready(() => {
 
         }
     }
-    
+
+    async function getLanding() {
+        try {
+            let response = await fetch("/", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/");
+            }
+        } catch (err){
+
+        }
+    }
 
 })
 

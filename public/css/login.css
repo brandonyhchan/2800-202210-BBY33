@@ -1,15 +1,21 @@
-html, body{
+@font-face{
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+body{
     height: 100%;
     width: 100%;
     margin: 0%;
-    background-color: rgb(14, 76, 109);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(245, 245, 245);
+    font-family:'Fonttype';
 }
 
 #container{
     max-width: 100%;
     text-align:center;
-    padding-top: 13%;
+    padding-top: 12%;
+    
 }
 
 #logo{
@@ -23,7 +29,7 @@ html, body{
     display: inline-block;
     margin-left: 3%;
     margin-right: 3%;
-    background-color:rgb(114,186,213);
+    background-color: white;
     padding-top: 1.5%;
     padding-bottom: 1.5%;
     padding-left: 1.5%;
@@ -37,8 +43,9 @@ html, body{
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
-    border-radius: 3px;
-    border-style: none;
+    border-radius: 4px;
+    border-style: solid;
+    font-family:'Fonttype';
 }
 
 #password{
@@ -48,8 +55,9 @@ html, body{
     margin-left: auto;
     margin-right: auto;
     font-size: 20px;
-    border-radius: 3px;
-    border-style: none;
+    border-radius: 4px;
+    border-style: solid;
+    font-family:'Fonttype';
 }
 
 #submit{
@@ -63,15 +71,16 @@ html, body{
     background-color: rgb(14, 76, 109);
     color: white;
     border-radius: 7px;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    font-family:'Fonttype';
 }
 
 #forgot{
     text-decoration: none;
-    color:white;
+    color: black;
 }
 
 #create{
@@ -84,11 +93,39 @@ html, body{
     border-style: none;
     background-color: rgb(14, 76, 109);
     color: white;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    padding-left: 3.5%;
+    padding-right: 3.5%;
     cursor: pointer;
+    font-family:'Fonttype';
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #00394f;
+}
+
+#desktop-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Fonttype';
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-section {
+    display: grid;
+    padding: 3%;
 }
 
 
@@ -103,6 +140,20 @@ html, body{
 
     #login-container{
         padding: 4%;
-        margin-top: 2%;
+        margin-top: 5%;
     }
+
+    #desktop-footer{
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        padding-bottom: 3%;
+    }
+
+    #about-us{
+        display: none;
+    }
+
 }

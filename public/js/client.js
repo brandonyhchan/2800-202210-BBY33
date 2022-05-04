@@ -31,8 +31,7 @@
                 let dataParsed = JSON.parse(data);
                 console.log(dataParsed);
                 if (dataParsed.status == "fail") {
-                    console.log("wrong");
-                    // document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+                    document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else {
                     window.location.replace("/landing");
                 }
