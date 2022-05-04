@@ -1,0 +1,44 @@
+body {
+    height: 100vh;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+/* Navbar */
+#navbarPlaceholder {
+}
+
+/* Main Container */
+
+.container {
+    grid-area: main;
+    display: grid;
+    grid-template-rows: 5% 5% 30% 60%;
+    grid-template-areas: 
+    "name"
+    "email"
+    "profile-pic"
+    "order-history";
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.display-name {
+    grid-area: name;
+}
+.display-email {
+    grid-area: email;
+}
+
+
+.profile-pic {
+    grid-area: profile-pic;
+}
+
+.order-history {
+    grid-area: order-history;
+}
+
+/* Main Container End*/
+
+

@@ -25,7 +25,6 @@
         let user_name = document.getElementById("user_name");
         let password = document.getElementById("password");
         let queryString = "user_name=" + user_name.value + "&password=" + password.value;
-        const vars = { "user_name": user_name, "password": password }
         ajaxPOST("/login", function (data) {
 
             if (data) {
@@ -40,33 +39,4 @@
         }, queryString);
     });
 
-    document.getElementById("deleteAll").addEventListener("click", function(e) {
-            e.preventDefault();
-
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-
-                    // 200 means everthing worked
-                    if (xhr.status === 200) {
-
-                      getCustomers();
-                      document.getElementById("status").innerHTML = "All records deleted.";
-
-                    } else {
-
-                      // not a 200, could be anything (404, 500, etc.)
-                      console.log(this.status);
-
-                    }
-
-                } else {
-                    console.log("ERROR", this.status);
-                }
-            }
-            xhr.open("POST", "/delete-all-customers");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send();
-        });
 

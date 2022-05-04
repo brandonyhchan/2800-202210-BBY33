@@ -1,3 +1,4 @@
+'use strict';
 ready(() => {
     function ajaxGET(url, callback) {
 
@@ -14,11 +15,26 @@ ready(() => {
     }
 
     ajaxGET("/nav", function (data) {
-        // console.log(data);
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
-        console.log("accessed");
+        document.querySelector("#profile").addEventListener("click", () => {
+            getProfile();
+        })
     });
+
+    async function getProfile() {
+        try {
+            let response = await fetch("/profile", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/profile");
+            }
+        } catch (err) {
+
+        }
+    }
+    
 
 })
 

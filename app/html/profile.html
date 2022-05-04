@@ -5,18 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/profile.css" type="text/css" />
+    <link rel="stylesheet" href="/css/nav.css" type="text/css" />
     <title>Profile</title>
 </head>
 
 <body>
+    <nav id="navbarPlaceholder"></nav>
 
-    <div id="logout-container">
-        <form action="/logout" method="get">
-            <input type="submit" value="Logout" />
-        </form>
+    <div class="container">
+        <div class="display-name">
+            <span id="user-name"></span>
+            
+        </div>
+        <div class="display-email">
+            <span id="email"></span>
+        </div>
+        <div class="profile-pic"></div>
+        <div class="order-history"></div>
     </div>
 
-    <script src="js/client.js"></script>
+    <script src="/js/placeholders.js"></script>
+    <script src="js/profile.js"></script>
 </body>
 
 </html>
