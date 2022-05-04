@@ -1,4 +1,4 @@
-@font-face{
+@font-face {
     font-family: Fonttype;
     src: url("/fonts/static/Raleway-Regular.ttf");
 }
@@ -36,9 +36,26 @@ footer a {
 
 @media only screen and (max-width: 720px) {
     #desktop-footer {
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    footer a {
+        text-decoration: none;
+        color: white;
+    }
+    .footer-section {
+        display: grid;
+        padding: 3%;
+        justify-content: center;
+    }
+    #mobile-footer {
         display: none;
     }
-
     #mobile-footer {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -46,11 +63,9 @@ footer a {
         align-items: center;
         min-height: 50px;
     }
-
     footer {
         position: absolute;
     }
-
     .material-icons {
         font-size: 36px;
         justify-content: center;
