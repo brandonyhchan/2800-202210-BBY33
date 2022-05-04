@@ -4,7 +4,6 @@
 }
 
 footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
     background-color: #00394f;
@@ -28,6 +27,7 @@ footer a {
 .footer-section {
     display: grid;
     padding: 3%;
+    justify-content: center;
 }
 
 #mobile-footer {
@@ -36,13 +36,7 @@ footer a {
 
 @media only screen and (max-width: 720px) {
     #desktop-footer {
-        position: relative;
-        bottom: 0;
-        width: 100%;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: white;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        display: none;
     }
     footer a {
         text-decoration: none;
