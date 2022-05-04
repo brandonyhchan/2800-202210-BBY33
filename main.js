@@ -110,7 +110,7 @@ app.get("/footer", (req, res) => {
 app.post("/login", async function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
-    userName = req.body.user_name;
+    let userName = req.body.user_name;
     let pwd = req.body.password;
 
 
@@ -127,7 +127,7 @@ app.post("/login", async function(req, res) {
         console.log('Database is connected successfully !');
     });
     const [rows, fields] = await connection.execute(
-        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [usr],
+        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName],
     );
     if (rows.length > 0) {
         let hashedPassword = rows[0].password
@@ -141,7 +141,7 @@ app.post("/login", async function(req, res) {
                 isAdmin = true;
             }
             req.session.loggedIn = true;
-            req.session.user_name = usr;
+            req.session.user_name = userName;
             req.session.password = pwd;
             req.session.name = rows[0].first_name;
             req.session.save((err) => {
