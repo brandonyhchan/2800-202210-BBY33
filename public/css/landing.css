@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -20,6 +25,8 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 #image-gallery {
@@ -50,17 +57,31 @@ body {
 }
 
 button {
-    width: 100px;
-    border-radius: 10px;
-    text-decoration: none;
-    background-color: #00394f;
+    display: flex;
+    margin-top: 6%;
+    margin-bottom: 4%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
     color: white;
-    transition: all 0.5s;
+    border-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
     cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
 }
 
 button:active {
-    transform: translateY(2px);
+    transform: translateY(4px);
+}
+
+button:hover {
+    background-color: rgb(114, 186, 213);
 }
 
 #button-container {
