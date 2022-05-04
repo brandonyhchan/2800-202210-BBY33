@@ -60,3 +60,4 @@ async function getLogin() {
 }
 
 document.getElementById("redirect").addEventListener("click", getLogin);
+document.getElementById("submit").addEventListener("click", getLogin);
