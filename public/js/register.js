@@ -37,10 +37,9 @@ document.querySelector("#submit").addEventListener("click", function (e) {
             let dataParsed = JSON.parse(data);
             console.log(dataParsed);
             if (dataParsed.status == "fail") {
-                console.log("wrong");
-                // document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+                document.getElementById("errorMsg").innerHTML = dataParsed.msg;
             } else {
-                window.location.replace("/login");
+                window.location.replace("/");
             }
         }
     }, queryString);
@@ -60,4 +59,3 @@ async function getLogin() {
 }
 
 document.getElementById("redirect").addEventListener("click", getLogin);
-document.getElementById("submit").addEventListener("click", getLogin);
