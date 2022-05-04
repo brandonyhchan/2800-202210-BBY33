@@ -1,28 +1,29 @@
-html, body{
+html,
+body {
     height: 100%;
     width: 100%;
     margin: 0%;
     background-color: rgb(14, 76, 109);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#container{
+#container {
     max-width: 100%;
-    text-align:center;
+    text-align: center;
     padding-top: 9%;
 }
 
-#logo{
+#logo {
     display: flex;
     max-width: 25%;
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
     margin-bottom: 1%;
 }
 
-#input_container{
+#input_container {
     display: inline-block;
-    background-color:rgb(114,186,213);
+    background-color: rgb(114, 186, 213);
     margin: auto;
     text-align: center;
     padding: 1.25%;
@@ -30,20 +31,29 @@ html, body{
     border-radius: 4px;
 }
 
-#message{
+#message {
     color: white;
     margin-top: 0%
 }
 
-#first_name, #last_name, #email, #username, #password, #confirm_password{
+#first_name,
+#last_name,
+#email,
+#username,
+#password,
+#confirm_password {
     display: flex;
     font-size: 20px;
     margin-top: 2%;
     margin-bottom: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 3px;
+    border-style: none;
 }
 
-#submit{
-    background-color:rgb(14, 76, 109);
+#submit {
+    background-color: rgb(14, 76, 109);
     border-style: none;
     color: white;
     font-size: 20px;
@@ -55,11 +65,23 @@ html, body{
     border-radius: 7px;
 }
 
-#redirect{
+#redirect {
     color: white;
     cursor: pointer;
 }
 
+@media only screen and (max-width: 720px) {
+    #logo {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 5%;
+        max-width: 70%;
+    }
 
+    #input_container {
+        padding-left: 2%;
+        padding-right: 2%;
+    }
 
-
+}

@@ -2,7 +2,7 @@ ready(() => {
     function ajaxGET(url, callback) {
 
         const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
+        xhr.onload = function() {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
             } else {
@@ -13,10 +13,17 @@ ready(() => {
         xhr.send();
     }
 
-    ajaxGET("/nav", function (data) {
+    ajaxGET("/nav", function(data) {
         // console.log(data);
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
+        console.log("accessed");
+    });
+
+    ajaxGET("/footer", function(data) {
+        // console.log(data);
+        let footer = document.querySelector("#footerPlaceholder");
+        footer.innerHTML = data;
         console.log("accessed");
     });
 

@@ -36,7 +36,7 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
     if (req.session.loggedIn) {
         if (isAdmin === false) {
             res.redirect("/users");
@@ -51,7 +51,7 @@ app.get("/", function (req, res) {
     }
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", async(req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -64,7 +64,7 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/landing", async (req, res) => {
+app.get("/landing", async(req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -91,7 +91,21 @@ app.get("/nav", (req, res) => {
     }
 })
 
-app.post("/login", async function (req, res) {
+app.get("/footer", (req, res) => {
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/footer.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
+
+        res.set("Server", "Wazubi Engine");
+        res.set("X-Powered-By", "Wazubi");
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+})
+
+
+app.post("/login", async function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -106,9 +120,7 @@ app.post("/login", async function (req, res) {
         database: "COMP2800"
     });
 
-    
-
-    connection.connect(function (err) {
+    connection.connect(function(err) {
         if (err) throw err;
         console.log('Database is connected successfully !');
     });
@@ -146,7 +158,7 @@ app.post("/login", async function (req, res) {
     }
 });
 
-app.get("/get-users", function (req, res) {
+app.get("/get-users", function(req, res) {
     const connection = mysql.createConnection({
         host: "localhost",
         user: "root",
@@ -156,7 +168,7 @@ app.get("/get-users", function (req, res) {
     connection.connect();
     connection.query(
         "SELECT BBY_33_user.USER_ID, BBY_33_user.email_address, BBY_33_user.first_name, BBY_33_user.last_name  FROM BBY_33_user WHERE user_removed = 'n'",
-        function (error, results) {
+        function(error, results) {
             if (error) {
                 console.log(error);
             }
@@ -169,10 +181,10 @@ app.get("/get-users", function (req, res) {
     );
 });
 
-app.get("/logout", function (req, res) {
+app.get("/logout", function(req, res) {
 
     if (req.session) {
-        req.session.destroy(function (error) {
+        req.session.destroy(function(error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
@@ -184,7 +196,7 @@ app.get("/logout", function (req, res) {
     }
 });
 
-app.post("/user-update", function (req, res) {
+app.post("/user-update", function(req, res) {
     let adminUsers = [];
     const userId = req.params['userId'];
     console.log(userId);
@@ -199,7 +211,7 @@ app.post("/user-update", function (req, res) {
     console.log(req.body.id + "ID");
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE admin_user = 'y' AND user_removed = 'n'",
-        function (error, results, fields) {
+        function(error, results, fields) {
             adminUsers = results;
             let send = {
                 status: "fail",
