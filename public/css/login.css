@@ -14,7 +14,7 @@ body{
 #container{
     max-width: 100%;
     text-align:center;
-    padding-top: 13%;
+    padding-top: 12%;
     
 }
 
@@ -101,6 +101,33 @@ body{
     font-family:'Fonttype';
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #00394f;
+}
+
+#desktop-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Fonttype';
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-section {
+    display: grid;
+    padding: 3%;
+}
+
 
 @media only screen and (max-width: 720px) {
     #logo{
@@ -113,6 +140,20 @@ body{
 
     #login-container{
         padding: 4%;
-        margin-top: 2%;
+        margin-top: 5%;
     }
+
+    #desktop-footer{
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        padding-bottom: 3%;
+    }
+
+    #about-us{
+        display: none;
+    }
+
 }

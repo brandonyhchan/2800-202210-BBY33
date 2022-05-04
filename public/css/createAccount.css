@@ -87,8 +87,10 @@ body {
     }
 
     #input_container {
-        padding-left: 2%;
-        padding-right: 2%;
+        margin-top: 2%;
+        padding-top: 3%;
+        padding-left: 4%;
+        padding-right: 4%;
     }
 
 }
