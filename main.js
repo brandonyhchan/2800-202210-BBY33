@@ -455,10 +455,9 @@ app.post("/update-password", async (req, res) => {
         let salt = 5;
         let hashedPassword = "";
         const connection = await mysql.createConnection({
-
             status: "",
             msg: ""
-        };
+        });
         connection.connect();
         const [rows] = await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName],

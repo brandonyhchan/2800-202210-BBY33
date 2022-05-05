@@ -102,7 +102,7 @@ function editEmail(e) {
             let dataToSend = {
                 email: newEmail.innerHTML
             };
-             const xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
@@ -131,7 +131,9 @@ function editEmail(e) {
 
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+        function (k) {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+        }
     ).join('&');
 
     const xhr = new XMLHttpRequest();
@@ -163,6 +165,7 @@ document.querySelector("#submit").addEventListener("click", function (e) {
         }
     }, queryString);
 });
+
 const uploadImage = document.getElementById("upload-image");
 uploadImage.addEventListener("submit", uploadImages);
 
@@ -211,4 +214,3 @@ async function getImage() {
 }
 
 getImage();
-
