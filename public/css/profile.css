@@ -11,7 +11,6 @@ body {
     font-family: 'Fonttype';
 }
 
-
 /* Main Container */
 
 .container {
@@ -28,6 +27,8 @@ body {
     "footer";
     height: 100vh;
     overflow-x: hidden;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
 }
 
 .display-image {
@@ -42,12 +43,29 @@ body {
     padding-top: 2rem;
 }
 
-.profile-pic {
-    grid-area: profile-pic;
+#profile-container{
+    margin: auto;
+    background-color: rgb(245, 245, 245);
+    padding: 1%;
+    border-style: none;
+    border-radius: 7px;
 }
 
-.order-history {
-    grid-area: order-history;
+.display-name, .display-email{
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#changeFname, #changeEmail{
+    font-size: 30px;    
+    font-family: 'Fonttype';
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .display-password {

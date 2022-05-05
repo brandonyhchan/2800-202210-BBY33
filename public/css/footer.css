@@ -22,6 +22,11 @@ footer {
 footer a {
     text-decoration: none;
     color: white;
+    transition-duration: 0.5s;
+}
+
+footer a:hover {
+    color: rgb(114, 186, 213);
 }
 
 .footer-section {
@@ -58,7 +63,7 @@ footer a {
         min-height: 50px;
     }
     footer {
-        position: absolute;
+        position: fixed;
     }
     .material-icons {
         font-size: 36px;

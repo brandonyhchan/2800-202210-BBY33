@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,13 +11,28 @@
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/admin.css">
 </head>
+
 <body>
     <nav id="navbarPlaceholder"></nav>
-    <table id="userTable"></table>
-    Admin success
+
+    <div id="container">
+        <h1 id="manage-users">Manage Users</h1>
+        <div id="control-panel">
+            <h2 id="control-panel-header">Admin Dashboard</h2>
+            <button id="manage-users-button" class="admin-buttons">Manage Users</button>
+            <button id="delete-users-button" class="admin-buttons">Delete Users</button>
+        </div>
+
+        <div id="table-container">
+            <table id="userTable"></table>
+        </div>
+
+
+    </div>
 
     <footer id="footerPlaceholder"></footer>
     <script src="/js/placeholders.js"></script>
     <script src="/js/admin.js"></script>
 </body>
+
 </html>

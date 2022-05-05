@@ -42,7 +42,7 @@ function editName(e) {
     let parent = e.target.parentNode;
     let input = document.createElement("input");
     let statusDiv = document.querySelector("#status");
-    input.setAttribute("id", "new-name");
+    input.setAttribute("id", "changeFname");
     input.value = currentName;
     input.addEventListener("keyup", function (e) {
         let newInput = null;
@@ -58,7 +58,7 @@ function editName(e) {
                 name: newName.innerHTML
             };
             const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
+            xhr.onload = function() {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         statusDiv.innerHTML = "Username updated.";
@@ -86,7 +86,7 @@ function editEmail(e) {
     let parent = e.target.parentNode;
     let input = document.createElement("input");
     let statusDiv = document.querySelector("#status");
-    input.setAttribute("id", "new-email");
+    input.setAttribute("id", "changeEmail");
     input.value = currentEmail;
     input.addEventListener("keyup", function (e) {
         let newInput = null;
@@ -102,7 +102,7 @@ function editEmail(e) {
                 email: newEmail.innerHTML
             };
             const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
+            xhr.onload = function() {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         statusDiv.innerHTML = "Email updated.";
@@ -127,13 +127,13 @@ function editEmail(e) {
 
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) {
+        function(k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
 
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
 
@@ -148,12 +148,12 @@ function ajaxPOST(url, callback, data) {
 }
 
 
-document.querySelector("#submit").addEventListener("click", function (e) {
+document.querySelector("#submit").addEventListener("click", function(e) {
     e.preventDefault();
     let currentPassword = document.getElementById("currentPass");
     let newPassword = document.getElementById("newPass");
     let queryString = "currentPass=" + currentPassword.value + "&newPass=" + newPassword.value;
-    ajaxPOST("/update-password", function (data) {
+    ajaxPOST("/update-password", function(data) {
 
         if (data) {
             let dataParsed = JSON.parse(data);
@@ -180,9 +180,9 @@ function uploadImages(e) {
         body: imageData,
     };
 
-    fetch("/upload-user-images", options).then(function (res) {
+    fetch("/upload-user-images", options).then(function(res) {
         console.log(res);
-    }).catch(function (err) {
+    }).catch(function(err) {
         ("Error:", err)
     });
     getImage();
