@@ -37,7 +37,7 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
     if (req.session.loggedIn) {
         if (isAdmin === false) {
             res.redirect("/landing");
@@ -51,7 +51,7 @@ app.get("/", function (req, res) {
     }
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", async(req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -64,7 +64,7 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/landing", async (req, res) => {
+app.get("/landing", async(req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -105,7 +105,7 @@ app.get("/footer", (req, res) => {
 })
 
 
-app.post("/login", async function (req, res) {
+app.post("/login", async function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     userName = req.body.user_name;
@@ -118,7 +118,7 @@ app.post("/login", async function (req, res) {
         database: "COMP2800"
     });
 
-    connection.connect(function (err) {
+    connection.connect(function(err) {
         if (err) throw err;
         console.log('Database is connected successfully !');
     });
@@ -161,7 +161,7 @@ app.post("/login", async function (req, res) {
     }
 });
 
-app.get("/get-users", function (req, res) {
+app.get("/get-users", function(req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -171,8 +171,8 @@ app.get("/get-users", function (req, res) {
         });
         connection.connect();
         connection.query(
-            "SELECT bby_33_user.email_address, bby_33_user.first_name, bby_33_user.last_name  FROM bby_33_user WHERE user_removed = ?", ['n'],
-            function (error, results) {
+            "SELECT bby_33_user.email_address, bby_33_user.first_name, bby_33_user.last_name, bby_33_user.admin_user  FROM bby_33_user WHERE user_removed = ?", ['n'],
+            function(error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -187,10 +187,10 @@ app.get("/get-users", function (req, res) {
     }
 });
 
-app.get("/logout", function (req, res) {
+app.get("/logout", function(req, res) {
 
     if (req.session) {
-        req.session.destroy(function (error) {
+        req.session.destroy(function(error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
@@ -202,7 +202,7 @@ app.get("/logout", function (req, res) {
     }
 });
 
-app.post("/user-update", function (req, res) {
+app.post("/user-update", function(req, res) {
     if (req.session.loggedIn) {
         let adminUsers = [];
         const connection = mysql.createConnection({
@@ -215,7 +215,7 @@ app.post("/user-update", function (req, res) {
         connection.connect();
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function (error, results) {
+            function(error, results) {
                 adminUsers = results;
                 let send = {
                     status: "fail",
@@ -254,7 +254,7 @@ app.post("/user-update", function (req, res) {
 
 });
 
-app.post("/register", function (req, res) {
+app.post("/register", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -275,14 +275,14 @@ app.post("/register", function (req, res) {
         database: "COMP2800"
     });
 
-    connection.connect(function (err) {
+    connection.connect(function(err) {
         if (err) {
             console.log("failed to connect");
         };
     });
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
-        function (error, results, fields) {
+        function(error, results, fields) {
             existingUsers = results;
             let send = {
                 status: " ",
@@ -303,7 +303,7 @@ app.post("/register", function (req, res) {
                         }
                     }
                     if (alreadyExists == false) {
-                        bcrypt.hash(pwd, salt, function (err, hash) {
+                        bcrypt.hash(pwd, salt, function(err, hash) {
                             hashedPassword = hash;
                             console.log(hashedPassword);
                             connection.execute(
@@ -324,7 +324,7 @@ app.post("/register", function (req, res) {
     )
 });
 
-app.get("/createAccount", function (req, res) {
+app.get("/createAccount", function(req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
@@ -332,7 +332,7 @@ app.get("/createAccount", function (req, res) {
     res.set("X-Powered-By", "Wazubi");
     res.send(profileDOM.serialize());
 });
-app.get("/profile", function (req, res) {
+app.get("/profile", function(req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/profile.html", "utf8");
@@ -444,6 +444,6 @@ app.post("/update-email", (req, res) => {
 
 //starts the server
 let port = 8000;
-app.listen(port, function () {
+app.listen(port, function() {
     console.log("Server started on " + port + "!");
 });
