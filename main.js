@@ -287,8 +287,10 @@ app.post("/register", function (req, res) {
                 send.msg = "Please fill out all fields";
             } else {
                 if (pwd == confirmPassword) {
+                    
                     for (let i = 0; i < existingUsers.length; i++) {
-                        if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
+                        console.log("Existing " + existingUsers[i]);
+                        if (existingUsers[i].user_name == usr || existingUsers[i].email == req.body.email) {
                             alreadyExists = true;
                             send.status = "fail";
                             send.msg = "Username or email already exists";
