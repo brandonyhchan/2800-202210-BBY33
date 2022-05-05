@@ -30,8 +30,8 @@ ready(() => {
     ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
-        console.log("accessed");
     });
+
     async function getProfile() {
         try {
             let response = await fetch("/profile", {
@@ -47,11 +47,11 @@ ready(() => {
 
     async function getLanding() {
         try {
-            let response = await fetch("/", {
+            let response = await fetch("/landing", {
                 method: 'GET'
             })
             if (response.status === 200) {
-                window.location.replace("/");
+                window.location.replace("/landing");
             }
         } catch (err){
 

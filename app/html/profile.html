@@ -8,7 +8,7 @@
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/profile.css" type="text/css" />
     <link rel="stylesheet" href="/css/nav.css" type="text/css" />
-    <link rel="stylesheet" href="/css/footer.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/footer.css" type="text/css" />
     <title>Profile</title>
 </head>
 
@@ -18,11 +18,22 @@
     <div class="container">
         <div class="display-name">
             <span id="user-name"></span>
-            
+            <div id="name-status"></div>
+
         </div>
         <div class="display-email">
-            <span id="email"></span>
+            <span id="email"></span><br><br>
+            <p id="email-status"></p>
         </div>
+        <div class="display-password">
+            <form>
+                <input id="currentPass" type="password" placeholder="Enter current password">
+                <input id="newPass" type="password" placeholder="Enter new password">
+                <input id="submit" type="button" value="Submit">
+                <p id="errorMsg"></p>
+            </form>
+        </div>
+        
         <div class="profile-pic"></div>
         <div class="order-history"></div>
     </div>
