@@ -1,6 +1,6 @@
 var images = ['/img/hero1.jpg', '/img/hero2.jpg', '/img/hero3.jpg', '/img/hero4.jpg'];
 var i = 0;
-var interval = 2000;
+var interval = 3500;
 
 /**
  * Creates a sliding image gallery that automatically updates every specified interval.

@@ -15,7 +15,7 @@ body {
 #container {
     max-width: 100%;
     text-align: center;
-    padding-top: 8%;
+    padding-top: 7%;
 }
 
 #logo {
@@ -71,6 +71,15 @@ body {
     border-radius: 7px;
     font-family: 'Fonttype';
     cursor: pointer;
+    transition-duration: 0.7s;
+}
+
+#submit:hover{
+    background-color: rgb(114,186,213);
+}
+
+#submit:active {
+    transform: translateY(4px);
 }
 
 #errorMsg{
