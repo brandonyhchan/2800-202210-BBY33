@@ -47,7 +47,6 @@ function update(e) {
   xhr.onload = function () {
     if (this.readyState == XMLHttpRequest.DONE) {
       if (xhr.status === 200) {
-        //   document.getElementById("status").innerHTML = "Record updated.";
         getUsers();
 
       } else {

@@ -120,19 +120,14 @@ app.post("/login", async function (req, res) {
 
     connection.connect(function (err) {
         if (err) throw err;
-        console.log('Database is connected successfully !');
     });
-    const [rows, fields] = await connection.execute(
-        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName],
+    const [rows] = await connection.execute(
+        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'],
     );
-    if (rows.length > 0) {
+    if (rows.length > 0 ) {
         let hashedPassword = rows[0].password
         let comparison = await bcrypt.compare(req.body.password, hashedPassword);
-        console.log(rows[0].password);
-        console.log(comparison);
-        console.log(pwd);
         if (comparison) {
-            console.log(bcrypt.compare(pwd, hashedPassword));
             if (rows[0].admin_user === 'y') {
                 isAdmin = true;
             }
@@ -221,7 +216,6 @@ app.post("/user-update", function (req, res) {
                     status: "fail",
                     msg: "Record not updated."
                 };
-                console.log("req email " + req.body.email);
                 connection.query("UPDATE bby_33_user SET user_removed = ? WHERE email_address = ? AND admin_user = ?", ['y', req.body.email, 'n'], (err) => {
                     if (err) {
                         console.log(err);
@@ -278,7 +272,7 @@ app.post("/register", function (req, res) {
     connection.connect(function (err) {
         if (err) {
             console.log("failed to connect");
-        };
+        }
     });
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
@@ -305,7 +299,6 @@ app.post("/register", function (req, res) {
                     if (alreadyExists == false) {
                         bcrypt.hash(pwd, salt, function (err, hash) {
                             hashedPassword = hash;
-                            console.log(hashedPassword);
                             connection.execute(
                                 "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES(?, ?, ?, ?, 'n', 'n', ?)", [usr, firstName, lastName, email, hashedPassword]
                             );
@@ -365,7 +358,6 @@ app.get("/email", (req, res) => {
         });
         let stat;
         connection.connect();
-        console.log("user name " + userName);
         connection.query(
             `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
                 if (err) {
@@ -425,7 +417,6 @@ app.post("/update-email", (req, res) => {
             msg: "Record not updated."
         };
         connection.connect();
-        console.log("Email req " + req.body.email);
         connection.execute(
             `UPDATE bby_33_user SET email_address = ? WHERE user_name = ?`, [req.body.email, userName], (err) => {
                 if (err) {
@@ -436,7 +427,6 @@ app.post("/update-email", (req, res) => {
                 }
             }
         );
-        // userEmail = req.body.email;
         res.send(send);
 
     }
@@ -445,10 +435,9 @@ app.post("/update-email", (req, res) => {
 app.post("/update-password", async (req, res) => {
     if (req.session.loggedIn) {
         const mysql = require("mysql2/promise");
-        let existingPassword = " ";
+        let existingPassword;
         let salt = 5;
         let hashedPassword = "";
-        let changed = false;
         const connection = await mysql.createConnection({
             host: "localhost",
             user: "root",
@@ -460,7 +449,7 @@ app.post("/update-password", async (req, res) => {
             msg: ""
         };
         connection.connect();
-        const [rows, fields] = await connection.execute(
+        const [rows] = await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName],
         );
         existingPassword = rows[0].password
@@ -469,7 +458,6 @@ app.post("/update-password", async (req, res) => {
             existingPassword = req.body.newPass;
             bcrypt.hash(existingPassword, salt, function (err, hash) {
                 hashedPassword = hash;
-                console.log(hashedPassword);
                 connection.execute(
                     "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
                 );
@@ -485,7 +473,6 @@ app.post("/update-password", async (req, res) => {
     }
 })
 
-//starts the server
 let port = 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");

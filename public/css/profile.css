@@ -17,13 +17,14 @@ body {
 .container {
     grid-area: main;
     display: grid;
-    grid-template-rows: 5% 5% 5% 30% 55%;
+    grid-template-rows: 5% 5% 5% 5%;
     grid-template-areas: 
     "name"
     "email"
     "password"
-    "profile-pic"
-    "order-history";
+    /* "profile-pic"
+    "order-history" */
+    "footer";
     height: 100vh;
     overflow-x: hidden;
 }
@@ -33,6 +34,7 @@ body {
 }
 .display-email {
     grid-area: email;
+    padding-top: 2rem;
 }
 
 .profile-pic {
@@ -45,8 +47,13 @@ body {
 
 .display-password {
     grid-area: password;
+    margin-top: 5rem;
+    padding-top: 2rem;
 }
 
+#footerPlaceholder {
+    grid-area: footer;
+}
 /* Main Container End*/
 
 
