@@ -6,7 +6,8 @@ CREATE TABLE BBY_33_user (
   email_address VARCHAR(50),
   admin_user VARCHAR(1),
   user_removed VARCHAR(1),
-  password VARCHAR(80),
+  user_image VARCHAR(200),
+  password VARCHAR(100),
   PRIMARY KEY (USER_ID)
 );
 
