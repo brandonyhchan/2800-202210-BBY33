@@ -5,9 +5,22 @@ const mysql = require("mysql2");
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
 const {
     JSDOM
 } = require('jsdom');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, "./public/userImg/")
+    },
+    filename: function (req, file, callback) {
+        callback(null, "profilePic-" + file.originalname.split('/').pop().trim());
+    }
+});
+const upload = multer({
+    storage: storage
+});
 
 var isAdmin = false;
 var userName;
@@ -19,6 +32,7 @@ var userEmail;
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
 app.use("/img", express.static("./public/img"));
+app.use("/userImg", express.static("./public/userImg"));
 app.use("/fonts", express.static("./public/fonts"));
 app.use("/html", express.static("./app/html"));
 app.use("/media", express.static("./public/media"));
@@ -261,7 +275,8 @@ app.post("/register", function (req, res) {
     let pwd = req.body.password;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
-    let email = req.body.email;
+    let email = req.body.userEmail;
+    console.log(email);
     let confirmPassword = req.body.passwordConfirm;
     let existingUsers = [];
     let alreadyExists = true;
@@ -294,7 +309,7 @@ app.post("/register", function (req, res) {
             } else {
                 if (pwd == confirmPassword) {
                     for (let i = 0; i < existingUsers.length; i++) {
-                        if (existingUsers[i].user_name == usr || existingUsers[i].email == email) {
+                        if (existingUsers[i].user_name == usr || existingUsers[i].email_address == email) {
                             alreadyExists = true;
                             send.status = "fail";
                             send.msg = "Username or Email Already Exist";
@@ -441,6 +456,67 @@ app.post("/update-email", (req, res) => {
 
     }
 })
+
+app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
+
+
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET user_image = ? WHERE user_name = ?`, [req.files[0].filename, userName], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }
+        );
+
+    }
+
+});
+
+app.get('/get-user-images', upload.array("files", 1), function (req, res) {
+
+    const connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "COMP2800"
+    });
+    connection.connect();
+    let send = {
+        status: "fail",
+        path: " "
+    };
+    connection.query(
+        `SELECT user_image FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send({
+                    status: "fail"
+                });
+            } else {
+                res.send({
+                    status: "success",
+                    path: "/userImg/" + result[0].user_image
+                });
+            }
+        }
+
+    )
+});
 
 //starts the server
 let port = 8000;

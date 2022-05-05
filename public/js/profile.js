@@ -127,3 +127,53 @@ function editEmail(e) {
     parent.innerHTML = "";
     parent.appendChild(input);
 }
+
+const uploadImage = document.getElementById("upload-image");
+uploadImage.addEventListener("submit", uploadImages);
+
+function uploadImages(e) {
+    e.preventDefault();
+
+    const profileLoad = document.querySelector('#upload');
+    const imageData = new FormData();
+
+    for (let i = 0; i < profileLoad.files.length; i++) {
+        imageData.append("files", profileLoad.files[i]);
+    }
+
+    const options = {
+        method: 'POST',
+        body: imageData,
+    };
+
+    fetch("/upload-user-images", options).then(function (res) {
+        console.log(res);
+    }).catch(function (err) {
+        ("Error:", err)
+    });
+    getImage();
+    getImage();
+    getImage();
+}
+
+
+
+async function getImage() {
+    try {
+        let responseObj = await fetch("/get-user-images", {
+            method: 'GET',
+        });
+        if (responseObj.status === 200) {
+            let data = await responseObj.json();
+            document.querySelector("#profileImage").setAttribute("src", data.path);
+        } else {
+            console.log(responseObj.status);
+            console.log(responseObj.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getImage();
+

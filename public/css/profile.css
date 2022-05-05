@@ -17,14 +17,19 @@ body {
 .container {
     grid-area: main;
     display: grid;
-    grid-template-rows: 5% 5% 30% 60%;
-    grid-template-areas: 
+    grid-template-rows: 15% 5% 5% 30% 45%;
+    grid-template-areas:
+    "upload-image" 
     "name"
     "email"
     "profile-pic"
     "order-history";
     height: 100vh;
     overflow-x: hidden;
+}
+
+.display-image {
+    grid-area: upload-image;
 }
 
 .display-name {

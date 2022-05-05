@@ -30,7 +30,7 @@ document.querySelector("#submit").addEventListener("click", function (e) {
     let password = document.getElementById("password");
     let email = document.getElementById("email");
     let password2 = document.getElementById("confirm_password");
-    let queryString = "user_name=" + user_name.value + "&password=" + password.value + "&firstName=" + first_name.value + "&lastName=" + last_name.value + "&email=" + email.value + "&passwordConfirm=" + password2.value;
+    let queryString = "user_name=" + user_name.value + "&password=" + password.value + "&firstName=" + first_name.value + "&lastName=" + last_name.value + "&userEmail=" + email.value + "&passwordConfirm=" + password2.value;
     ajaxPOST("/register", function (data) {
 
         if (data) {
