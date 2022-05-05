@@ -11,35 +11,38 @@ body {
     font-family: 'Fonttype';
 }
 
-
 /* Main Container */
 
-.container {
-    grid-area: main;
-    display: grid;
-    grid-template-rows: 5% 5% 30% 60%;
-    grid-template-areas: 
-    "name"
-    "email"
-    "profile-pic"
-    "order-history";
+#container {
     height: 100vh;
     overflow-x: hidden;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
 }
 
-.display-name {
-    grid-area: name;
-}
-.display-email {
-    grid-area: email;
-}
-
-.profile-pic {
-    grid-area: profile-pic;
+#profile-container{
+    margin: auto;
+    background-color: rgb(245, 245, 245);
+    padding: 1%;
+    border-style: none;
+    border-radius: 7px;
 }
 
-.order-history {
-    grid-area: order-history;
+.display-name, .display-email{
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#changeFname, #changeEmail{
+    font-size: 30px;    
+    font-family: 'Fonttype';
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 /* Main Container End*/

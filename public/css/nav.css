@@ -27,22 +27,21 @@ body {
     max-width: 38%;
 }
 
-.user-options {
-    margin: auto;
+.user-options{
+    margin:auto;
 }
 
 .logout-button {
-    border-style: none;
-    border-radius: 7px;
-    background-color: rgb(114, 186, 213);
+    margin: auto;
     color: white;
     font-size: 20px;
-    padding-left: 8%;
-    padding-right: 8%;
-    padding-top: 7%;
-    padding-bottom: 7%;
     font-family: 'Fonttype';
     cursor: pointer;
+    background-color:rgb(114, 186, 213);
+    border-style: none;
+    border-radius: 7px; 
+    padding: 3%;
+
 }
 
 .navbar ul {

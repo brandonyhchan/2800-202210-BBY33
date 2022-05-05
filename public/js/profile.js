@@ -43,6 +43,7 @@ function editName(e) {
     let spanText = e.target.innerHTML;
     let parent = e.target.parentNode;
     let input = document.createElement("input");
+    input.setAttribute("id","changeFname");
     input.value = spanText;
     input.addEventListener("keyup", function (e) {
         let v = null;
@@ -88,6 +89,7 @@ function editEmail(e) {
     let spanText = e.target.innerHTML;
     let parent = e.target.parentNode;
     let input = document.createElement("input");
+    input.setAttribute("id", "changeEmail");
     input.value = spanText;
     input.addEventListener("keyup", function (e) {
         let v = null;
