@@ -41,6 +41,7 @@ function editName(e) {
     let currentName = e.target.innerHTML;
     let parent = e.target.parentNode;
     let input = document.createElement("input");
+    let statusDiv = document.querySelector("#status");
     input.setAttribute("id", "new-name");
     input.value = currentName;
     input.addEventListener("keyup", function (e) {
@@ -60,10 +61,7 @@ function editName(e) {
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        let status = document.createElement("p");
-                        status.setAttribute('id', 'name-status');
-                        status.innerHTML = "Record updated.";
-                        parent.appendChild(status);
+                        statusDiv.innerHTML = "Username updated.";
                         getName();
                         getEmail();
                     } else {
@@ -87,6 +85,7 @@ function editEmail(e) {
     let currentEmail = e.target.innerHTML;
     let parent = e.target.parentNode;
     let input = document.createElement("input");
+    let statusDiv = document.querySelector("#status");
     input.setAttribute("id", "new-email");
     input.value = currentEmail;
     input.addEventListener("keyup", function (e) {
@@ -106,10 +105,7 @@ function editEmail(e) {
             xhr.onload = function () {
                 if (this.readyState == XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        let status = document.createElement("p");
-                        status.setAttribute('id', 'email-status');
-                        status.innerHTML = "Record updated.";
-                        parent.appendChild(status);
+                        statusDiv.innerHTML = "Email updated.";
                         getName();
                         getEmail();
                     } else {
