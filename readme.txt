@@ -1,17 +1,12 @@
-Team Members:
-[Ryan Lee], [A01018490], [Set 1C], [May 6, 2022]
-[Artem Khan], [A01250262], [Set 1C], [May 6, 2022]
-[Brandon Chan], [A01026254], [Set 1B], [May 6, 2022]
-[Stanley Chow], [A01266659], [Set 1B], [May 6, 2022]
+Hope in a Box (BBY-33)
 
-This assignment is 100% complete.
+Team Members: 
+Artem Khan
+Brandon Chan
+Ryan Lee
+Stanley Chow
 
-We used Bcrypt for passwords.
-Admin user: 
-    username: Ryan 
-    password: Lee
 
-Regular user:
-    username:  Stanley
-    password: Chow 
-
+-Our logo was generated with keywords through looka.com and edited to match our brand's theme.
+-We used npm multer to enable users to upload images.
+- npm bcrypt was used to hash account passwords before sending them to the database, to avoid storing passwords as plaintext.

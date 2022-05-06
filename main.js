@@ -112,51 +112,58 @@ app.get("/footer", (req, res) => {
 
 
 app.post("/login", async function (req, res) {
-    res.setHeader("Content-Type", "application/json");
+    if (req.session.loggedIn && isAdmin == true) {
+        res.redirect("/admin");
+    } else if (req.session.loggedIn && isAdmin == false) {
+        res.redirect("/landing");
+    } else {
+        res.setHeader("Content-Type", "application/json");
 
-    userName = req.body.user_name;
-    let pwd = req.body.password;
-    const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "COMP2800"
-    });
+        userName = req.body.user_name;
+        let pwd = req.body.password;
+        const mysql = require("mysql2/promise");
+        const connection = await mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
 
-    connection.connect(function (err) {
-        if (err) throw err;
-    });
-    const [rows] = await connection.execute(
-        "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'],
-    );
-    if (rows.length > 0) {
-        let hashedPassword = rows[0].password
-        let comparison = await bcrypt.compare(req.body.password, hashedPassword);
-        if (comparison) {
-            if (rows[0].admin_user === 'y') {
-                isAdmin = true;
+        connection.connect(function (err) {
+            if (err) throw err;
+        });
+        const [rows] = await connection.execute(
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'],
+        );
+        if (rows.length > 0) {
+            let hashedPassword = rows[0].password
+            let comparison = await bcrypt.compare(req.body.password, hashedPassword);
+            if (comparison) {
+                if (rows[0].admin_user === 'y') {
+                    isAdmin = true;
+                }
+                req.session.loggedIn = true;
+                req.session.user_name = userName;
+                req.session.password = pwd;
+                req.session.name = rows[0].first_name;
+                res.send({
+                    status: "success",
+                    msg: "Logged in."
+                });
+            } else {
+                res.send({
+                    status: "fail",
+                    msg: "Invalid Username or Password."
+                });
             }
-            req.session.loggedIn = true;
-            req.session.user_name = userName;
-            req.session.password = pwd;
-            req.session.name = rows[0].first_name;
-            res.send({
-                status: "success",
-                msg: "Logged in."
-            });
         } else {
             res.send({
                 status: "fail",
                 msg: "Invalid Username or Password."
             });
         }
-    } else {
-        res.send({
-            status: "fail",
-            msg: "Invalid Username or Password."
-        });
     }
+
 });
 
 app.get("/get-users", function (req, res) {
