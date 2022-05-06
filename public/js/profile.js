@@ -193,7 +193,7 @@ document.querySelector("#submit").addEventListener("click", function(e) {
 
         if (data) {
             let dataParsed = JSON.parse(data);
-            document.getElementById("errorMsg").innerHTML = dataParsed.msg;
+            document.getElementById("status").innerHTML = dataParsed.msg;
         }
     }, queryString);
 });
