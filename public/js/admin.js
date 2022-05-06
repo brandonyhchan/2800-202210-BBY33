@@ -12,16 +12,17 @@ function getUsers() {
                     <th class="lastName_header"><span>Last Name</span></th>
                     <th class="email_header"><span>Email</span></th>
                     <th class="admin_header"><span>Admin</span></th>
+                    <th class="manage_header"><span>Manage</span></th>
                     </tr>`;
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         str += ("<tr>" +
-                            "</td><td class='firstName'>" + row.first_name +
+                            "<td class='firstName'>" + row.first_name +
                             "</td><td class='lastName'>" + row.last_name +
                             "</td><td class='email'>" + row.email_address +
                             "</td><td class='admin'>" + row.admin_user +
-                            "<td><button class='remove'>Delete</button>" +
-                            "<td><button class='view'>View</button>" + "</tr>");
+                            "<td class='manage' valign='middle'><button class='remove'>Delete</button><button class='view'>View</button>" +
+                            "</td></tr>");
                     }
                     document.getElementById("userTable").innerHTML = str;
 

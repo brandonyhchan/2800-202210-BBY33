@@ -9,8 +9,8 @@
     }
     
     body {
-        overflow-x: hidden;
         background-color: #e6e6e6;
+        overflow-x: hidden;
     }
     
     .container {
@@ -152,6 +152,7 @@
             grid-template-columns: 100%;
             grid-template-rows: 30% 25% 25% 20%;
             height: 100%;
+            padding-bottom: 5%;
         }
         #image-gallery {
             grid-row: 1 / 2;
@@ -169,10 +170,14 @@
         #menu-container {
             grid-row: 4 / 5;
             grid-column: 1 / 2;
-            padding: 5%;
             padding-bottom: 10%;
+            margin-right: 0;
+            padding-right: 0;
         }
         #header-text {
+            font-size: medium;
+        }
+        #motto {
             font-size: medium;
         }
     }
