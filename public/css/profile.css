@@ -13,7 +13,6 @@ body {
 
 /* Main Container */
 
-<<<<<<< HEAD
 .container {
     grid-area: main;
     display: grid;
@@ -26,16 +25,12 @@ body {
     /* "profile-pic"
     "order-history" */
     "footer";
-=======
-#container {
->>>>>>> Stanley_Brandon_UI
     height: 100vh;
     overflow-x: hidden;
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
 
-<<<<<<< HEAD
 .display-image {
     grid-area: upload-image;
 }
@@ -46,14 +41,14 @@ body {
 .display-email {
     grid-area: email;
     padding-top: 2rem;
-=======
+}
+
 #profile-container{
     margin: auto;
     background-color: rgb(245, 245, 245);
     padding: 1%;
     border-style: none;
     border-radius: 7px;
->>>>>>> Stanley_Brandon_UI
 }
 
 .display-name, .display-email{
