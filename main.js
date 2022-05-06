@@ -141,9 +141,6 @@ app.post("/login", async function (req, res) {
             req.session.user_name = userName;
             req.session.password = pwd;
             req.session.name = rows[0].first_name;
-            req.session.save((err) => {
-                console.log(err);
-            });
             res.send({
                 status: "success",
                 msg: "Logged in."
