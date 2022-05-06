@@ -15,8 +15,6 @@ body {
     margin-right: auto;
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
-    padding: 1%;
-    height: 60px;
     display: grid;
     grid-template-columns: 40% 45% 15%;
 }
@@ -90,7 +88,7 @@ body {
 }
 
 #desktop-logo {
-    justify-self: start;
+    object-fit: cover;
 }
 
 @media only screen and (max-width: 720px) {
