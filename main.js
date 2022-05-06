@@ -604,7 +604,7 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
                 } else {
                     res.send({
                         status: "success",
-                        path: "/userImggit p/" + result[0].user_image
+                        path: "/userImg/" + result[0].user_image
                     });
                 }
             }
