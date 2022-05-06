@@ -316,7 +316,7 @@ app.post("/register", function(req, res) {
                         bcrypt.hash(pwd, salt, function(err, hash) {
                             hashedPassword = hash;
                             connection.execute(
-                                "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password) VALUES(?, ?, ?, ?, 'n', 'n', ?)", [usr, firstName, lastName, email, hashedPassword]
+                                "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password, user_image) VALUES(?, ?, ?, ?, 'n', 'n', ?, 'stock-profile.png')", [usr, firstName, lastName, email, hashedPassword]
                             );
                         });
                         send.status = "success";

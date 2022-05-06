@@ -10,7 +10,7 @@
     
     #container {
         display: grid;
-        height: 100%;
+        height: 100vh;
         width: 100%;
         grid-template-columns: 20% 80%;
         grid-template-rows: 10% 90%;
@@ -56,6 +56,7 @@
     }
     
     th {
+        height: 20px;
         background-color: #00394f;
         color: white;
     }
