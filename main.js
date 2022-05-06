@@ -262,7 +262,7 @@ app.post("/register", function (req, res) {
     let lastName = req.body.lastName;
     let email = req.body.userEmail;
     let confirmPassword = req.body.passwordConfirm;
-    let existingUsers = [];
+    var existingUsers;
     let alreadyExists = false;
     let salt = 5;
     let hashedPassword = "";
@@ -293,8 +293,9 @@ app.post("/register", function (req, res) {
             } else {
                 if (pwd == confirmPassword) {
                     let i = 0;
-                    while (!alreadyExists) {
-                        if (existingUsers[i].user_name == usr || existingUsers[i].email_address == email) {
+                    while (!alreadyExists && i < existingUsers.length) {
+                        console.log("existing " + existingUsers[i].user_name);
+                        if (existingUsers[i].user_name === usr || existingUsers[i].email_address === email) {
                             alreadyExists = true;
                             send.status = "fail";
                             send.msg = "Username or email already exists";
