@@ -70,8 +70,6 @@ app.get("/admin", async (req, res) => {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
-        res.set("Server", "Wazubi Engine");
-        res.set("X-Powered-By", "Wazubi");
         res.send(profileDOM.serialize());
     } else {
         res.redirect("/");
@@ -83,8 +81,6 @@ app.get("/landing", async (req, res) => {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
-        res.set("Server", "Wazubi Engine");
-        res.set("X-Powered-By", "Wazubi");
         res.send(profileDOM.serialize());
     } else {
         res.redirect("/");
@@ -97,8 +93,6 @@ app.get("/nav", (req, res) => {
         let profile = fs.readFileSync("./app/html/nav.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
-        res.set("Server", "Wazubi Engine");
-        res.set("X-Powered-By", "Wazubi");
         res.send(profileDOM.serialize());
     } else {
         res.redirect("/");
@@ -110,8 +104,6 @@ app.get("/footer", (req, res) => {
         let profile = fs.readFileSync("./app/html/footer.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
-        res.set("Server", "Wazubi Engine");
-        res.set("X-Powered-By", "Wazubi");
         res.send(profileDOM.serialize());
     } else {
         res.redirect("/");
@@ -294,7 +286,6 @@ app.post("/register", function (req, res) {
                 if (pwd == confirmPassword) {
                     let i = 0;
                     while (!alreadyExists && i < existingUsers.length) {
-                        console.log("existing " + existingUsers[i].user_name);
                         if (existingUsers[i].user_name === usr || existingUsers[i].email_address === email) {
                             alreadyExists = true;
                             send.status = "fail";
@@ -329,8 +320,7 @@ app.get("/createAccount", function (req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
-    res.set("Server", "Wazubi Engine");
-    res.set("X-Powered-By", "Wazubi");
+
     res.send(profileDOM.serialize());
 });
 app.get("/profile", function (req, res) {
@@ -339,8 +329,6 @@ app.get("/profile", function (req, res) {
         let profile = fs.readFileSync("./app/html/profile.html", "utf8");
         let profileDOM = new JSDOM(profile);
 
-        res.set("Server", "Wazubi Engine");
-        res.set("X-Powered-By", "Wazubi");
         res.send(profileDOM.serialize());
     } else {
         res.redirect("/");
