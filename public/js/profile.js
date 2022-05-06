@@ -1,4 +1,40 @@
 'use strict';
+async function getFirstName() {
+    try {
+        let resOBJ = await fetch("/first-name", {
+            method: 'GET',
+        });
+        if (resOBJ.status === 200) {
+            let data = await resOBJ.json();
+            document.querySelector("#first-name").innerHTML = data.rows[0].first_name;
+        } else {
+            console.log(resOBJ.status);
+            console.log(resOBJ.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+getFirstName();
+
+async function getLastName() {
+    try {
+        let resOBJ = await fetch("/last-name", {
+            method: 'GET',
+        });
+        if (resOBJ.status === 200) {
+            let data = await resOBJ.json();
+            document.querySelector("#last-name").innerHTML = data.rows[0].last_name;
+        } else {
+            console.log(resOBJ.status);
+            console.log(resOBJ.statusText);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+getLastName();
+
 async function getName() {
     try {
         let resOBJ = await fetch("/user-name", {
@@ -152,6 +188,7 @@ document.querySelector("#submit").addEventListener("click", function(e) {
     e.preventDefault();
     let currentPassword = document.getElementById("currentPass");
     let newPassword = document.getElementById("newPass");
+    let newPassword2 = document.getElementById("confirmPass");
     let queryString = "currentPass=" + currentPassword.value + "&newPass=" + newPassword.value;
     ajaxPOST("/update-password", function(data) {
 

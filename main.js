@@ -391,6 +391,60 @@ app.get("/email", (req, res) => {
     }
 })
 
+app.get("/first-name", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let stat;
+        connection.connect();
+        connection.query(
+            `SELECT first_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    stat = "success";
+                    res.send({
+                        status: stat,
+                        rows: result
+                    });
+                }
+            }
+
+        )
+    }
+})
+
+app.get("/last-name", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let stat;
+        connection.connect();
+        connection.query(
+            `SELECT last_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    stat = "success";
+                    res.send({
+                        status: stat,
+                        rows: result
+                    });
+                }
+            }
+
+        )
+    }
+})
+
 app.post("/update-user-name", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
