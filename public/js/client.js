@@ -1,9 +1,8 @@
-
+'use strict';
     function ajaxPOST(url, callback, data) {
         let params = typeof data == 'string' ? data : Object.keys(data).map(
             function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
         ).join('&');
-        console.log("params in ajaxPOST", params);
 
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -25,12 +24,10 @@
         let user_name = document.getElementById("user_name");
         let password = document.getElementById("password");
         let queryString = "user_name=" + user_name.value + "&password=" + password.value;
-        const vars = { "user_name": user_name, "password": password }
         ajaxPOST("/login", function (data) {
 
             if (data) {
                 let dataParsed = JSON.parse(data);
-                console.log(dataParsed);
                 if (dataParsed.status == "fail") {
                     document.getElementById("errorMsg").innerHTML = dataParsed.msg;
                 } else {
@@ -40,33 +37,19 @@
         }, queryString);
     });
 
-    document.getElementById("deleteAll").addEventListener("click", function(e) {
-            e.preventDefault();
-
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                if (this.readyState == XMLHttpRequest.DONE) {
-
-                    // 200 means everthing worked
-                    if (xhr.status === 200) {
-
-                      getCustomers();
-                      document.getElementById("status").innerHTML = "All records deleted.";
-
-                    } else {
-
-                      // not a 200, could be anything (404, 500, etc.)
-                      console.log(this.status);
-
-                    }
-
-                } else {
-                    console.log("ERROR", this.status);
-                }
+    async function getCreateAccount() {
+        try {
+            let response = await fetch("/createAccount", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/createAccount");
             }
-            xhr.open("POST", "/delete-all-customers");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send();
-        });
+        } catch (err) {
+
+        }
+    }
+
+    document.getElementById("create").addEventListener("click", getCreateAccount);
+
 

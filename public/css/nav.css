@@ -1,20 +1,22 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
 html,
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Fonttype';
 }
 
 .navbar {
     position: sticky;
     top: 0;
-    left: 0;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
-    padding: 0.75%;
-    margin-bottom: 1rem;
-    height: 60px;
-    width: 100%;
     display: grid;
-    grid-template-columns: 30% 40% 20%;
+    grid-template-columns: 40% 45% 15%;
 }
 
 .logo {
@@ -22,16 +24,20 @@ body {
     max-width: 38%;
 }
 
-.user-options{
-    margin:auto;
+.user-options {
+    margin: auto;
 }
 
-.logout-button{
-    border-style: none;
-    border-radius: 3px;
-    background-color: rgb(114,186,213);
+.logout-button {
+    margin: auto;
     color: white;
     font-size: 20px;
+    font-family: 'Fonttype';
+    cursor: pointer;
+    background-color: rgb(114, 186, 213);
+    border-style: none;
+    border-radius: 7px;
+    padding: 3%;
 }
 
 .navbar ul {
@@ -43,7 +49,8 @@ body {
 
 .navbar li {
     list-style: none;
-    font-size: 20px;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 .navbar li a {
@@ -52,10 +59,63 @@ body {
     color: white;
     width: 100%;
     padding: 1rem;
+    cursor: pointer;
+    transition-duration: 0.5s;
 }
 
-.navbar li:hover,
-#navbar a:hover {
-    background-color: #014f86;
-    color: #333;
+.navbar li a:hover {
+    color: rgb(114, 186, 213);
+}
+
+#mobile-navbar {
+    display: none;
+}
+
+.material-symbols-outlined {
+    color: white;
+    font-size: 36px;
+    margin-top: 10%;
+    transition-duration: 0.5s;
+}
+
+.material-symbols-outlined:hover {
+    color: rgb(114, 186, 213);
+}
+
+#cart-container {
+    text-align: end;
+    padding-right: 5%;
+}
+
+#desktop-logo {
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 720px) {
+    .navbar {
+        display: block;
+    }
+    #desktop-navbar {
+        display: none;
+    }
+    #mobile-navbar {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        justify-content: space-between;
+    }
+    #mobile-logo {
+        max-height: 150px;
+        justify-content: center;
+    }
+    #mobile-nav1 {
+        grid-column: 1 / 2;
+    }
+    #mobile-nav2 {
+        grid-column: 2 / 3;
+        text-align: center;
+    }
+    #mobile-nav3 {
+        grid-column: 3 / 4;
+    }
 }

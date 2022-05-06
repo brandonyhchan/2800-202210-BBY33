@@ -1,0 +1,82 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    background-color: #00394f;
+    margin: 0;
+    padding: 0;
+}
+
+#desktop-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Fonttype';
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+    transition-duration: 0.5s;
+}
+
+footer a:hover {
+    color: rgb(114, 186, 213);
+}
+
+.footer-section {
+    display: grid;
+    padding: 3%;
+    justify-content: center;
+}
+
+#mobile-footer {
+    display: none;
+}
+
+.footer-header {
+    padding-bottom: 5%;
+}
+
+.footer-link {
+    padding-top: 1%;
+}
+
+@media only screen and (max-width: 720px) {
+    #desktop-footer {
+        display: none;
+    }
+    footer a {
+        text-decoration: none;
+        color: white;
+    }
+    .footer-section {
+        display: grid;
+        padding: 3%;
+        justify-content: center;
+    }
+    #mobile-footer {
+        display: none;
+    }
+    #mobile-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        min-height: 50px;
+    }
+    footer {
+        position: fixed;
+    }
+    .material-icons {
+        font-size: 36px;
+        justify-content: center;
+    }
+}

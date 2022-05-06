@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,13 +11,15 @@
 body {
     background-color: #01171b;
     overflow-x: hidden;
+    font-family: 'Fonttype';
+    max-height: 1080px;
 }
 
 .container {
     display: grid;
     grid-template-columns: 15% 85%;
-    grid-template-areas: 
-    "cart" "map";
+    grid-template-areas: "cart" "map";
+    height: 100vh;
 }
 
 .cart {
@@ -31,7 +38,7 @@ svg path {
 }
 
 svg path:hover {
-    fill:dodgerblue;
+    fill: dodgerblue;
     transition: 0.6s;
     cursor: pointer;
 }
@@ -43,4 +50,3 @@ svg path:hover {
 .country {
     color: aqua;
 }
-

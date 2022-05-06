@@ -1,0 +1,186 @@
+    @font-face {
+        font-family: Fonttype;
+        src: url("/fonts/static/Raleway-Regular.ttf");
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        background-color: #e6e6e6;
+        overflow-x: hidden;
+    }
+    
+    .container {
+        display: grid;
+        height: 100%;
+        max-height: calc(100vh - 20%);
+        max-height: 1080px;
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 40% 30% 30%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    
+    #image:hover {
+        opacity: 50%;
+    }
+    
+    #image:hover+#header-text {
+        display: block;
+    }
+    
+    #image-gallery {
+        grid-row: 1 / 2;
+        grid-column: 1 / 3;
+        position: relative;
+    }
+    
+    #header-text {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Fonttype';
+        white-space: nowrap;
+        color: #00394f;
+    }
+    
+    #hero-logo-container {
+        background-color: white;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        grid-row: 2 / 3;
+        grid-column: 1 / 2;
+    }
+    
+    #logo {
+        width: 100%;
+        object-fit: cover;
+    }
+    
+    #hero-text-container {
+        background-color: #00394f;
+        color: white;
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+    }
+    
+    button {
+        text-align: center;
+        white-space: nowrap;
+        height: 40px;
+        font-size: 20px;
+        border-style: none;
+        background-color: rgb(14, 76, 109);
+        color: white;
+        border-radius: 7px;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        padding-left: 10%;
+        padding-right: 10%;
+        cursor: pointer;
+        transition-duration: 0.7s;
+        font-family: 'Fonttype';
+    }
+    
+    button:active {
+        transform: translateY(4px);
+    }
+    
+    button:hover {
+        background-color: rgb(114, 186, 213);
+    }
+    
+    #menu-container {
+        width: 100%;
+        grid-row: 3 / 4;
+        grid-column: 1 / 3;
+        background: #e6e6e6;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: auto;
+        justify-items: center;
+        align-items: center;
+    }
+    
+    #motto {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        padding-top: 5%;
+        color: #00394f;
+        font-size: 30px;
+    }
+    
+    #button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    #learn-more-container {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        padding: 5%;
+    }
+    
+    #get-started-container {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        padding: 5%;
+    }
+    
+    #landing-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        clip-path: circle(95% at right);
+    }
+    
+    @media only screen and (max-width: 720px) {
+        .container {
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: 30% 25% 25% 20%;
+            height: 100%;
+            padding-bottom: 5%;
+        }
+        #image-gallery {
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+        }
+        #hero-logo-container {
+            grid-row: 2 / 3;
+            grid-column: 1 / 2;
+            padding: 3%;
+        }
+        #hero-text-container {
+            grid-column: 1 / 2;
+            grid-row: 3 / 4;
+        }
+        #menu-container {
+            grid-row: 4 / 5;
+            grid-column: 1 / 2;
+            padding-bottom: 10%;
+            margin-right: 0;
+            padding-right: 0;
+        }
+        #header-text {
+            font-size: medium;
+        }
+        #motto {
+            font-size: 20px;
+        }
+    }

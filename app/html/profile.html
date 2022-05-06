@@ -5,18 +5,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/css/profile.css" type="text/css" />
+    <link rel="stylesheet" href="/css/nav.css" type="text/css" />
+    <link rel="stylesheet" href="/css/footer.css" type="text/css" />
     <title>Profile</title>
 </head>
 
 <body>
+    <nav id="navbarPlaceholder"></nav>
 
-    <div id="logout-container">
-        <form action="/logout" method="get">
-            <input type="submit" value="Logout" />
-        </form>
+    <div id="container">
+        <div id="profile-container">
+            <img id="profileImage" src="/img/stock-profile.png" alt="Profile Image" width="200" height="200">
+
+            <div id="upload-image">
+                <form id="profile-images">
+                    <input id="upload" type="file" accept="image/png, image/gif, image/jpeg" multiple="multiple" />
+                    <input id="submitImg" type="submit" value="Change photo" />
+                </form>
+            </div>
+
+            <div id="user-info">
+                <p id="name-label">Name:</p>
+                <div id="name">
+                    <p id="first-name"></p>
+                    <p id="last-name"></p>
+                </div>
+
+                <p id="username-label">Username:</p>
+                <div class="display-name">
+                    <span id="user-name"></span>
+                </div>
+
+                <p id="email-label">Email:</p>
+                <div class="display-email">
+                    <span id="email"></span>
+                </div>
+            </div>
+
+            <div class="display-password">
+                <form>
+                    <input id="currentPass" type="password" placeholder="Current password">
+                    <input id="newPass" type="password" placeholder="New password">
+                    <input id="submit" type="button" value="Change Password">
+                </form>
+            </div>
+            <div id="status"></div>
+
+            <form class="user-options" action="/logout" method="get">
+                <input id="logout" type="submit" value="Logout" />
+            </form>
+        </div>
+        <div class="order-history"></div>
+
+
+
     </div>
-
-    <script src="js/client.js"></script>
+    <footer id="footerPlaceholder"></footer>
+    <script src="/js/placeholders.js"></script>
+    <script src="/js/profile.js"></script>
 </body>
 
 </html>
