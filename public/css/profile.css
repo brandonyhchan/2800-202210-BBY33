@@ -3,6 +3,11 @@
     src: url("/fonts/static/Raleway-Regular.ttf");
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     height: 100vh;
     width: 100%;
@@ -11,11 +16,16 @@ body {
     font-family: 'Fonttype';
 }
 
+
 /* Main Container */
 
 #container {
     width: 100%;
+    height: 100vh;
+    max-height: calc(100vh - 20%);
     overflow-x: hidden;
+    display: grid;
+    align-items: center;
 }
 
 #profile-container {
@@ -114,6 +124,7 @@ body {
     background-color: rgb(14, 76, 109);
     color: white;
     padding: 1%;
+    margin-bottom: 3%;
     cursor: pointer;
     transition-duration: 0.7s;
 }
@@ -147,10 +158,9 @@ body {
     transform: translateY(4px);
 }
 
-#status{
+#status {
     margin-bottom: 2%;
 }
-
 
 @media only screen and (max-width: 720px) {
     #profile-container {
@@ -162,20 +172,16 @@ body {
         margin-right: auto;
         grid-template-columns: 25% 75%;
     }
-
     #user-info {
         width: 100%;
     }
-
     #submit {
         margin-top: 2%;
         border-radius: 5px;
         padding: 2%;
     }
-
     #logout {
         border-radius: 5px;
         padding: 2%;
     }
-
 }

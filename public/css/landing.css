@@ -15,7 +15,9 @@
     
     .container {
         display: grid;
-        max-height: 1000px;
+        height: 100%;
+        max-height: calc(100vh - 20%);
+        max-height: 1080px;
         grid-template-columns: 50% 50%;
         grid-template-rows: 40% 30% 30%;
         padding: 0;
@@ -119,6 +121,7 @@
         grid-row: 1 / 2;
         padding-top: 5%;
         color: #00394f;
+        font-size: 30px;
     }
     
     #button-container {
@@ -178,6 +181,6 @@
             font-size: medium;
         }
         #motto {
-            font-size: medium;
+            font-size: 20px;
         }
     }

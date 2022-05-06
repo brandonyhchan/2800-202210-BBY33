@@ -7,6 +7,8 @@ footer {
     bottom: 0;
     width: 100%;
     background-color: #00394f;
+    margin: 0;
+    padding: 0;
 }
 
 #desktop-footer {
@@ -37,6 +39,14 @@ footer a:hover {
 
 #mobile-footer {
     display: none;
+}
+
+.footer-header {
+    padding-bottom: 5%;
+}
+
+.footer-link {
+    padding-top: 1%;
 }
 
 @media only screen and (max-width: 720px) {
