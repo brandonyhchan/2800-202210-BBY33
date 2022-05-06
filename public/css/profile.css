@@ -1,4 +1,4 @@
-@font-face{
+@font-face {
     font-family: Fonttype;
     src: url("/fonts/static/Raleway-Regular.ttf");
 }
@@ -18,7 +18,7 @@ body {
     overflow-x: hidden;
 }
 
-#profile-container{
+#profile-container {
     margin-left: auto;
     margin-right: auto;
     margin-top: 1%;
@@ -32,7 +32,7 @@ body {
     font-size: 20px;
 }
 
-#user-info{
+#user-info {
     margin: auto;
     width: 60%;
     display: grid;
@@ -40,17 +40,17 @@ body {
     grid-template-rows: 33% 33% 33%;
 }
 
-#profileImage{
+#profileImage {
     border-radius: 50%;
 }
 
-#submitImg{
+#submitImg {
     border-style: none;
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: rgb(14, 76, 109);
     color: white;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
+    padding-top: 0.75%;
+    padding-bottom: 0.75%;
     padding-left: 1%;
     padding-right: 1%;
     cursor: pointer;
@@ -61,45 +61,52 @@ body {
     background-color: rgb(114, 186, 213);
 }
 
-#submitImg:active{
+#submitImg:active {
     transform: translateY(4px);
 }
 
-#name-label, #username-label, #email-label{
+#name-label,
+#username-label,
+#email-label {
     text-align: right;
     font-weight: bold;
     margin-top: 4%;
     margin-bottom: 4%;
 }
 
-#changeFname, #changeEmail{
+#changeFname,
+#changeEmail {
     font-size: 20px;
     font-family: 'Fonttype';
     margin: auto;
     border-radius: 4px;
 }
 
-.display-name, .display-email, #name{
+.display-name,
+.display-email,
+#name {
     margin: auto;
 }
 
-#first-name, #last-name{
+#first-name,
+#last-name {
     display: inline-block;
     margin: 0;
 }
 
-#currentPass, #newPass{
+#currentPass,
+#newPass {
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2%; 
+    margin-top: 2%;
     margin-bottom: 2%;
     font-family: 'Fonttype';
     font-size: 20px;
     border-radius: 4px;
 }
 
-#submit{
+#submit {
     font-family: 'Fonttype';
     font-size: 20px;
     border-style: none;
@@ -119,37 +126,56 @@ body {
     transform: translateY(4px);
 }
 
-#logout{
+#logout {
     margin: auto;
     color: white;
     font-size: 20px;
     font-family: 'Fonttype';
     cursor: pointer;
-    background-color:rgb(14, 76, 109);
+    background-color: rgb(14, 76, 109);
     border-style: none;
-    border-radius: 6px; 
+    border-radius: 6px;
     padding: 1%;
     transition-duration: 0.7s;
 }
 
-#logout:hover{
+#logout:hover {
     background-color: rgb(114, 186, 213);
 }
 
-#logout:active{
+#logout:active {
     transform: translateY(4px);
+}
+
+#status{
+    margin-bottom: 2%;
 }
 
 
 @media only screen and (max-width: 720px) {
-    #profile-container{
+    #profile-container {
         width: 90%;
         margin-top: 5%;
+        padding-bottom: 5%;
         padding-top: 5%;
         margin-left: auto;
         margin-right: auto;
+        grid-template-columns: 25% 75%;
+    }
+
+    #user-info {
+        width: 100%;
+    }
+
+    #submit {
+        margin-top: 2%;
+        border-radius: 5px;
+        padding: 2%;
+    }
+
+    #logout {
+        border-radius: 5px;
+        padding: 2%;
     }
 
 }
-
-
