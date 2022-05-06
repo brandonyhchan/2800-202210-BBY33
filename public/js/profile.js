@@ -188,7 +188,6 @@ document.querySelector("#submit").addEventListener("click", function(e) {
     e.preventDefault();
     let currentPassword = document.getElementById("currentPass");
     let newPassword = document.getElementById("newPass");
-    let newPassword2 = document.getElementById("confirmPass");
     let queryString = "currentPass=" + currentPassword.value + "&newPass=" + newPassword.value;
     ajaxPOST("/update-password", function(data) {
 
