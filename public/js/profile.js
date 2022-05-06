@@ -7,12 +7,8 @@ async function getFirstName() {
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
             document.querySelector("#first-name").innerHTML = data.rows[0].first_name;
-        } else {
-            console.log(resOBJ.status);
-            console.log(resOBJ.statusText);
         }
     } catch (error) {
-        console.log(error);
     }
 }
 getFirstName();
@@ -25,12 +21,8 @@ async function getLastName() {
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
             document.querySelector("#last-name").innerHTML = data.rows[0].last_name;
-        } else {
-            console.log(resOBJ.status);
-            console.log(resOBJ.statusText);
         }
     } catch (error) {
-        console.log(error);
     }
 }
 getLastName();
@@ -43,12 +35,8 @@ async function getName() {
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
             document.querySelector("#user-name").innerHTML = data.name;
-        } else {
-            console.log(resOBJ.status);
-            console.log(resOBJ.statusText);
         }
     } catch (error) {
-        console.log(error);
     }
 }
 getName();
@@ -62,12 +50,8 @@ async function getEmail() {
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
             document.querySelector("#email").innerHTML = data.rows[0].email_address;
-        } else {
-            console.log(resOBJ.status);
-            console.log(resOBJ.statusText);
         }
     } catch (error) {
-        console.log(error);
     }
 }
 document.querySelector("#email").addEventListener("click", editEmail);
@@ -100,11 +84,7 @@ function editName(e) {
                         statusDiv.innerHTML = "Username updated.";
                         getName();
                         getEmail();
-                    } else {
-                        console.log(this.status);
                     }
-                } else {
-                    console.log("ERROR", this.status);
                 }
             }
             xhr.open("POST", "/update-user-name");
@@ -144,11 +124,7 @@ function editEmail(e) {
                         statusDiv.innerHTML = "Email updated.";
                         getName();
                         getEmail();
-                    } else {
-                        console.log(this.status);
                     }
-                } else {
-                    console.log("ERROR");
                 }
             }
             xhr.open("POST", "/update-email");
@@ -236,12 +212,8 @@ async function getImage() {
         if (responseObj.status === 200) {
             let data = await responseObj.json();
             document.querySelector("#profileImage").setAttribute("src", data.path);
-        } else {
-            console.log(responseObj.status);
-            console.log(responseObj.statusText);
         }
     } catch (error) {
-        console.log(error);
     }
 }
 

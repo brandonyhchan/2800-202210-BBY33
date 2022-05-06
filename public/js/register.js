@@ -5,7 +5,6 @@ function ajaxPOST(url, callback, data) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
-    console.log("params in ajaxPOST", params);
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -36,7 +35,6 @@ document.querySelector("#submit").addEventListener("click", function (e) {
 
         if (data) {
             let dataParsed = JSON.parse(data);
-            console.log(dataParsed);
             if (dataParsed.status == "fail") {
                 document.getElementById("errorMsg").innerHTML = dataParsed.msg;
             } else {

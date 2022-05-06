@@ -231,17 +231,11 @@ app.post("/user-update", function (req, res) {
                     msg: "Record not updated."
                 };
                 connection.query("UPDATE bby_33_user SET user_removed = ? WHERE email_address = ? AND admin_user = ?", ['y', req.body.email, 'n'], (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
                     send.status = "success";
                     send.msg = "Record updated"
                 });
                 if (adminUsers.length > 1) {
                     connection.query("UPDATE bby_33_user SET user_removed = ? WHERE email_address = ? AND admin_user = ?", ['y', req.body.email, 'y'], (err) => {
-                        if (err) {
-                            console.log(err);
-                        }
                         send.status = "success";
                         send.msg = "Record updated"
                     });
@@ -249,9 +243,6 @@ app.post("/user-update", function (req, res) {
                     send.status = "fail";
                 }
                 res.send(send);
-                if (error) {
-                    console.log(error);
-                }
                 connection.end();
             }
         );
@@ -270,7 +261,6 @@ app.post("/register", function (req, res) {
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
     let email = req.body.userEmail;
-    console.log(email);
     let confirmPassword = req.body.passwordConfirm;
     let existingUsers = [];
     let alreadyExists = true;
@@ -602,7 +592,6 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
         connection.query(
             `SELECT user_image FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
                 if (err) {
-                    console.log(err);
                     res.send({
                         status: "fail"
                     });
