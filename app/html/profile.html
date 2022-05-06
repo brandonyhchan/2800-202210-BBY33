@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/profile.css" type="text/css" />
     <link rel="stylesheet" href="/css/nav.css" type="text/css" />
     <link rel="stylesheet" href="/css/footer.css" type="text/css" />
@@ -15,37 +16,51 @@
 <body>
     <nav id="navbarPlaceholder"></nav>
 
-    <div class="container">
-        <div id="upload-image">
-            <form id="profile-images">
-              <input id="upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg" multiple="multiple"/>
-              <input id="submitImg" type="submit" value="Submit"/>
-              <br>
-              <div>
-                <img id="profileImage" alt="Profile Image" width="200px" height="200px">
-              </div>
-            </form>
-          </div>
-        <div class="display-name">
-            <span id="user-name"></span>
-            <div id="name-status"></div>
+    <div id="container">
+        <div id="profile-container">
+            <img id="profileImage" alt="Profile Image" width="200px" height="200px">
 
-        </div>
-        <div class="display-email">
-            <span id="email"></span><br><br>
-            <p id="email-status"></p>
-        </div>
-        <div class="display-password">
-            <form>
-                <input id="currentPass" type="password" placeholder="Enter current password">
-                <input id="newPass" type="password" placeholder="Enter new password">
-                <input id="submit" type="button" value="Submit">
-                <p id="errorMsg"></p>
+            <div id="upload-image">
+                <form id="profile-images">
+                    <input id="upload" type="file" value="Upload Image" accept="image/png, image/gif, image/jpeg"
+                        multiple="multiple" />
+                    <input id="submitImg" type="submit" value="Change photo" />
+                </form>
+            </div>
+
+            <div id="user-info">
+                <p id="name-label">Name:</p>
+                <div id="name">
+                    <p id="first-name"></p>
+                    <p id="last-name"></p>
+                </div>
+
+                <p id="username-label">Username:</p>
+                <div class="display-name">
+                    <span id="user-name"></span>
+                </div>
+
+                <p id="email-label">Email:</p>
+                <div class="display-email">
+                    <span id="email"></span>
+                </div>
+            </div>
+
+            <div class="display-password">
+                <form>
+                    <input id="currentPass" type="password" placeholder="Current password">
+                    <input id="newPass" type="password" placeholder="New password">
+                    <input id="submit" type="button" value="Change Password">
+                    <p id="errorMsg"></p>
+                </form>
+            </div>
+            <div id="status"></div>
+
+            <form class="user-options" action="/logout" method="get">
+                <input id="logout" type="button" value="Logout" />
             </form>
         </div>
-        <div id="status"></div>
-        
-        <div class="profile-pic"></div>
+
         <div class="order-history"></div>
     </div>
     <footer id="footerPlaceholder"></footer>
