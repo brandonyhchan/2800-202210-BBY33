@@ -263,7 +263,7 @@ app.post("/register", function (req, res) {
     let email = req.body.userEmail;
     let confirmPassword = req.body.passwordConfirm;
     let existingUsers = [];
-    let alreadyExists = true;
+    let alreadyExists = false;
     let salt = 5;
     let hashedPassword = "";
 
@@ -292,8 +292,8 @@ app.post("/register", function (req, res) {
                 send.msg = "Please fill out all fields";
             } else {
                 if (pwd == confirmPassword) {
-
-                    for (let i = 0; i < existingUsers.length; i++) {
+                    let i = 0;
+                    while (!alreadyExists) {
                         if (existingUsers[i].user_name == usr || existingUsers[i].email_address == email) {
                             alreadyExists = true;
                             send.status = "fail";
@@ -301,6 +301,7 @@ app.post("/register", function (req, res) {
                         } else {
                             alreadyExists = false;
                         }
+                        i++;
                     }
                     if (alreadyExists == false) {
                         bcrypt.hash(pwd, salt, function (err, hash) {
