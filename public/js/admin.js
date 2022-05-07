@@ -2,7 +2,7 @@
 
 function getUsers() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
@@ -46,7 +46,7 @@ function update(e) {
     };
 
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 getUsers();
@@ -64,3 +64,21 @@ function update(e) {
     xhr.send("email=" + dataToSend.email);
 
 }
+
+$(function () {
+    $("#dialogue-confirm").dialogue({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+            "Delete account": function () {
+                update();
+                $(this).dialogue("close");
+            },
+            Cancel: function () {
+                $(this).dialogue("close");
+            }
+        }
+    });
+});

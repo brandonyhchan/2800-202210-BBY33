@@ -8,10 +8,16 @@
     <title>Admin</title>
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/admin.css">
+   <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -29,6 +35,10 @@
             <table id="userTable"></table>
         </div>
 
+        <div id="dialogue-confirm" title="Empty the recycle bin?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will
+                be permanently deleted and cannot be recovered. Are you sure?</p>
+        </div>
 
     </div>
 
