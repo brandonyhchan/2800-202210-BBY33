@@ -76,6 +76,17 @@ app.get("/admin", async (req, res) => {
     }
 });
 
+app.get("/admin-add-users", async (req, res) => {
+    if (req.session.loggedIn && isAdmin === true) {
+        let profile = fs.readFileSync("./app/html/adminAddUsers.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.get("/landing", async (req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
@@ -91,6 +102,17 @@ app.get("/landing", async (req, res) => {
 app.get("/nav", (req, res) => {
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/nav.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+})
+
+app.get("/admin-sideBar", (req, res) => {
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/adminSideBar.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
         res.send(profileDOM.serialize());

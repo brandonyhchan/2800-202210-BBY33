@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/adminAddUsers.css">
+</head>
+
+<body>
+    <nav id="navbarPlaceholder"></nav>
+
+    <div id="container">
+        <h1 id="manage-users">Add New Users</h1>
+        <div id="control-panel">
+        </div>
+
+        <div id="register-container">
+            <form id="input_container">
+                <input type="text" id="first_name" required="required" placeholder="First Name" pattern="[A-Za-z]{4,20}"/>
+    
+                <input type="text" id="last_name" required="required" placeholder="Last Name" pattern="[A-Za-z]{4,20}"/>
+    
+                <input id="email" required="required" type="text" placeholder="Email" pattern="[A-Za-z0-9]{4,20}"/>
+    
+                <input type="text" id="username" required="required" placeholder="Username" pattern="[A-Za-z]{4,15}"/>
+    
+                <input id="password" required="required" type="password" placeholder="New password"  pattern="[A-Za-z0-9]{4,20}"/>
+    
+                <input id="confirm_password" required="required" type="password" placeholder="Confirm password" pattern="[A-Za-z0-9]{4,20}"/>
+    
+                <input type="button" id="submit" value="Sign up">
+    
+                <p id = "errorMsg"></p>
+                
+            </form>
+    
+        </div>
+
+
+    </div>
+
+    <footer id="footerPlaceholder"></footer>
+    <script src="/js/placeholders.js"></script>
+    <script src="/js/AdminAddUser.js"></script>
+</body>
+
+</html>

@@ -27,6 +27,19 @@ ready(() => {
 
     });
 
+    ajaxGET("/admin-sideBar", function (data) {
+        let navbar = document.querySelector("#control-panel");
+        navbar.innerHTML = data;
+        document.querySelector("#manage-users-button").addEventListener("click", () => {
+            getManageUsers();
+        })
+
+        document.querySelector("#delete-users-button").addEventListener("click", () =>{
+            getAddUsers();
+        })
+
+    });
+
     ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
@@ -52,6 +65,32 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/landing");
+            }
+        } catch (err){
+
+        }
+    }
+
+    async function getAddUsers() {
+        try {
+            let response = await fetch("/admin-add-users", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/admin-add-users");
+            }
+        } catch (err){
+
+        }
+    }
+
+    async function getManageUsers() {
+        try {
+            let response = await fetch("/admin", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/admin");
             }
         } catch (err){
 
