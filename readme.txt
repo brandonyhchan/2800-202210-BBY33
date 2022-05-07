@@ -1,18 +1,9 @@
-Team Members:
-[Ryan Lee], [A01018490], [Set 1C], [May 6, 2022]
-[Artem Khan], [A01250262], [Set 1C], [May 6, 2022]
-[Stanley Chow], [A01266659], [Set 1B], [May 6, 2022]
-[Brandon Chan], [A01026254], [Set 1B], [May 6, 2022]
+Team Members: 
+Artem Khan
+Brandon Chan
+Ryan Lee
+Stanley Chow
 
-This assignment is 100% complete.
-
-Group: BBY33
-
-We use bcrypt to hash the passwords 
-
-Admin User:
-	username: Ryan 
-	password: Lee
-Regular User:
-	username: Stanley 
-	password: Chow
+-Our logo was generated with keywords through looka.com and edited to match our brand's theme.
+-We used npm multer to enable users to upload images.
+- npm bcrypt was used to hash account passwords before sending them to the database, to avoid storing passwords as plaintext.
