@@ -36,6 +36,7 @@ svg path:hover {
 
 .cart {
     grid-area: cart;
+    background-color: aliceblue;
 }
 
 .map {
