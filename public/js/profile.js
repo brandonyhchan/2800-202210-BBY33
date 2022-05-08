@@ -57,6 +57,8 @@ async function getEmail() {
 document.querySelector("#email").addEventListener("click", editEmail);
 getEmail();
 
+// Jquery snippet from https://jqueryui.com/dialog/#modal-confirmation for the Jquery UI
+
 function editName(e) {
     let currentName = e.target.innerHTML;
     let parent = e.target.parentNode;
@@ -74,29 +76,46 @@ function editName(e) {
             newName.innerHTML = newInput;
             parent.innerHTML = "";
             parent.appendChild(newName);
-            let dataToSend = {
+            let sentName = {
                 name: newName.innerHTML
             };
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function() {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        statusDiv.innerHTML = "Username updated.";
-                        getName();
-                        getEmail();
+            $(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 300,
+                    modal: true,
+                    buttons: {
+                        "Update account": function () {
+                            const xhr = new XMLHttpRequest();
+                            xhr.onload = function () {
+                                if (this.readyState == XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        statusDiv.innerHTML = "Email updated.";
+                                        getName();
+                                        getEmail();
+                                    }
+                                }
+                            }
+                            xhr.open("POST", "/update-user-name");
+                            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.send("name=" + sentName.name);
+                            $(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
-            }
-            xhr.open("POST", "/update-user-name");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("name=" + dataToSend.name);
+                });
+            });
         }
     });
     parent.innerHTML = "";
     parent.appendChild(input);
 }
 
+// Jquery snippet from https://jqueryui.com/dialog/#modal-confirmation for the Jquery UI
 function editEmail(e) {
     let currentEmail = e.target.innerHTML;
     let parent = e.target.parentNode;
@@ -114,23 +133,41 @@ function editEmail(e) {
             newEmail.innerHTML = newInput;
             parent.innerHTML = "";
             parent.appendChild(newEmail);
-            let dataToSend = {
+            var sentEmail = {
                 email: newEmail.innerHTML
             };
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function() {
-                if (this.readyState == XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        statusDiv.innerHTML = "Email updated.";
-                        getName();
-                        getEmail();
+
+            $(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 300,
+                    modal: true,
+                    buttons: {
+                        "Update account": function () {
+                            const xhr = new XMLHttpRequest();
+                            xhr.onload = function () {
+                                if (this.readyState == XMLHttpRequest.DONE) {
+                                    if (xhr.status === 200) {
+                                        statusDiv.innerHTML = "Email updated.";
+                                        getName();
+                                        getEmail();
+                                    }
+                                }
+                            }
+                            xhr.open("POST", "/update-email");
+                            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.send("email=" + sentEmail.email);
+                            $(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
-            }
-            xhr.open("POST", "/update-email");
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send("email=" + dataToSend.email);
+                });
+            });
+            $("#dialog-confirm").hide();
         }
     });
     parent.innerHTML = "";
@@ -139,13 +176,13 @@ function editEmail(e) {
 
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function(k) {
+        function (k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
 
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
 
@@ -154,18 +191,16 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(params);
 }
 
 
-document.querySelector("#submit").addEventListener("click", function(e) {
+document.querySelector("#submit").addEventListener("click", function (e) {
     e.preventDefault();
     let currentPassword = document.getElementById("currentPass");
     let newPassword = document.getElementById("newPass");
     let queryString = "currentPass=" + currentPassword.value + "&newPass=" + newPassword.value;
-    ajaxPOST("/update-password", function(data) {
+    ajaxPOST("/update-password", function (data) {
 
         if (data) {
             let dataParsed = JSON.parse(data);
@@ -192,9 +227,9 @@ function uploadImages(e) {
         body: imageData,
     };
 
-    fetch("/upload-user-images", options).then(function(res) {
+    fetch("/upload-user-images", options).then(function (res) {
         console.log(res);
-    }).catch(function(err) {
+    }).catch(function (err) {
         ("Error:", err)
     });
     getImage();

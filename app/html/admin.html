@@ -13,11 +13,8 @@
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/admin.css">
-   <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
+    <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -35,9 +32,9 @@
             <table id="userTable"></table>
         </div>
 
-        <div id="dialogue-confirm" title="Empty the recycle bin?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will
-                be permanently deleted and cannot be recovered. Are you sure?</p>
+        <!-- Snippet from https://jqueryui.com/dialog/#modal-confirmation for content inside pop up -->
+        <div id="dialog-confirm" title="Deactivate Account?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
         </div>
 
     </div>
@@ -45,6 +42,9 @@
     <footer id="footerPlaceholder"></footer>
     <script src="/js/placeholders.js"></script>
     <script src="/js/admin.js"></script>
+    <!-- Jquery scripts from https://jqueryui.com/dialog/#modal-confirmation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </body>
 
 </html>

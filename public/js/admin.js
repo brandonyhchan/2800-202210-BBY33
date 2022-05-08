@@ -29,6 +29,7 @@ function getUsers() {
                     let records = document.querySelectorAll(".remove");
                     for (let j = 0; j < records.length; j++) {
                         records[j].addEventListener("click", update);
+                        // records[j].setAttribute("id", "" + data.rows[j].email_address);
                     }
                 }
             }
@@ -39,46 +40,42 @@ function getUsers() {
 }
 getUsers();
 
+
+// Jquery snippet from https://jqueryui.com/dialog/#modal-confirmation for the Jquery UI
 function update(e) {
-    let parent = e.target.parentNode;
-    let dataToSend = {
+    var parent = e.target.parentNode;
+    var sentEmail = {
         email: parent.parentNode.querySelector(".email").innerHTML
     };
-
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (this.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                getUsers();
-
-            } else {
-                console.log(this.status);
+    $(function () {
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: "auto",
+            width: 300,
+            modal: true,
+            buttons: {
+                "Delete account": function () {
+                    const xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        if (this.readyState == XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                getUsers();
+                            }
+                        } 
+                    }
+                    xhr.open("POST", "/user-update");
+                    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.send("email=" + sentEmail.email);
+                    $(this).dialog("close");
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
             }
-        } else {
-            console.log("ERROR", this.status);
-        }
-    }
-    xhr.open("POST", "/user-update");
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send("email=" + dataToSend.email);
+        });
+    });
+    $("#dialog-confirm").hide();
 
 }
 
-$(function () {
-    $("#dialogue-confirm").dialogue({
-        resizable: false,
-        height: "auto",
-        width: 400,
-        modal: true,
-        buttons: {
-            "Delete account": function () {
-                update();
-                $(this).dialogue("close");
-            },
-            Cancel: function () {
-                $(this).dialogue("close");
-            }
-        }
-    });
-});

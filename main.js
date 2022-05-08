@@ -216,7 +216,6 @@ app.post("/user-update", function (req, res) {
             password: "",
             database: "COMP2800"
         });
-
         connection.connect();
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
