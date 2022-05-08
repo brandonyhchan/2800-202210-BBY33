@@ -626,7 +626,10 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-app.get("/get-packages", function (req, res) {
+app.post("/get-packages", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let countryID = req.body.countryID;
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -636,7 +639,7 @@ app.get("/get-packages", function (req, res) {
         });
         connection.connect();
         connection.query(
-            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package FROM bby_33_package WHERE country_id = ?", ['1'],
+            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
             function (error, results) {
                 if (error) {
                     console.log(error);
@@ -650,34 +653,6 @@ app.get("/get-packages", function (req, res) {
     } 
 });
 
-// app.post("/get-packages", (req, res) => {
-//     if (req.session.loggedIn) {
-//         const connection = mysql.createConnection({
-//             host: "localhost",
-//             user: "root",
-//             password: "",
-//             database: "COMP2800"
-//         });
-//         connection.connect();
-//         connection.query(
-//             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package FROM bby_33_package WHERE country_id = ?", ['1'],
-//             function (error, results) {
-//                 if (error) {
-//                     console.log(error);
-//                     res.send({
-//                         status: "fail"
-//                     });
-//                 }
-//                 res.send({
-//                     status: "success",
-//                     rows: results
-//                 });
-//             }
-//         );
-//     } 
-// })
-
-//starts the server
 let port = 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
