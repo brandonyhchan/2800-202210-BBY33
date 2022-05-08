@@ -20,9 +20,7 @@ function ajaxGET(url, callback, data) {
     xhr.send(params);
 }
 
-
-document.querySelector(".UA").addEventListener("click", function (e) {
-    e.preventDefault();
+function getPackage() {
     var countryId;
     var countryName;
     var queryString;
@@ -60,9 +58,11 @@ document.querySelector(".UA").addEventListener("click", function (e) {
             }
         }, queryString);
     };
-    let records = document.querySelectorAll(".UA");
+    let records = document.querySelectorAll(".countries");
     for (let j = 0; j < records.length; j++) {
         records[j].addEventListener("click", onClick);
     }
 
-});
+};
+
+getPackage();
