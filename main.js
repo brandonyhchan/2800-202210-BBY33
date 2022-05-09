@@ -69,7 +69,6 @@ app.get("/admin", async (req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
-
         res.send(profileDOM.serialize());
     } else {
         res.redirect("/");

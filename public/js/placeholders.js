@@ -3,7 +3,7 @@ ready(() => {
     function ajaxGET(url, callback) {
 
         const xhr = new XMLHttpRequest();
-        xhr.onload = function() {
+        xhr.onload = function () {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
             } else {
@@ -21,26 +21,30 @@ ready(() => {
             getProfile();
         })
 
-        document.querySelector("#landing").addEventListener("click", () =>{
+        document.querySelector("#landing").addEventListener("click", () => {
             getLanding();
         })
 
     });
 
-    ajaxGET("/admin-sideBar", function (data) {
-        let navbar = document.querySelector("#control-panel");
-        navbar.innerHTML = data;
-        document.querySelector("#manage-users-button").addEventListener("click", () => {
-            getManageUsers();
-        })
+    if (window.location.pathname == "/admin") {
+        ajaxGET("/admin-sideBar", function (data) {
+            
+            let navbar = document.querySelector("#control-panel");
+            navbar.innerHTML = data;
+            document.querySelector("#manage-users-button").addEventListener("click", () => {
+                getManageUsers();
+            })
 
-        document.querySelector("#delete-users-button").addEventListener("click", () =>{
-            getAddUsers();
-        })
+            document.querySelector("#delete-users-button").addEventListener("click", () => {
+                getAddUsers();
+            })
 
-    });
+        });
 
-    ajaxGET("/footer", function(data) {
+    }
+
+    ajaxGET("/footer", function (data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
     });
@@ -66,7 +70,7 @@ ready(() => {
             if (response.status === 200) {
                 window.location.replace("/landing");
             }
-        } catch (err){
+        } catch (err) {
 
         }
     }
@@ -79,7 +83,7 @@ ready(() => {
             if (response.status === 200) {
                 window.location.replace("/admin-add-users");
             }
-        } catch (err){
+        } catch (err) {
 
         }
     }
@@ -92,7 +96,7 @@ ready(() => {
             if (response.status === 200) {
                 window.location.replace("/admin");
             }
-        } catch (err){
+        } catch (err) {
 
         }
     }

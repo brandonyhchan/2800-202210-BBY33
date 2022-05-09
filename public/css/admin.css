@@ -40,6 +40,10 @@
     #userTable {
         text-align: center;
     }
+
+    #dialog-confirm {
+        display: none;
+    }
     
     #table-container {
         display: grid;

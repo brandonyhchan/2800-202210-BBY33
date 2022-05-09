@@ -1,5 +1,4 @@
 'use strict';
-
 function getUsers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -29,7 +28,6 @@ function getUsers() {
                     let records = document.querySelectorAll(".remove");
                     for (let j = 0; j < records.length; j++) {
                         records[j].addEventListener("click", update);
-                        // records[j].setAttribute("id", "" + data.rows[j].email_address);
                     }
                 }
             }
@@ -75,7 +73,5 @@ function update(e) {
             }
         });
     });
-    $("#dialog-confirm").hide();
-
 }
 

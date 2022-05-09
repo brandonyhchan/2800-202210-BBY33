@@ -167,7 +167,6 @@ function editEmail(e) {
                     }
                 });
             });
-            $("#dialog-confirm").hide();
         }
     });
     parent.innerHTML = "";
@@ -191,6 +190,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(params);
 }
 
@@ -200,13 +201,28 @@ document.querySelector("#submit").addEventListener("click", function (e) {
     let currentPassword = document.getElementById("currentPass");
     let newPassword = document.getElementById("newPass");
     let queryString = "currentPass=" + currentPassword.value + "&newPass=" + newPassword.value;
-    ajaxPOST("/update-password", function (data) {
-
-        if (data) {
-            let dataParsed = JSON.parse(data);
-            document.getElementById("status").innerHTML = dataParsed.msg;
-        }
-    }, queryString);
+    $(function () {
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: "auto",
+            width: 300,
+            modal: true,
+            buttons: {
+                "Update account": function () {
+                    ajaxPOST("/update-password", function (data) {
+                        if (data) {
+                            let dataParsed = JSON.parse(data);
+                            document.getElementById("status").innerHTML = dataParsed.msg;
+                        }
+                    }, queryString);
+                    $(this).dialog("close");
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
 });
 
 const uploadImage = document.getElementById("upload-image");
