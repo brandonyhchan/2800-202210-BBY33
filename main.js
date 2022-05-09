@@ -625,7 +625,33 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-//starts the server
+app.post("/get-packages", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let countryID = req.body.countryID;
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.query(
+            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
+            function (error, results) {
+                if (error) {
+                    console.log(error);
+                }
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            }
+        );
+    } 
+});
+
 let port = 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
