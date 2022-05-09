@@ -40,20 +40,17 @@ function getPackage() {
                 } else {
                     console.log("This is data" + data);
                     console.log("This is data" + dataParsed.rows.length);
-                    let str = `        <tr>
-                    <th class="firstName_header"><span>Package name</span></th>
-                    <th class="lastName_header"><span>package price</span></th>
-                    <th class="email_header"><span>Description</span></th>
-                    </tr>`;
+                    let str = ""
                     for (let i = 0; i < dataParsed.rows.length; i++) {
                         let row = dataParsed.rows[i];
-                        str += ("<tr>" +
-                            "<td class='firstName'>" + row.package_name +
-                            "</td><td class='lastName'>" + row.package_price +
-                            "</td><td class='email'>" + row.description_of_package +
-                            "</td></tr>");
+                        str += (`<div class='card'> 
+                            <div id='title'>${row.package_name} 
+                            </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
+                            </div><div id='price'> $${row.package_price} 
+                            </div><div id='description'>${row.description_of_package}
+                            </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
                     }
-                    document.getElementById("cart").innerHTML = str
+                    document.getElementById("pList").innerHTML = str
                 }
             }
         }, queryString);

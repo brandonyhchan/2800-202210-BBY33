@@ -639,7 +639,7 @@ app.post("/get-packages", function (req, res) {
         });
         connection.connect();
         connection.query(
-            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
+            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
             function (error, results) {
                 if (error) {
                     console.log(error);

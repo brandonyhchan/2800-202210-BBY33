@@ -65,5 +65,16 @@ svg path:hover {
 }
 
 .countries {
-    background-color: red;
+    fill: red;
+}
+
+#pList {
+    padding: 5%;
+    margin: 5%;
+}
+
+.card {
+    background-color: white;
+    padding: 2%;
+    text-align: center;
 }
