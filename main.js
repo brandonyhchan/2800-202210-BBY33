@@ -649,7 +649,50 @@ app.post("/get-packages", function (req, res) {
                 });
             }
         );
-    } 
+    }
+});
+
+app.post("/add-packages", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+    let userid = [];
+    let packageID = req.body.packageID;
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        function setValue(value) {
+            userid = value;
+        }
+        connection.query("SELECT bby_33_user.user_id FROM bby_33_user WHERE user_name = ?", [userName],
+            function (err, rows) {
+                if (err) {
+                    throw err;
+                } else {
+                    setValue(rows);
+                }
+            });
+
+        console.log(userid);
+        connection.execute(
+            "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id) VALUES(?, ?, ?)", [packageID, 1, userid.user_id]
+        );
+        // connection.query(
+        //     "SELECT * FROM bby_33_cart WHERE  user_id = ?", [userid.user_id],
+        //     function (error, results) {
+        //         if (error) {
+        //             console.log(error);
+        //         }
+        //         res.send({
+        //             status: "success",
+        //             rows: results
+        //         });
+        //     }
+        // );
+    }
 });
 
 let port = 8000;

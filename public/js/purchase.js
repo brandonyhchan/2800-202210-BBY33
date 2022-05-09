@@ -48,7 +48,7 @@ function getPackage() {
                             </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div id='price'> $${row.package_price} 
                             </div><div id='description'>${row.description_of_package}
-                            </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
+                            </div><input type='submit' value='submit' class='packages' id='${row.package_id}'/></div><br>`);
                     }
                     document.getElementById("pList").innerHTML = str
                 }
@@ -63,3 +63,45 @@ function getPackage() {
 };
 
 getPackage();
+
+function addPackage() {
+    var packageId;
+    var queryString;
+    const onClick = (event) => {
+        console.log(event.target.id);
+        packageId = event.target.id;
+        console.log(packageId);
+        queryString = "packageID=" + packageId;
+        console.log(queryString);
+        ajaxGET("/add-packages", function (data) {
+
+            if (data) {
+                let dataParsed = JSON.parse(data);
+                if (dataParsed.status == "fail") {
+                    console.log("fail");
+                } else {
+                    console.log("success")
+                    // console.log("This is data" + dataParsed.rows.length);
+                    // let str = ""
+                    // for (let i = 0; i < dataParsed.rows.length; i++) {
+                    //     let row = dataParsed.rows[i];
+                    //     str += (`<div class='card'> 
+                    //         <div id='title'>${row.package_name} 
+                    //         </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
+                    //         </div><div id='price'> $${row.package_price} 
+                    //         </div><div id='description'>${row.description_of_package}
+                    //         </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
+                    // }
+                    // document.getElementById("pList").innerHTML = str
+                }
+            }
+        }, queryString);
+    };
+    let records = document.querySelectorAll(".packages");
+    for (let j = 0; j < records.length; j++) {
+        records[j].addEventListener("click", onClick);
+    }
+
+};
+
+addPackage();
