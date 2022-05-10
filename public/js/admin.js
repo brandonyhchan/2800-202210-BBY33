@@ -190,7 +190,6 @@ function updateInfo(e, p, newClass) {
     var parent = p;
     let input = document.createElement("input");
     let emailID = parent.parentNode.querySelector(".email").innerText
-    // let statusDiv = document.querySelector("#status");
     input.value = currentValue;
     input.addEventListener("keyup", function (e) {
         let newInput = null;
