@@ -518,6 +518,126 @@ app.post("/update-email", (req, res) => {
     }
 })
 
+app.post("/admin-update-firstName", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET first_name = ? WHERE email_address = ?`, [req.body.firstName, req.body.email], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }
+        );
+        res.send(send);
+
+    } else {
+        res.redirect("/");
+    }
+})
+
+app.post("/admin-update-lastName", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET last_name = ? WHERE email_address = ?`, [req.body.lastName, req.body.email], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }
+        );
+        res.send(send);
+
+    } else {
+        res.redirect("/");
+    }
+})
+
+app.post("/admin-update-admin", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET admin_user = ? WHERE email_address = ?`, [req.body.admin, req.body.email], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }
+        );
+        res.send(send);
+
+    } else {
+        res.redirect("/");
+    }
+})
+
+app.post("/admin-update-email", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
+        connection.connect();
+        connection.execute(
+            `UPDATE bby_33_user SET email_address = ? WHERE email_address = ?`, [req.body.email_address, req.body.email], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }
+        );
+        res.send(send);
+
+    } else {
+        res.redirect("/");
+    }
+})
+
 app.post("/update-password", async (req, res) => {
     if (req.session.loggedIn) {
         const mysql = require("mysql2/promise");
@@ -554,6 +674,42 @@ app.post("/update-password", async (req, res) => {
             send.status = "fail";
             send.msg = "Current Password is Incorrect";
         }
+        res.send(send);
+    } else {
+        res.redirect("/");
+    }
+})
+
+app.post("/admin-update-password", async (req, res) => {
+    if (req.session.loggedIn) {
+        const mysql = require("mysql2/promise");
+        let existingPassword;
+        let salt = 5;
+        let hashedPassword = "";
+        const connection = await mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        let send = {
+            status: "",
+            msg: ""
+        };
+        connection.connect();
+        const [rows] = await connection.execute(
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email],
+        );
+        existingPassword = req.body.newPass;
+        bcrypt.hash(existingPassword, salt, function (err, hash) {
+            hashedPassword = hash;
+            connection.execute(
+                "UPDATE bby_33_user SET password = ? WHERE email_address = ?", [hashedPassword, req.body.email]
+            );
+        });
+        send.status = "success";
+        send.msg = "Password Updated";
+
         res.send(send);
     } else {
         res.redirect("/");
@@ -648,7 +804,7 @@ app.post("/get-packages", function (req, res) {
                 });
             }
         );
-    } 
+    }
 });
 
 app.post("/delete-users", function (req, res) {
