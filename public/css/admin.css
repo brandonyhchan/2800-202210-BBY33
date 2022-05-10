@@ -74,6 +74,12 @@
         align-content: center;
     }
     
+    .undelete {
+        align-self: center;
+        justify-self: center;
+        grid-row: 2 / 3;
+    }
+    
     .remove {
         align-self: center;
         justify-self: center;

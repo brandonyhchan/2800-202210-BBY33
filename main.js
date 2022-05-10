@@ -197,7 +197,7 @@ app.get("/get-users", function (req, res) {
         });
         connection.connect();
         connection.query(
-            "SELECT bby_33_user.email_address, bby_33_user.first_name, bby_33_user.last_name, bby_33_user.admin_user  FROM bby_33_user WHERE user_removed = ?", ['n'],
+            "SELECT * FROM bby_33_user",
             function (error, results) {
                 if (error) {
                     console.log(error);
@@ -646,6 +646,98 @@ app.post("/get-packages", function (req, res) {
                     status: "success",
                     rows: results
                 });
+            }
+        );
+    } 
+});
+
+app.post("/delete-users", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let adminUsers = [];
+    let userID = req.body.userID;
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.execute(
+            "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
+            function (error, results) {
+                adminUsers = results;
+                let send = {
+                    status: ""  
+                };
+                connection.execute(
+                    "SELECT * FROM bby_33_user WHERE USER_ID = ?", [userID],
+                    function (error, admins) {
+                        if (admins[0].admin_user == 'y') {
+                            if (adminUsers.length > 1) {
+                                connection.execute(
+                                    "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'y'],
+                                    function (error, results) {
+                                        if (error) {
+                                            console.log(error);
+                                            send.status = "fail";
+                                        } else {
+                                            send.status = "success";
+                                        }
+                                    }
+                                );
+                            } else {
+                                send.status = "fail";
+                            }
+                        } else {
+                            connection.execute(
+                                "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'n'],
+                                function (error, results) {
+                                    if (error) {
+                                        console.log(error);
+                                        send.status = "fail";
+                                    } else {
+                                        send.status = "success";
+                                    }
+                                }
+                            );
+                        }
+                        res.send(send);
+                    }
+                );
+            }
+        );
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.post("/undelete-users", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let userID = req.body.userID;
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.execute(
+            "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ?", ['n', userID],
+            function (error, results) {
+                if (error) {
+                    console.log(error);
+                    res.send({
+                        status: "fail",
+                    });
+                } else {
+                    res.send({
+                        status: "success",
+                    });
+                }
             }
         );
     } 
