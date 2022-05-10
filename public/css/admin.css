@@ -132,6 +132,10 @@ td {
     display: none;
 }
 
+#dropdown-items {
+    display: grid;
+}
+
 @media only screen and (max-width: 720px) {
     #container {
         grid-template-columns: 100%;
@@ -164,6 +168,8 @@ td {
         font-size: 24px;
     }
     #dropdown-items {
-        display: none;
+        opacity: 0;
+        height: 0px;
+        display: block;
     }
 }

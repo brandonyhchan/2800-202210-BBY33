@@ -80,6 +80,7 @@ function update(e) {
 /**
  * Expands the admin dashboard menu onclick in a mobile viewport.
  */
+/**
 function expandDropdown() {
 
     var expandables = document.getElementById("dropdown-items");
@@ -91,6 +92,40 @@ function expandDropdown() {
     }
 }
 
+*/
+/**
+ * Ensures that the admin dashboard items are always visible when resizing from mobile to desktop viewports.
+ */
+
+/**
+function reDisplay() {
+
+    if (window.innerWidth > 720) {
+        var expandables = document.getElementById("dropdown-items");
+        expandables.style.display = "inline-block";
+
+    }
+}
+window.addEventListener('resize', reDisplay);
+*/
+
+
+
+/**
+ * Expands the admin dashboard menu onclick in a mobile viewport.
+ */
+function expandDropdown() {
+    var expandables = document.getElementById("dropdown-items");
+    if (expandables.style.height === "0px") {
+        expandables.style.height = "100px";
+        expandables.style.opacity = "1";
+        expandables.style.transition = "0.3s";
+    } else {
+        expandables.style.height = "0px";
+        expandables.style.opacity = "0";
+    }
+}
+
 
 /**
  * Ensures that the admin dashboard items are always visible when resizing from mobile to desktop viewports.
@@ -99,7 +134,8 @@ function reDisplay() {
 
     if (window.innerWidth > 720) {
         var expandables = document.getElementById("dropdown-items");
-        expandables.style.display = "inline-block";
+        expandables.style.opacity = "1";
+        expandables.style.height = "auto";
 
     }
 }
