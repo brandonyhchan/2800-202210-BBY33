@@ -57,8 +57,11 @@ function getPackage() {
     for (let j = 0; j < records.length; j++) {
         records[j].addEventListener("click", onClick);
     }
+}
 
-};
+var promise = new Promise((resolve, reject) => {
+    resolve(getPackage);
+});
 
 getPackage();
 
