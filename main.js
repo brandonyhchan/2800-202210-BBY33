@@ -678,7 +678,7 @@ app.post("/add-packages", function (req, res) {
                         price = prices[0].package_price
                     });
                 if (userFound) {
-                    connection.query("SELECT * FROM bby_33_cart WHERE user_id = ?", [userid],
+                    connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
                         function (err, results) {
                             if (results.length > 0) {
                                 connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
