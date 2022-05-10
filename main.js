@@ -654,6 +654,7 @@ app.post("/get-packages", function (req, res) {
 
 app.post("/add-packages", function (req, res) {
     res.setHeader("Content-Type", "application/json");
+    var price = "";
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -672,23 +673,30 @@ app.post("/add-packages", function (req, res) {
                 var userid = rows[0].USER_ID;
                 console.log(userid);
                 userFound = true;
+                connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
+                    function (err, prices) {
+                        price = prices[0].package_price
+                    });
                 if (userFound) {
                     connection.query("SELECT * FROM bby_33_cart WHERE user_id = ?", [userid],
                         function (err, results) {
                             if (results.length > 0) {
-                                connection.execute(
-                                    `UPDATE bby_33_cart SET  product_quantity = ? WHERE PACKAGE_ID = ?`, [results[0].product_quantity + 1, packageID], (err) => {
-                                    }
-                                )
-                                send.status = "success";
+                                connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
+                                    function (err, totalPrice) {
+                                        var tPrice = totalPrice[0].price
+                                        connection.execute(
+                                            `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [results[0].product_quantity + 1, tPrice + price, packageID]
+                                        )
+                                        send.status = "success";
+                                    });
                             } else {
                                 connection.execute(
-                                    "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id) VALUES(?, ?, ?)", [packageID, 1, userid]
+                                    "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, price]
                                 )
                                 send.status = "success";
                             }
-                    });
-                    
+                        });
+
                 } else {
                     send.status = "fail";
                 }
