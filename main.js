@@ -359,6 +359,18 @@ app.get("/profile", function (req, res) {
     }
 });
 
+app.get("/map", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/map.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.get("/user-name", (req, res) => {
     if (req.session.loggedIn) {
         res.send({

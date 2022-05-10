@@ -25,6 +25,10 @@ ready(() => {
             getLanding();
         })
 
+        document.querySelector("#map").addEventListener("click", () => {
+            getMap();
+        })
+
     });
 
     var path = window.location.pathname;
@@ -48,6 +52,14 @@ ready(() => {
     ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
+
+        document.querySelector("#profile-icon").addEventListener("click", () =>{
+            getProfile();
+        })
+
+        document.querySelector("#map-icon").addEventListener("click", () =>{
+            getMap();
+        })
     });
 
     async function getProfile() {
@@ -62,6 +74,20 @@ ready(() => {
 
         }
     }
+
+    async function getMap() {
+        try {
+            let response = await fetch("/map", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/map");
+            }
+        } catch (err) {
+
+        }
+    }
+
 
     async function getLanding() {
         try {

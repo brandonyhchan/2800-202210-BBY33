@@ -79,4 +79,13 @@ footer a:hover {
         font-size: 36px;
         justify-content: center;
     }
+
+    #profile-icon{
+        color: white;
+    }
+
+    #map-icon{
+        color: white;
+    }
+
 }
