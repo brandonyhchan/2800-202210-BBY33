@@ -1,7 +1,8 @@
 'use strict';
+
 function getUsers() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
@@ -45,21 +46,21 @@ function update(e) {
     var sentEmail = {
         email: parent.parentNode.querySelector(".email").innerHTML
     };
-    $(function () {
+    $(function() {
         $("#dialog-confirm").dialog({
             resizable: false,
             height: "auto",
             width: 300,
             modal: true,
             buttons: {
-                "Delete account": function () {
+                "Delete account": function() {
                     const xhr = new XMLHttpRequest();
-                    xhr.onload = function () {
+                    xhr.onload = function() {
                         if (this.readyState == XMLHttpRequest.DONE) {
                             if (xhr.status === 200) {
                                 getUsers();
                             }
-                        } 
+                        }
                     }
                     xhr.open("POST", "/user-update");
                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
@@ -67,7 +68,7 @@ function update(e) {
                     xhr.send("email=" + sentEmail.email);
                     $(this).dialog("close");
                 },
-                Cancel: function () {
+                Cancel: function() {
                     $(this).dialog("close");
                 }
             }
@@ -75,3 +76,31 @@ function update(e) {
     });
 }
 
+
+/**
+ * Expands the admin dashboard menu onclick in a mobile viewport.
+ */
+function expandDropdown() {
+
+    var expandables = document.getElementById("dropdown-items");
+    if (expandables.style.display === "none") {
+        expandables.style.display = "inline-block";
+    } else {
+        expandables.style.display = "none";
+
+    }
+}
+
+
+/**
+ * Ensures that the admin dashboard items are always visible when resizing from mobile to desktop viewports.
+ */
+function reDisplay() {
+
+    if (window.innerWidth > 720) {
+        var expandables = document.getElementById("dropdown-items");
+        expandables.style.display = "inline-block";
+
+    }
+}
+window.addEventListener('resize', reDisplay);
