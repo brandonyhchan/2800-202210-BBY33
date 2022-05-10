@@ -780,38 +780,12 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-app.post("/get-packages", function (req, res) {
-    res.setHeader("Content-Type", "application/json");
-
-    let countryID = req.body.countryID;
-    if (req.session.loggedIn) {
-        const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
-        });
-        connection.connect();
-        connection.query(
-            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
-            function (error, results) {
-                if (error) {
-                    console.log(error);
-                }
-                res.send({
-                    status: "success",
-                    rows: results
-                });
-            }
-        );
-    }
-});
-
 app.post("/delete-users", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let adminUsers = [];
     let userID = req.body.userID;
+
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -897,6 +871,88 @@ app.post("/undelete-users", function (req, res) {
             }
         );
     } 
+});
+
+app.post("/get-packages", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let countryID = req.body.countryID;
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.query(
+            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
+            function (error, results) {
+                if (error) {
+                    console.log(error);
+                }
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            }
+        );
+    }
+});
+
+app.post("/add-packages", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+    var price = "";
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
+            function (err, rows) {
+                let send = {
+                    status: " "
+                }
+                var packageID = req.body.packageID;
+                let userFound = false;
+                var userid = rows[0].USER_ID;
+                userFound = true;
+                connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
+                    function (err, prices) {
+                        price = prices[0].package_price
+                    });
+                if (userFound) {
+                    connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
+                        function (err, packages) {
+                            console.log(packages.length);
+                            if (packages.length > 0) {
+                                connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
+                                    function (err, totalPrice) {
+                                        var tPrice = totalPrice[0].price
+                                        connection.execute(
+                                            `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
+                                        )
+                                        send.status = "success";
+                                    });
+                            } else {
+                                connection.execute(
+                                    "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, price]
+                                )
+                                send.status = "success";
+                            }
+                        });
+
+                } else {
+                    send.status = "fail";
+                }
+
+            });
+    } else {
+        res.redirect("/");
+    }
 });
 
 let port = 8000;

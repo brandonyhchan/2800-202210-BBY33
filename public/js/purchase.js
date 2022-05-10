@@ -1,5 +1,8 @@
 'use strict';
 
+var buttons;
+var packagesDisplayed = false;
+
 function ajaxGET(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function (k) {
@@ -24,13 +27,10 @@ function getPackage() {
     var countryId;
     var countryName;
     var queryString;
-    const onClick = (event) => {
-        console.log(event.target.id);
+    let onClick = (event) => {
         countryId = event.target.id;
-        console.log(countryId);
         countryName = "Ukraine";
         queryString = "countryID=" + countryId + "&countryName=" + countryName;
-        console.log(queryString);
         ajaxGET("/get-packages", function (data) {
 
             if (data) {
@@ -38,17 +38,15 @@ function getPackage() {
                 if (dataParsed.status == "fail") {
                     console.log("fail");
                 } else {
-                    console.log("This is data" + data);
-                    console.log("This is data" + dataParsed.rows.length);
                     let str = ""
                     for (let i = 0; i < dataParsed.rows.length; i++) {
                         let row = dataParsed.rows[i];
                         str += (`<div class='card'> 
                             <div id='title'>${row.package_name} 
-                            </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
-                            </div><div id='price'> $${row.package_price} 
-                            </div><div id='description'>${row.description_of_package}
-                            </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
+                            </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
+                            </div><div class='price'> $${row.package_price} 
+                            </div><div class='description'>${row.description_of_package}
+                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button></div></div><br>`);
                     }
                     document.getElementById("pList").innerHTML = str
                 }
@@ -63,3 +61,43 @@ function getPackage() {
 };
 
 getPackage();
+
+function addPackage() {
+    var packageId;
+    var queryString;
+    let onClick = (event) => {
+        if (event.target.className == "packages") {
+            console.log(event.target.id);
+            packageId = event.target.id;
+            console.log(packageId);
+            queryString = "packageID=" + packageId;
+            console.log(queryString);
+            ajaxGET("/add-packages", function (data) {
+
+                if (data) {
+                    let dataParsed = JSON.parse(data);
+                    if (dataParsed.status == "fail") {
+                        console.log("fail");
+                    } else {
+                        console.log("success")
+                        // console.log("This is data" + dataParsed.rows.length);
+                        // let str = ""
+                        // for (let i = 0; i < dataParsed.rows.length; i++) {
+                        //     let row = dataParsed.rows[i];
+                        //     str += (`<div class='card'> 
+                        //         <div id='title'>${row.package_name} 
+                        //         </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
+                        //         </div><div id='price'> $${row.package_price} 
+                        //         </div><div id='description'>${row.description_of_package}
+                        //         </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
+                        // }
+                        // document.getElementById("pList").innerHTML = str
+                    }
+                }
+            }, queryString);
+        }
+    };
+    window.addEventListener('click', onClick);
+};
+
+addPackage();
