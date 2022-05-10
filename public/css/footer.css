@@ -71,6 +71,8 @@ footer a:hover {
         justify-items: center;
         align-items: center;
         min-height: 50px;
+        padding-top: 1%;
+        padding-bottom: 1%;
     }
     footer {
         position: fixed;
@@ -82,10 +84,20 @@ footer a:hover {
 
     #profile-icon{
         color: white;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 
     #map-icon{
         color: white;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    #help-icon{
+        color: white;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 
 }
