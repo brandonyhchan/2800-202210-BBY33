@@ -673,27 +673,27 @@ app.post("/add-packages", function (req, res) {
                 console.log(userid);
                 userFound = true;
                 if (userFound) {
-                    connection.execute(
-                        "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id) VALUES(?, ?, ?)", [packageID, 1, userid]
-                    );
-                    send.status = "success";
+                    connection.query("SELECT * FROM bby_33_cart WHERE user_id = ?", [userid],
+                        function (err, results) {
+                            if (results.length > 0) {
+                                connection.execute(
+                                    `UPDATE bby_33_cart SET  product_quantity = ? WHERE PACKAGE_ID = ?`, [results[0].product_quantity + 1, packageID], (err) => {
+                                    }
+                                )
+                                send.status = "success";
+                            } else {
+                                connection.execute(
+                                    "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id) VALUES(?, ?, ?)", [packageID, 1, userid]
+                                )
+                                send.status = "success";
+                            }
+                    });
+                    
                 } else {
                     send.status = "fail";
                 }
 
             });
-        // connection.query(
-        //     "SELECT * FROM bby_33_cart WHERE  user_id = ?", [userid.user_id],
-        //     function (error, results) {
-        //         if (error) {
-        //             console.log(error);
-        //         }
-        //         res.send({
-        //             status: "success",
-        //             rows: results
-        //         });
-        //     }
-        // );
     }
 });
 
