@@ -1,7 +1,8 @@
 'use strict';
 
-var buttons; 
+var buttons;
 var packagesDisplayed = false;
+
 function ajaxGET(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function (k) {
@@ -45,7 +46,7 @@ function getPackage() {
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
                             </div><div class='description'>${row.description_of_package}
-                            </div><div><button type='button' class='packages' onclick="addPackage()" id='${row.package_id}'>Add</button></div></div><br>`);
+                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button></div></div><br>`);
                     }
                     document.getElementById("pList").innerHTML = str
                 }
@@ -65,39 +66,38 @@ function addPackage() {
     var packageId;
     var queryString;
     let onClick = (event) => {
-        console.log(event.target.id);
-        packageId = event.target.id;
-        console.log(packageId);
-        queryString = "packageID=" + packageId;
-        console.log(queryString);
-        ajaxGET("/add-packages", function (data) {
+        if (event.target.className == "packages") {
+            console.log(event.target.id);
+            packageId = event.target.id;
+            console.log(packageId);
+            queryString = "packageID=" + packageId;
+            console.log(queryString);
+            ajaxGET("/add-packages", function (data) {
 
-            if (data) {
-                let dataParsed = JSON.parse(data);
-                if (dataParsed.status == "fail") {
-                    console.log("fail");
-                } else {
-                    console.log("success")
-                    // console.log("This is data" + dataParsed.rows.length);
-                    // let str = ""
-                    // for (let i = 0; i < dataParsed.rows.length; i++) {
-                    //     let row = dataParsed.rows[i];
-                    //     str += (`<div class='card'> 
-                    //         <div id='title'>${row.package_name} 
-                    //         </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
-                    //         </div><div id='price'> $${row.package_price} 
-                    //         </div><div id='description'>${row.description_of_package}
-                    //         </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
-                    // }
-                    // document.getElementById("pList").innerHTML = str
+                if (data) {
+                    let dataParsed = JSON.parse(data);
+                    if (dataParsed.status == "fail") {
+                        console.log("fail");
+                    } else {
+                        console.log("success")
+                        // console.log("This is data" + dataParsed.rows.length);
+                        // let str = ""
+                        // for (let i = 0; i < dataParsed.rows.length; i++) {
+                        //     let row = dataParsed.rows[i];
+                        //     str += (`<div class='card'> 
+                        //         <div id='title'>${row.package_name} 
+                        //         </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
+                        //         </div><div id='price'> $${row.package_price} 
+                        //         </div><div id='description'>${row.description_of_package}
+                        //         </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
+                        // }
+                        // document.getElementById("pList").innerHTML = str
+                    }
                 }
-            }
-        }, queryString);
+            }, queryString);
+        }
     };
-    buttons = document.querySelectorAll(".packages");
-    for (let j = 0; j < buttons.length; j++) {
-        buttons[j].addEventListener("click", onClick);
-    }
+    window.addEventListener('click', onClick);
 };
 
 addPackage();
