@@ -16,7 +16,7 @@ body {
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
     display: grid;
-    grid-template-columns: 40% 45% 15%;
+    grid-template-columns: 30% 45% 25%;
 }
 
 .logo {
@@ -61,6 +61,11 @@ body {
     padding: 1rem;
     cursor: pointer;
     transition-duration: 0.5s;
+}
+
+.material-symbols-outlined.md-24.cart{
+    margin-right: 5%;
+    margin-bottom: 10%;
 }
 
 .navbar li a:hover {

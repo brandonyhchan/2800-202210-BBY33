@@ -9,18 +9,17 @@
 }
 
 body {
-    background-color: #01171b;
     overflow-x: hidden;
     font-family: 'Fonttype';
     max-height: 1080px;
 }
 
-.container {
+#container {
+    width: 100%;
     display: grid;
-    grid-template-columns: 15% 85%;
-    grid-template-areas: "cart" "map";
-    height: 100vh;
+    grid-template-rows: 25% 75%;
 }
+
 
 svg path {
     fill: #00394f;
@@ -29,39 +28,9 @@ svg path {
 }
 
 svg path:hover {
-    fill:dodgerblue;
+    fill: rgb(114, 186, 213);
     transition: 0.6s;
     cursor: pointer;
-}
-
-.cart {
-    grid-area: cart;
-    background-color: aliceblue;
-}
-
-.map {
-    grid-area: map;
-    width: 100vw;
-}
-
-svg path {
-    fill: #00394f;
-    stroke: white;
-    stroke-width: .25;
-}
-
-svg path:hover {
-    fill: dodgerblue;
-    transition: 0.6s;
-    cursor: pointer;
-}
-
-#navplaceholder {
-    background-color: aqua;
-}
-
-.country {
-    color: aqua;
 }
 
 .countries {
@@ -75,6 +44,7 @@ svg path:hover {
 
 .card {
     background-color: white;
+    float:inline-start;
     padding: 2%;
     text-align: center;
 }
