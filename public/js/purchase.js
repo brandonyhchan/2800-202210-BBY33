@@ -48,7 +48,7 @@ function getPackage() {
                             </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div id='price'> $${row.package_price} 
                             </div><div id='description'>${row.description_of_package}
-                            </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
+                            </div><input type='submit' class='addCart' value='Add' id='${row.package_id}'></div><br>`);
                     }
                     document.getElementById("pList").innerHTML = str
                 }
@@ -59,7 +59,26 @@ function getPackage() {
     for (let j = 0; j < records.length; j++) {
         records[j].addEventListener("click", onClick);
     }
+}
 
-};
+var promise = new Promise((resolve, reject) => {
+    resolve(getPackage);
+});
 
-getPackage();
+promise.then(async () => {
+    await getPackage();
+}).then(() => {
+    addListeners();
+})
+
+function addListeners() {
+    let adds = document.querySelectorAll(".addCart");
+    for (let i = 0; i < adds.length; i++) {
+        adds[i].addEventListener("click", addtoCart);
+        console.log(adds[i]);
+    }
+}
+
+function addtoCart() {
+    console.log("hi");
+}
