@@ -20,7 +20,7 @@ body {
     overflow-x: hidden;
 }
 
-#control-panel {
+#control-panel-placeholder {
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
     border: 1px solid black;
@@ -35,6 +35,7 @@ body {
     text-align: center;
     color: white;
     align-self: center;
+    padding-top: 5%;
 }
 
 #userTable {
@@ -46,9 +47,10 @@ body {
     margin: 3%;
 }
 
-#manage-users {
+.page-header {
     text-align: center;
     padding: 3%;
+    color: #00394f;
 }
 
 tr:nth-child(odd) {
@@ -102,10 +104,6 @@ button:active {
     transform: translateY(4px);
 }
 
-button:hover {
-    background-color: rgb(114, 186, 213);
-}
-
 .admin-buttons {
     cursor: pointer;
     background: none;
@@ -117,11 +115,28 @@ button:hover {
 
 .admin-buttons:hover {
     color: rgb(114, 186, 213);
-    background-color: #00394f;
 }
 
 td {
     height: 60px;
+}
+
+#submit {
+    text-align: center;
+    white-space: nowrap;
+    height: 40px;
+    font-size: 16px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 10%;
+    padding-right: 10%;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
 }
 
 @media only screen and (max-width: 720px) {
@@ -129,13 +144,13 @@ td {
         grid-template-columns: 100%;
         grid-template-rows: auto;
     }
-    #control-panel {
+    #control-panel-placeholder {
         grid-row: 1 / 2;
         display: flex;
         flex-direction: column;
         padding: 5%;
     }
-    #manage-users {
+    .page-header {
         grid-row: 2 / 3;
         font-size: 20px;
     }

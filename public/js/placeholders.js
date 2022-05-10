@@ -3,7 +3,7 @@ ready(() => {
     function ajaxGET(url, callback) {
 
         const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
+        xhr.onload = function() {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
             } else {
@@ -14,7 +14,7 @@ ready(() => {
         xhr.send();
     }
 
-    ajaxGET("/nav", function (data) {
+    ajaxGET("/nav", function(data) {
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
         document.querySelector("#profile").addEventListener("click", () => {
@@ -27,10 +27,11 @@ ready(() => {
 
     });
 
-    if (window.location.pathname == "/admin") {
-        ajaxGET("/admin-sideBar", function (data) {
-            
-            let navbar = document.querySelector("#control-panel");
+    var path = window.location.pathname;
+    if (path.startsWith("/admin")) {
+        ajaxGET("/admin-sideBar", function(data) {
+
+            let navbar = document.querySelector("#control-panel-placeholder");
             navbar.innerHTML = data;
             document.querySelector("#manage-users-button").addEventListener("click", () => {
                 getManageUsers();
@@ -44,7 +45,7 @@ ready(() => {
 
     }
 
-    ajaxGET("/footer", function (data) {
+    ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
     });
