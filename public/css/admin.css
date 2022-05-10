@@ -37,6 +37,10 @@
         align-self: center;
         padding-top: 5%;
     }
+
+    #update-confirm {
+        display: none;
+    }
     
     #userTable {
         text-align: center;
@@ -72,6 +76,12 @@
         display: flex;
         justify-content: space-around;
         align-content: center;
+    }
+    
+    .undelete {
+        align-self: center;
+        justify-self: center;
+        grid-row: 2 / 3;
     }
     
     .remove {
