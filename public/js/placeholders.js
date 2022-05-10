@@ -29,6 +29,10 @@ ready(() => {
             getMap();
         })
 
+        document.querySelector("#mobile-logo").addEventListener("click", () =>{
+            getLanding();
+        })
+
     });
 
     var path = window.location.pathname;
