@@ -26,15 +26,48 @@
         <div id="package-container">
 
 
-            <div id="package-image">
-                <img id="image" src="/img/landing1.jpg">
+            <div id="package-gallery-desktop">
+                <img id="image" class="main-image" src="/img/landing1.jpg" alt="Care Package Image">
+                <img id="image2" class="tabbed-image" src="/img/landing1.jpg" alt="Care Package Image" onclick="changeImage(this)">
+                <img id="image3" class="tabbed-image" src="/img/hero3.jpg" alt="Care Package Image" onclick="changeImage(this)">
+                <img id="image4" class="tabbed-image" src="/img/hero4.jpg" alt="Care Package Image" onclick="changeImage(this)">
+
+            </div>
+
+            <div id="package-gallery-mobile">
+                <div class="slider">
+                    <p class="slide-index">1 / 3</p>
+                    <img src="/img/landing1.jpg" class="mobile-image" alt="Care Package Image">
+                </div>
+
+                <div class="slider">
+                    <p class="slide-index">2 / 3</p>
+                    <img src="/img/hero3.jpg" class="mobile-image" alt="Care Package Image">
+                </div>
+
+                <div class="slider">
+                    <p class="slide-index">3 / 3</p>
+                    <img src="/img/hero4.jpg" class="mobile-image" alt="Care Package Image">
+                </div>
+
+                <a class="previous" onclick="changeImage(-1)">&#10094;</a>
+                <a class="next" onclick="changeImage(1)">&#10095;</a>
+
             </div>
 
             <div id="package-description">
-                <h2 id="package-name">Care Package 1</h2>
-                <p>poggers</p>
+                <h2 id="package-name">Care Package Name</h2>
+                <br>
+                <p id="price">Price:</p>
+                <br>
+                <p id="description">Description:</p>
+                <br>
+
+
 
                 <button id="add-to-cart">Add to Cart</button>
+
+
             </div>
 
 
@@ -47,6 +80,9 @@
 
     <footer id="footerPlaceholder"></footer>
     <script src="/js/placeholders.js"></script>
+    <script src="/js/packageInfo.js"></script>
+
+
 
 </body>
 
