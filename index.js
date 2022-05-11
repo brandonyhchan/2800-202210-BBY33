@@ -3,8 +3,7 @@
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
-let http = require('http');
-let url = require('url');
+let server = require('http').Server(app);
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -187,7 +186,6 @@ app.post("/login", async function (req, res) {
             });
         }
     }
-    connection.end();
 
 });
 
@@ -215,7 +213,6 @@ app.get("/get-users", function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
 });
 
 app.get("/logout", function (req, res) {
@@ -270,8 +267,6 @@ app.post("/user-update", function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
-
 });
 
 app.post("/register", function (req, res) {
@@ -343,7 +338,6 @@ app.post("/register", function (req, res) {
 
         }
     )
-    connection.end();
 });
 
 app.get("/createAccount", function (req, res) {
@@ -363,7 +357,6 @@ app.get("/profile", function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
 });
 
 app.get("/user-name", (req, res) => {
@@ -375,7 +368,6 @@ app.get("/user-name", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.get("/email", (req, res) => {
@@ -405,7 +397,6 @@ app.get("/email", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.get("/first-name", (req, res) => {
@@ -435,7 +426,6 @@ app.get("/first-name", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.get("/last-name", (req, res) => {
@@ -465,7 +455,6 @@ app.get("/last-name", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/update-user-name", (req, res) => {
@@ -497,7 +486,6 @@ app.post("/update-user-name", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/update-email", (req, res) => {
@@ -528,7 +516,6 @@ app.post("/update-email", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/admin-update-firstName", (req, res) => {
@@ -559,7 +546,6 @@ app.post("/admin-update-firstName", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/admin-update-lastName", (req, res) => {
@@ -590,7 +576,6 @@ app.post("/admin-update-lastName", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/admin-update-admin", (req, res) => {
@@ -621,7 +606,6 @@ app.post("/admin-update-admin", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/admin-update-email", (req, res) => {
@@ -652,7 +636,6 @@ app.post("/admin-update-email", (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/update-password", async (req, res) => {
@@ -695,7 +678,6 @@ app.post("/update-password", async (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post("/admin-update-password", async (req, res) => {
@@ -732,7 +714,6 @@ app.post("/admin-update-password", async (req, res) => {
     } else {
         res.redirect("/");
     }
-    connection.end();
 })
 
 app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
@@ -762,7 +743,6 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
 
 });
 
@@ -797,7 +777,6 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
 
 });
 
@@ -862,7 +841,6 @@ app.post("/delete-users", function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
 });
 
 app.post("/undelete-users", function (req, res) {
@@ -893,7 +871,6 @@ app.post("/undelete-users", function (req, res) {
             }
         );
     }
-    connection.end();
 });
 
 app.post("/get-packages", function (req, res) {
@@ -921,7 +898,6 @@ app.post("/get-packages", function (req, res) {
             }
         );
     }
-    connection.end();
 });
 
 app.post("/add-packages", function (req, res) {
@@ -977,17 +953,16 @@ app.post("/add-packages", function (req, res) {
     } else {
         res.redirect("/");
     }
-    connection.end();
 });
 
-// let port = 8000;
-// app.listen(port, function () {
-//     console.log("Server started on " + port + "!");
-// });
+var port = process.env.PORT || 8000;
+server.listen(port, function () {
+    console.log("Server started on " + port + "!");
+});
 
-app.listen(process.env.PORT || 3000, function(){
-    console.log("Server started" + "!");
-  });
+// app.listen(process.env.PORT || 3000, function(){
+//     console.log("Server started" + "!");
+//   });
 
 // http.createServer((req, res) => {
 //     let q = url.parse(req.url, true);
