@@ -3,7 +3,8 @@
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
-
+let http = require('http');
+let url = require('url');
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -957,21 +958,22 @@ app.post("/add-packages", function (req, res) {
     }
 });
 
+// let port = 8000;
+// app.listen(port, function () {
+//     console.log("Server started on " + port + "!");
+// });
 
-// app.listen(process.env.PORT || 3000, function(){
-//     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-//   });
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Server started" + "!");
+  });
 
-let http = require('http');
-let url = require('url');
+// http.createServer((req, res) => {
+//     let q = url.parse(req.url, true);
 
-http.createServer((req, res) => {
-    let q = url.parse(req.url, true);
+//     res.writeHead(200, {
+//         "Content-Type": "text/html",
+//         "Access-Control-Allow-Origin": "*"
+//     });
 
-    res.writeHead(200, {
-        "Content-Type": "text/html",
-        "Access-Control-Allow-Origin": "*"
-    });
-
-    res.end(`Hello ${q.query['Artem']}`);
-}).listen(process.env.PORT || 3000);
+//     res.end(`Hello ${q.query['Artem']}`);
+// }).listen(process.env.Port || 3000);
