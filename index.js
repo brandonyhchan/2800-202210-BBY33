@@ -3,7 +3,8 @@
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
-let server = require('http').Server(app);
+let http = require('http');
+let url = require('url');
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -956,7 +957,7 @@ app.post("/add-packages", function (req, res) {
 });
 
 var port = process.env.PORT || 8000;
-server.listen(port, function () {
+app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
 
