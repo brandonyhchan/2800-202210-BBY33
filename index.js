@@ -1,4 +1,5 @@
 'use strict';
+
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
