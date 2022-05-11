@@ -959,17 +959,17 @@ app.post("/add-packages", function (req, res) {
 });
 
 
-app.listen(process.env.PORT || 3000, function(){
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-  });
+// app.listen(process.env.PORT || 3000, function(){
+//     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+//   });
 
-// http.createServer((req, res) => {
-//     let q = url.parse(req.url, true);
+http.createServer((req, res) => {
+    let q = url.parse(req.url, true);
 
-//     res.writeHead(200, {
-//         "Content-Type": "text/html",
-//         "Access-Control-Allow-Origin": "*"
-//     });
+    res.writeHead(200, {
+        "Content-Type": "text/html",
+        "Access-Control-Allow-Origin": "*"
+    });
 
-//     res.end(`Hello ${q.query['Artem']}`);
-// }).listen(process.env.Port || 3000);
+    res.send(`Hello ${q.query['Artem']}`);
+}).listen(process.env.Port || 3000);
