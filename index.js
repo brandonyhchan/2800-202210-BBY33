@@ -3,8 +3,7 @@
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
-let http = require('http');
-let url = require('url');
+
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -963,6 +962,9 @@ app.post("/add-packages", function (req, res) {
 //     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 //   });
 
+let http = require('http');
+let url = require('url');
+
 http.createServer((req, res) => {
     let q = url.parse(req.url, true);
 
@@ -971,5 +973,5 @@ http.createServer((req, res) => {
         "Access-Control-Allow-Origin": "*"
     });
 
-    res.send(`Hello ${q.query['Artem']}`);
-}).listen(process.env.Port || 3000);
+    res.end(`Hello ${q.query['Artem']}`);
+}).listen(process.env.PORT || 3000);
