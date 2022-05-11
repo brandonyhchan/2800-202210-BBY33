@@ -22,12 +22,16 @@ CREATE TABLE BBY_33_country (
 
 CREATE TABLE BBY_33_package (
   PACKAGE_ID int NOT NULL AUTO_INCREMENT,
-  user_id int NOT NULL,
   cart_id int,
   package_name VARCHAR(50),
   package_price int NOT NULL,
-  description_of_package VARCHAR(500),
-  package_image VARCHAR(50),
+  brief_description_of_package VARCHAR(500),
+  complete_description_of_package VARCHAR(1000),
+  first_package_image VARCHAR(50),
+  second_package_image VARCHAR(50),
+  third_package_image VARCHAR(50),
+  fourth_package_image VARCHAR(50),
+  fifth_package_image VARCHAR(50),
   PRIMARY KEY (PACKAGE_ID),
   FOREIGN KEY (country_id) REFERENCES BBY_33_country(COUNTRY_ID) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES BBY_33_user(USER_ID) ON UPDATE CASCADE ON DELETE CASCADE

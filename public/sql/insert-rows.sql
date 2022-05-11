@@ -8,7 +8,7 @@ INSERT INTO BBY_33_country (COUNTRY_ID, user_id, country, description_of_country
 INSERT INTO BBY_33_country (COUNTRY_ID, user_id, country, description_of_country) VALUES (3, 1, 'Yemen', 'Food Shortage');
 INSERT INTO BBY_33_country (COUNTRY_ID, user_id, country, description_of_country) VALUES (4, 1, 'Ethiopia', 'Heavy flooding');
 
-INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (1, 1, 'Package 1', 20, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
-INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (2, 1, 'Package 2', 30, 'Contains Water, Canned food and Medicine', '/img/landing1.jpg');
-INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (3, 1, 'Package 3', 35, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
-INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (4, 1, 'Package 4', 30, 'Contains Water, and Water', '/img/landing1.jpg');
+INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (1, 'Package 1', 20, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
+INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (2, 'Package 2', 30, 'Contains Water, Canned food and Medicine', '/img/landing1.jpg');
+INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (3, 'Package 3', 35, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
+INSERT INTO BBY_33_package (PACKAGE_ID, user_id, country_id, package_name, package_price, description_of_package, package_image) VALUES (4, 'Package 4', 30, 'Contains Water, and Water', '/img/landing1.jpg');
