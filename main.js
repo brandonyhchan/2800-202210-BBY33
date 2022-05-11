@@ -799,7 +799,7 @@ app.post("/delete-users", function (req, res) {
             function (error, results) {
                 adminUsers = results;
                 let send = {
-                    status: ""  
+                    status: ""
                 };
                 connection.execute(
                     "SELECT * FROM bby_33_user WHERE USER_ID = ?", [userID],
@@ -870,7 +870,7 @@ app.post("/undelete-users", function (req, res) {
                 }
             }
         );
-    } 
+    }
 });
 
 app.post("/get-packages", function (req, res) {
@@ -954,6 +954,35 @@ app.post("/add-packages", function (req, res) {
         res.redirect("/");
     }
 });
+
+app.get("/get-cart", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
+            function (err, rows) {
+                let send = {
+                    rows: ""
+                }
+                var userid = rows[0].USER_ID;
+                connection.execute(
+                    `SELECT * FROM bby_33_cart WHERE user_id = ?`, [userid], (err, rows) => {
+                        send.rows = rows;
+                        res.send(send);
+                    }
+                )
+            }
+        )
+
+    } else {
+        res.redirect("/");
+    }
+})
 
 let port = 8000;
 app.listen(port, function () {
