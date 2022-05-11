@@ -12,6 +12,7 @@ body {
     overflow-x: hidden;
     font-family: 'Fonttype';
     max-height: 1080px;
+    background-color:#01171b;
 }
 
 #container {
@@ -19,7 +20,6 @@ body {
     display: grid;
     grid-template-rows: 25% 75%;
 }
-
 
 svg path {
     fill: #00394f;

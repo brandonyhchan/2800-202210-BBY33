@@ -24,7 +24,6 @@ body {
     height: 100vh;
     max-height: calc(100vh - 20%);
     overflow-x: hidden;
-    display: grid;
     align-items: center;
 }
 
