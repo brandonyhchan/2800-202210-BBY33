@@ -24,7 +24,6 @@ CREATE TABLE BBY_33_package (
   PACKAGE_ID int NOT NULL AUTO_INCREMENT,
   user_id int NOT NULL,
   cart_id int,
-  country_id int NOT NULL,
   package_name VARCHAR(50),
   package_price int NOT NULL,
   description_of_package VARCHAR(500),

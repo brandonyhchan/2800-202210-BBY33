@@ -23,6 +23,21 @@ function ajaxGET(url, callback, data) {
     xhr.send(params);
 }
 
+function ajaxGE(url, callback) {
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            callback(this.responseText);
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
+
+
 function getPackage() {
     var countryId;
     var countryName;
@@ -46,7 +61,7 @@ function getPackage() {
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
                             </div><div class='description'>${row.description_of_package}
-                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button></div></div><br>`);
+                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>viewMore</button></div></div><br>`);
                     }
                     document.getElementById("pList").innerHTML = str
                 }
@@ -100,4 +115,33 @@ function addPackage() {
     window.addEventListener('click', onClick);
 };
 
+function displayPackage() {
+    var packageId;
+    let onClick = (event) => {
+        if (event.target.className == "packagesDisplay") {
+            console.log(event.target.id);
+            packageId = event.target.id;
+            sessionStorage.setItem("package", packageId);
+            showPackage();
+        }
+    };
+    window.addEventListener('click', onClick);
+};
+
+
+async function showPackage() {
+    try {
+        let response = await fetch("/individualPackage", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/individualPackage");
+        }
+    } catch (err){
+
+    }
+}
+
 addPackage();
+
+displayPackage();
