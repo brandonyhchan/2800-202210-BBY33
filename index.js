@@ -147,10 +147,10 @@ app.post("/login", async function (req, res) {
         let pwd = req.body.password;
         const mysql = require("mysql2/promise");
         const connection = await mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
 
         connection.connect(function (err) {
@@ -193,10 +193,10 @@ app.post("/login", async function (req, res) {
 app.get("/get-users", function (req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         connection.query(
@@ -235,10 +235,10 @@ app.post("/user-update", function (req, res) {
     if (req.session.loggedIn) {
         let adminUsers = [];
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         connection.execute(
@@ -287,10 +287,10 @@ app.post("/register", function (req, res) {
     let hashedPassword = "";
 
     const connection = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "COMP2800"
+        host: "us-cdbr-east-05.cleardb.net",
+        user: "baf45e51bb6699",
+        password: "96b73edd",
+        database: "heroku_ecb002aef4014be"
     });
 
     connection.connect(function (err) {
@@ -376,10 +376,10 @@ app.get("/user-name", (req, res) => {
 app.get("/email", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let stat;
         connection.connect();
@@ -405,10 +405,10 @@ app.get("/email", (req, res) => {
 app.get("/first-name", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let stat;
         connection.connect();
@@ -434,10 +434,10 @@ app.get("/first-name", (req, res) => {
 app.get("/last-name", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let stat;
         connection.connect();
@@ -463,10 +463,10 @@ app.get("/last-name", (req, res) => {
 app.post("/update-user-name", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -494,10 +494,10 @@ app.post("/update-user-name", (req, res) => {
 app.post("/update-email", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -524,10 +524,10 @@ app.post("/update-email", (req, res) => {
 app.post("/admin-update-firstName", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -554,10 +554,10 @@ app.post("/admin-update-firstName", (req, res) => {
 app.post("/admin-update-lastName", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -584,10 +584,10 @@ app.post("/admin-update-lastName", (req, res) => {
 app.post("/admin-update-admin", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -614,10 +614,10 @@ app.post("/admin-update-admin", (req, res) => {
 app.post("/admin-update-email", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -648,10 +648,10 @@ app.post("/update-password", async (req, res) => {
         let salt = 5;
         let hashedPassword = "";
         const connection = await mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "",
@@ -690,10 +690,10 @@ app.post("/admin-update-password", async (req, res) => {
         let salt = 5;
         let hashedPassword = "";
         const connection = await mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "",
@@ -722,10 +722,10 @@ app.post("/admin-update-password", async (req, res) => {
 app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         let send = {
             status: "fail",
@@ -752,10 +752,10 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
 app.get('/get-user-images', upload.array("files", 1), function (req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         let send = {
@@ -791,10 +791,10 @@ app.post("/delete-users", function (req, res) {
 
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         connection.execute(
@@ -802,7 +802,7 @@ app.post("/delete-users", function (req, res) {
             function (error, results) {
                 adminUsers = results;
                 let send = {
-                    status: ""  
+                    status: ""
                 };
                 connection.execute(
                     "SELECT * FROM bby_33_user WHERE USER_ID = ?", [userID],
@@ -852,10 +852,10 @@ app.post("/undelete-users", function (req, res) {
     let userID = req.body.userID;
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         connection.execute(
@@ -873,7 +873,7 @@ app.post("/undelete-users", function (req, res) {
                 }
             }
         );
-    } 
+    }
 });
 
 app.post("/get-packages", function (req, res) {
@@ -882,10 +882,10 @@ app.post("/get-packages", function (req, res) {
     let countryID = req.body.countryID;
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         connection.query(
@@ -908,10 +908,10 @@ app.post("/add-packages", function (req, res) {
     var price = "";
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
+            host: "us-cdbr-east-05.cleardb.net",
+            user: "baf45e51bb6699",
+            password: "96b73edd",
+            database: "heroku_ecb002aef4014be"
         });
         connection.connect();
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
@@ -963,13 +963,13 @@ app.post("/add-packages", function (req, res) {
 //     console.log("Server started on " + port + "!");
 // });
 
-http.createServer((req,res) => {
+http.createServer((req, res) => {
     let q = url.parse(req.url, true);
-    
+
     res.writeHead(200, {
         "Content-Type": "text/html",
         "Access-Control-Allow-Origin": "*"
     });
-    
+
     res.end(`Hello ${q.query['name']}`);
 }).listen(process.env.Port || 3000);
