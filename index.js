@@ -958,18 +958,18 @@ app.post("/add-packages", function (req, res) {
     }
 });
 
-// let port = 8000;
-// app.listen(port, function () {
-//     console.log("Server started on " + port + "!");
-// });
+let port = 8000;
+app.listen(port, function () {
+    console.log("Server started on " + port + "!");
+});
 
-http.createServer((req, res) => {
-    let q = url.parse(req.url, true);
+// http.createServer((req, res) => {
+//     let q = url.parse(req.url, true);
 
-    res.writeHead(200, {
-        "Content-Type": "text/html",
-        "Access-Control-Allow-Origin": "*"
-    });
+//     res.writeHead(200, {
+//         "Content-Type": "text/html",
+//         "Access-Control-Allow-Origin": "*"
+//     });
 
-    res.end(`Hello ${q.query['name']}`);
-}).listen(process.env.Port || 3000);
+//     res.end(`Hello ${q.query['Artem']}`);
+// }).listen(process.env.Port || 3000);
