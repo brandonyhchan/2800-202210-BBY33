@@ -1,0 +1,185 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Fonttype";
+}
+
+#container {
+    height: 100%;
+    background-color: white;
+    display: flex;
+    align-content: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#package-container {
+    background-color: rgb(245, 245, 245);
+    border-style: none;
+    border-radius: 7px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+    text-align: center;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+}
+
+#package-name {
+    color: rgb(14, 76, 109);
+}
+
+#package-description {
+    padding: 3%;
+    text-align: left;
+    grid-column: 2 / 3;
+    display: grid;
+}
+
+button {
+    text-align: center;
+    white-space: nowrap;
+    height: 40px;
+    font-size: 20px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
+}
+
+button:active {
+    transform: translateY(4px);
+}
+
+button:hover {
+    background-color: rgb(114, 186, 213);
+}
+
+#add-to-cart {
+    align-self: flex-end;
+}
+
+#package-gallery-desktop {
+    padding: 3%;
+    grid-column: 1 / 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1r;
+    grid-template-rows: auto;
+}
+
+#package-gallery-mobile {
+    display: none;
+}
+
+#image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+}
+
+#image2 {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+#image3 {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+#image4 {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+}
+
+.tabbed-image {
+    opacity: 50%;
+}
+
+.tabbed-image:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 720px) {
+    .tabbed-image {
+        display: none;
+    }
+    #package-gallery-desktop {
+        display: none;
+    }
+    #package-container {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        margin-bottom: 10%;
+    }
+    #package-gallery-mobile {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+        position: relative;
+    }
+    .mobile-image {
+        width: 100%;
+        object-fit: cover;
+    }
+    .slide-index {
+        color: rgb(14, 76, 109);
+        font-size: 20px;
+        padding: 8px 12px;
+        position: absolute;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .previous,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: rgb(14, 76, 109);
+        font-weight: bold;
+        font-size: 30px;
+    }
+    .next {
+        right: 0;
+    }
+    .previous {
+        left: 0;
+    }
+    .previous:hover,
+    .next:hover {
+        background-color: rgba(14, 76, 109, 0.7);
+        color: rgba(114, 186, 213, 1);
+    }
+}

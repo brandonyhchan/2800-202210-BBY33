@@ -11,10 +11,10 @@ const {
 } = require('jsdom');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, callback) {
+    destination: function(req, file, callback) {
         callback(null, "./public/userImg/")
     },
-    filename: function (req, file, callback) {
+    filename: function(req, file, callback) {
         callback(null, "profilePic-" + file.originalname.split('/').pop().trim());
     }
 });
@@ -51,7 +51,7 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
     if (req.session.loggedIn) {
         if (isAdmin === false) {
             res.redirect("/landing");
@@ -65,7 +65,7 @@ app.get("/", function (req, res) {
     }
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", async(req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -75,7 +75,7 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/admin-add-users", async (req, res) => {
+app.get("/admin-add-users", async(req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/adminAddUsers.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -86,7 +86,7 @@ app.get("/admin-add-users", async (req, res) => {
     }
 });
 
-app.get("/landing", async (req, res) => {
+app.get("/landing", async(req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -132,7 +132,7 @@ app.get("/footer", (req, res) => {
 })
 
 
-app.post("/login", async function (req, res) {
+app.post("/login", async function(req, res) {
     if (req.session.loggedIn && isAdmin == true) {
         res.redirect("/admin");
     } else if (req.session.loggedIn && isAdmin == false) {
@@ -150,7 +150,7 @@ app.post("/login", async function (req, res) {
             database: "COMP2800"
         });
 
-        connection.connect(function (err) {
+        connection.connect(function(err) {
             if (err) throw err;
         });
         const [rows] = await connection.execute(
@@ -187,7 +187,7 @@ app.post("/login", async function (req, res) {
 
 });
 
-app.get("/get-users", function (req, res) {
+app.get("/get-users", function(req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -198,7 +198,7 @@ app.get("/get-users", function (req, res) {
         connection.connect();
         connection.query(
             "SELECT * FROM bby_33_user",
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -213,10 +213,10 @@ app.get("/get-users", function (req, res) {
     }
 });
 
-app.get("/logout", function (req, res) {
+app.get("/logout", function(req, res) {
 
     if (req.session) {
-        req.session.destroy(function (error) {
+        req.session.destroy(function(error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
@@ -228,7 +228,7 @@ app.get("/logout", function (req, res) {
     }
 });
 
-app.post("/user-update", function (req, res) {
+app.post("/user-update", function(req, res) {
     if (req.session.loggedIn) {
         let adminUsers = [];
         const connection = mysql.createConnection({
@@ -240,7 +240,7 @@ app.post("/user-update", function (req, res) {
         connection.connect();
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function (error, results) {
+            function(error, results) {
                 adminUsers = results;
                 let send = {
                     status: "fail",
@@ -269,7 +269,7 @@ app.post("/user-update", function (req, res) {
 
 });
 
-app.post("/register", function (req, res) {
+app.post("/register", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -290,14 +290,14 @@ app.post("/register", function (req, res) {
         database: "COMP2800"
     });
 
-    connection.connect(function (err) {
+    connection.connect(function(err) {
         if (err) {
             console.log("failed to connect");
         }
     });
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
-        function (error, results, fields) {
+        function(error, results, fields) {
             existingUsers = results;
             let send = {
                 status: " ",
@@ -320,7 +320,7 @@ app.post("/register", function (req, res) {
                         i++;
                     }
                     if (alreadyExists == false) {
-                        bcrypt.hash(pwd, salt, function (err, hash) {
+                        bcrypt.hash(pwd, salt, function(err, hash) {
                             hashedPassword = hash;
                             connection.execute(
                                 "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password, user_image) VALUES(?, ?, ?, ?, 'n', 'n', ?, 'stock-profile.png')", [usr, firstName, lastName, email, hashedPassword]
@@ -340,14 +340,14 @@ app.post("/register", function (req, res) {
     )
 });
 
-app.get("/createAccount", function (req, res) {
+app.get("/createAccount", function(req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
 
     res.send(profileDOM.serialize());
 });
-app.get("/profile", function (req, res) {
+app.get("/profile", function(req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/profile.html", "utf8");
@@ -638,7 +638,7 @@ app.post("/admin-update-email", (req, res) => {
     }
 })
 
-app.post("/update-password", async (req, res) => {
+app.post("/update-password", async(req, res) => {
     if (req.session.loggedIn) {
         const mysql = require("mysql2/promise");
         let existingPassword;
@@ -662,7 +662,7 @@ app.post("/update-password", async (req, res) => {
         let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
         if (comparison) {
             existingPassword = req.body.newPass;
-            bcrypt.hash(existingPassword, salt, function (err, hash) {
+            bcrypt.hash(existingPassword, salt, function(err, hash) {
                 hashedPassword = hash;
                 connection.execute(
                     "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
@@ -680,7 +680,7 @@ app.post("/update-password", async (req, res) => {
     }
 })
 
-app.post("/admin-update-password", async (req, res) => {
+app.post("/admin-update-password", async(req, res) => {
     if (req.session.loggedIn) {
         const mysql = require("mysql2/promise");
         let existingPassword;
@@ -701,7 +701,7 @@ app.post("/admin-update-password", async (req, res) => {
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email],
         );
         existingPassword = req.body.newPass;
-        bcrypt.hash(existingPassword, salt, function (err, hash) {
+        bcrypt.hash(existingPassword, salt, function(err, hash) {
             hashedPassword = hash;
             connection.execute(
                 "UPDATE bby_33_user SET password = ? WHERE email_address = ?", [hashedPassword, req.body.email]
@@ -716,7 +716,7 @@ app.post("/admin-update-password", async (req, res) => {
     }
 })
 
-app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
+app.post('/upload-user-images', upload.array("files", 1), function(req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -746,7 +746,7 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-app.get('/get-user-images', upload.array("files", 1), function (req, res) {
+app.get('/get-user-images', upload.array("files", 1), function(req, res) {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
             host: "localhost",
@@ -780,7 +780,7 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-app.post("/delete-users", function (req, res) {
+app.post("/delete-users", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let adminUsers = [];
@@ -796,19 +796,19 @@ app.post("/delete-users", function (req, res) {
         connection.connect();
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function (error, results) {
+            function(error, results) {
                 adminUsers = results;
                 let send = {
-                    status: ""  
+                    status: ""
                 };
                 connection.execute(
                     "SELECT * FROM bby_33_user WHERE USER_ID = ?", [userID],
-                    function (error, admins) {
+                    function(error, admins) {
                         if (admins[0].admin_user == 'y') {
                             if (adminUsers.length > 1) {
                                 connection.execute(
                                     "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'y'],
-                                    function (error, results) {
+                                    function(error, results) {
                                         if (error) {
                                             console.log(error);
                                             send.status = "fail";
@@ -823,7 +823,7 @@ app.post("/delete-users", function (req, res) {
                         } else {
                             connection.execute(
                                 "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'n'],
-                                function (error, results) {
+                                function(error, results) {
                                     if (error) {
                                         console.log(error);
                                         send.status = "fail";
@@ -843,7 +843,7 @@ app.post("/delete-users", function (req, res) {
     }
 });
 
-app.post("/undelete-users", function (req, res) {
+app.post("/undelete-users", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let userID = req.body.userID;
@@ -857,7 +857,7 @@ app.post("/undelete-users", function (req, res) {
         connection.connect();
         connection.execute(
             "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ?", ['n', userID],
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                     res.send({
@@ -870,10 +870,10 @@ app.post("/undelete-users", function (req, res) {
                 }
             }
         );
-    } 
+    }
 });
 
-app.post("/get-packages", function (req, res) {
+app.post("/get-packages", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let countryID = req.body.countryID;
@@ -887,7 +887,7 @@ app.post("/get-packages", function (req, res) {
         connection.connect();
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -900,7 +900,7 @@ app.post("/get-packages", function (req, res) {
     }
 });
 
-app.post("/add-packages", function (req, res) {
+app.post("/add-packages", function(req, res) {
     res.setHeader("Content-Type", "application/json");
     var price = "";
     if (req.session.loggedIn) {
@@ -912,7 +912,7 @@ app.post("/add-packages", function (req, res) {
         });
         connection.connect();
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
-            function (err, rows) {
+            function(err, rows) {
                 let send = {
                     status: " "
                 }
@@ -921,16 +921,16 @@ app.post("/add-packages", function (req, res) {
                 var userid = rows[0].USER_ID;
                 userFound = true;
                 connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                    function (err, prices) {
+                    function(err, prices) {
                         price = prices[0].package_price
                     });
                 if (userFound) {
                     connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
-                        function (err, packages) {
+                        function(err, packages) {
                             console.log(packages.length);
                             if (packages.length > 0) {
                                 connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
-                                    function (err, totalPrice) {
+                                    function(err, totalPrice) {
                                         var tPrice = totalPrice[0].price
                                         connection.execute(
                                             `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
@@ -955,7 +955,22 @@ app.post("/add-packages", function (req, res) {
     }
 });
 
+app.get("/packageInfo", function(req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/packageInfo.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+
+
+
 let port = 8000;
-app.listen(port, function () {
+app.listen(port, function() {
     console.log("Server started on " + port + "!");
 });
