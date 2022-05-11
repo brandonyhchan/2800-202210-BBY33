@@ -958,10 +958,6 @@ app.post("/add-packages", function (req, res) {
     }
 });
 
-// let port = 8000;
-// app.listen(port, function () {
-//     console.log("Server started on " + port + "!");
-// });
 
 app.listen(process.env.PORT || 3000, function(){
     console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
