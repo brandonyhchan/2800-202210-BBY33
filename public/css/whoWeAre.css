@@ -39,3 +39,19 @@ body {
     font-size: 20px;
     margin-bottom: 2%;
 }
+
+@media only screen and (max-width: 720px) {
+    #logo{
+        max-width: 70%;
+        margin-top: 12%;
+    }
+
+    #writing{
+        margin-left: 7%;
+        margin-right: 7%;
+    }
+
+    .description{
+        text-align: justify;
+    }
+}
