@@ -160,10 +160,9 @@ app.post("/login", async function (req, res) {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
-        req.session.user_name = req.body.user_name;
         let pwd = req.body.password;
         await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [req.session.user_name, 'n'], async (err, rows) => {
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [req.body.user_name, 'n'], async (err, rows) => {
                 if (rows.length > 0) {
                     let hashedPassword = rows[0].password
                     let comparison = await bcrypt.compare(req.body.password, hashedPassword);
@@ -172,6 +171,7 @@ app.post("/login", async function (req, res) {
                             isAdmin = true;
                         }
                         req.session.loggedIn = true;
+                        req.session.user_name = rows[0].user_name;
                         req.session.password = pwd;
                         req.session.name = rows[0].first_name;
                         res.send({
