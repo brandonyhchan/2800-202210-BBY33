@@ -44,6 +44,7 @@ const upload = multer({
 });
 
 var isAdmin = false;
+var loggedInAsAdmin = false;
 var userName;
 var userEmail;
 
@@ -108,7 +109,7 @@ app.get("/admin-add-users", async (req, res) => {
 });
 
 app.get("/landing", async (req, res) => {
-    if (req.session.loggedIn && isAdmin === false) {
+    if (req.session.loggedIn && req.session.isAdmin === 'n') {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
@@ -174,6 +175,7 @@ app.post("/login", async function (req, res) {
                         req.session.user_name = rows[0].user_name;
                         req.session.password = pwd;
                         req.session.name = rows[0].first_name;
+                        req.session.isAdmin = rows[0].admin_user;
                         res.send({
                             status: "success",
                             msg: "Logged in."
