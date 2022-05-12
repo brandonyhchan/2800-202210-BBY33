@@ -195,6 +195,20 @@ function ajaxPOST(url, callback, data) {
     xhr.send(params);
 }
 
+function ajaxGET(url, callback) {
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            callback(this.responseText);
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
+
 
 document.querySelector("#submit").addEventListener("click", function (e) {
     e.preventDefault();
@@ -248,24 +262,42 @@ function uploadImages(e) {
     }).catch(function (err) {
         ("Error:", err)
     });
-    getImage();
-    getImage();
-    getImage();
 }
 
 
 
-async function getImage() {
-    try {
-        let responseObj = await fetch("/get-user-images", {
-            method: 'GET',
-        });
-        if (responseObj.status === 200) {
-            let data = await responseObj.json();
-            document.querySelector("#profileImage").setAttribute("src", data.path);
+// async function getImage() {
+//     try {
+//         let responseObj = await fetch("/get-user-images", {
+//             method: 'GET',
+//         });
+//         if (responseObj.status === 200) {
+//             let data = await responseObj.json();
+//             document.querySelector("#profileImage").setAttribute("src", data.path);
+//         }
+//     } catch (error) {
+//     }
+// }
+
+// getImage();
+
+function getImage() {
+    let onClick = (event) => {
+        if (event.target.className == "showImage") {
+            ajaxGET("/get-user-images", function (data) {
+
+                if (data) {
+                    let dataParsed = JSON.parse(data);
+                    if (dataParsed.status == "fail") {
+                        console.log("fail");
+                    } else {
+                        document.querySelector("#profileImage").setAttribute("src", data.path);
+                    }
+                }
+            });
         }
-    } catch (error) {
-    }
-}
+    };
+    window.addEventListener('click', onClick);
+};
 
 getImage();
