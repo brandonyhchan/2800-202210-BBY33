@@ -74,25 +74,16 @@ ready(() => {
         });
         document.querySelector("#landing").addEventListener("click", () => {
             getLanding();
-<<<<<<< HEAD
         });
+
+        document.querySelector("#map").addEventListener("click", ()=>{
+            getMap();
+        })
         let carts = document.querySelectorAll(".cart-container");
         for (let i = 0; i < carts.length; i++) {
             carts[i].addEventListener("click", getCart);
         }
         
-=======
-        })
-
-        document.querySelector("#map").addEventListener("click", () => {
-            getMap();
-        })
-
-        document.querySelector("#mobile-logo").addEventListener("click", () =>{
-            getLanding();
-        })
-
->>>>>>> Brandon_map_styling
     });
 
     var path = window.location.pathname;
