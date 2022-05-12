@@ -46,7 +46,7 @@ function getPackage() {
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
                             </div><div class='description'>${row.description_of_package}
-                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button></div></div><br>`);
+                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button></div></div><button type='button' class='packagesDisplay' id='${row.package_name}'>viewMore</button></div></div><br>`);
                     }
                     document.getElementById("pList").innerHTML = str
                 }
@@ -102,5 +102,34 @@ function addPackage() {
     };
     window.addEventListener('click', onClick);
 };
+
+function displayPackage() {
+    var packageId;
+    let onClick = (event) => {
+        if (event.target.className == "packagesDisplay") {
+            console.log(event.target.id);
+            packageId = event.target.id;
+            sessionStorage.setItem("package", packageId);
+            showPackage();
+        }
+    };
+    window.addEventListener('click', onClick);
+};
+
+
+async function showPackage() {
+    try {
+        let response = await fetch("/packageInfo", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/packageInfo");
+        }
+    } catch (err){
+
+    }
+}
+
+displayPackage();
 
 addPackage();
