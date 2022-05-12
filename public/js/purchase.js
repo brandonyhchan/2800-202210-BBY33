@@ -48,7 +48,7 @@ function getPackage() {
                             </div><div class='description'>${row.description_of_package}
                             </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button></div></div><button type='button' class='packagesDisplay' id='${row.package_name}'>viewMore</button></div></div><br>`);
                     }
-                    document.getElementById("pList").innerHTML = str
+                    document.getElementById("cart").innerHTML = str;
                 }
             }
         }, queryString);
@@ -58,10 +58,6 @@ function getPackage() {
         records[j].addEventListener("click", onClick);
     }
 }
-
-var promise = new Promise((resolve, reject) => {
-    resolve(getPackage);
-});
 
 getPackage();
 

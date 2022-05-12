@@ -865,6 +865,36 @@ app.post("/display-package", function (req, res) {
 
 
 var port = process.env.PORT || 8000;
+app.get("/get-cart", (req, res) => {
+    if (req.session.loggedIn) {
+        const connection = mysql.createConnection({
+            host: "localhost",
+            user: "root",
+            password: "",
+            database: "COMP2800"
+        });
+        connection.connect();
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
+            function (err, rows) {
+                let send = {
+                    rows: ""
+                }
+                var userid = rows[0].USER_ID;
+                connection.execute(
+                    `SELECT * FROM bby_33_cart WHERE user_id = ?`, [userid], (err, rows) => {
+                        send.rows = rows;
+                        res.send(send);
+                    }
+                )
+            }
+        )
+
+    } else {
+        res.redirect("/");
+    }
+})
+
+let port = 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
