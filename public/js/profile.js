@@ -299,6 +299,8 @@ function getImage() {
         }
     };
     window.addEventListener('click', onClick);
+    displayImage();
+
 };
 
 getImage();
