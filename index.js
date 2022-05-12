@@ -159,6 +159,7 @@ app.post("/login", async function (req, res) {
         const [rows] = await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'],
         );
+        connection.end();
         if (rows.length > 0) {
             let hashedPassword = rows[0].password
             let comparison = await bcrypt.compare(req.body.password, hashedPassword);
@@ -265,6 +266,7 @@ app.post("/user-update", function (req, res) {
                 connection.end();
             }
         );
+        connection.end();
     } else {
         res.redirect("/");
     }
@@ -339,6 +341,7 @@ app.post("/register", function (req, res) {
 
         }
     )
+    connection.end();
 });
 
 app.get("/createAccount", function (req, res) {
@@ -395,6 +398,7 @@ app.get("/email", (req, res) => {
             }
 
         )
+        connection.end();
     } else {
         res.redirect("/");
     }
@@ -424,6 +428,7 @@ app.get("/first-name", (req, res) => {
             }
 
         )
+        connection.end();
     } else {
         res.redirect("/");
     }
@@ -453,6 +458,7 @@ app.get("/last-name", (req, res) => {
             }
 
         )
+        connection.end();
     } else {
         res.redirect("/");
     }
@@ -481,6 +487,7 @@ app.post("/update-user-name", (req, res) => {
                 }
             }
         );
+        connection.end();
         userName = req.body.name;
         res.send(send);
 
@@ -512,6 +519,7 @@ app.post("/update-email", (req, res) => {
                 }
             }
         );
+        connection.end();
         res.send(send);
 
     } else {
@@ -542,6 +550,7 @@ app.post("/admin-update-firstName", (req, res) => {
                 }
             }
         );
+        connection.end();
         res.send(send);
 
     } else {
@@ -572,6 +581,7 @@ app.post("/admin-update-lastName", (req, res) => {
                 }
             }
         );
+        connection.end();
         res.send(send);
 
     } else {
@@ -602,6 +612,7 @@ app.post("/admin-update-admin", (req, res) => {
                 }
             }
         );
+        connection.end();
         res.send(send);
 
     } else {
@@ -632,6 +643,7 @@ app.post("/admin-update-email", (req, res) => {
                 }
             }
         );
+        connection.end();
         res.send(send);
 
     } else {
@@ -668,6 +680,7 @@ app.post("/update-password", async (req, res) => {
                 connection.execute(
                     "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
                 );
+                
             });
             send.status = "success";
             send.msg = "Password Updated";
@@ -707,6 +720,7 @@ app.post("/admin-update-password", async (req, res) => {
             connection.execute(
                 "UPDATE bby_33_user SET password = ? WHERE email_address = ?", [hashedPassword, req.body.email]
             );
+            connection.end();
         });
         send.status = "success";
         send.msg = "Password Updated";
@@ -740,6 +754,7 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
                 }
             }
         );
+        connection.end();
 
     } else {
         res.redirect("/");
@@ -775,6 +790,7 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
             }
 
         )
+        connection.end();
     } else {
         res.redirect("/");
     }
@@ -839,6 +855,7 @@ app.post("/delete-users", function (req, res) {
                 );
             }
         );
+        connection.end();
     } else {
         res.redirect("/");
     }
@@ -871,6 +888,7 @@ app.post("/undelete-users", function (req, res) {
                 }
             }
         );
+        connection.end();
     }
 });
 
@@ -898,6 +916,7 @@ app.post("/get-packages", function (req, res) {
                 });
             }
         );
+        connection.end();
     }
 });
 
@@ -951,6 +970,8 @@ app.post("/add-packages", function (req, res) {
                 }
 
             });
+
+        connection.end();
     } else {
         res.redirect("/");
     }
