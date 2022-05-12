@@ -21,7 +21,7 @@ function getUsers() {
                             "</td><td class='lastName'>" + row.last_name +
                             "</td><td class='email'>" + row.email_address +
                             "</td><td class='admin'>" + row.admin_user +
-                            "<td class='manage' valign='middle'><button class='remove'>Delete</button><button class='view'>View</button>" +
+                            "<td class='manage'><button class='remove'>Delete</button>" +
                             "</td></tr>");
                     }
                     document.getElementById("userTable").innerHTML = str;
