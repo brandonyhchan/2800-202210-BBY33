@@ -160,7 +160,7 @@ app.post("/login", async function (req, res) {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
-        userName = req.body.user_name;
+        req.session.user_name = req.body.user_name;
         let pwd = req.body.password;
         await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [req.session.user_name, 'n'], async (err, rows) => {
@@ -172,7 +172,6 @@ app.post("/login", async function (req, res) {
                             isAdmin = true;
                         }
                         req.session.loggedIn = true;
-                        req.session.user_name = userName;
                         req.session.password = pwd;
                         req.session.name = rows[0].first_name;
                         res.send({
