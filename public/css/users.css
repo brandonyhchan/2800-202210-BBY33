@@ -16,7 +16,7 @@ body {
     height: 100vh;
 }
 
-#display-cart {
+.display-cart {
     z-index: 1;
     right: 0;
     height: 30%;
@@ -27,7 +27,11 @@ body {
     opacity: 0;
 }
 
-#close {
+#mobile {
+    display: none;
+}
+
+#close, #close-m {
     float: right;
     top: 0;
 }
@@ -35,11 +39,10 @@ body {
 .container {
     display: grid;
     grid-template-columns: 10% 90%;
-    grid-template-rows: 60% 20% 20%;
+    grid-template-rows: 70% 30%;
     grid-template-areas: 
     "cart" "map"
-    "cart" "map"
-    "total" "map";
+    "cart" "map";
     height: 100vh;
 }
 
@@ -57,22 +60,12 @@ svg path:hover {
 
 #cart {
     grid-area: cart;
-    max-height: 60%;
+    max-height: 70%;
     width: 10%;
     overflow-y: scroll;
     left: 0;
     position: absolute;
     scrollbar-width: none;
-}
-
-#total {
-    grid-area: total;
-    color: white;
-    left: 0;
-    bottom: 0;
-    height: 20%;
-    width: 10%;
-    position: absolute;
 }
 
 #cart::-webkit-scrollbar {
@@ -124,4 +117,61 @@ svg path:hover {
     background-color: white;
     padding: 2%;
     text-align: center;
+}
+
+@media only screen and (max-width: 720px) {
+    body {
+        margin-right: 0;
+    }
+    .container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 20% 65% 25%;
+        grid-template-areas: 
+        "cart"
+        "map"
+        "subtotal";
+        height: 100vh;
+    }
+
+    .map {
+        grid-area: map;
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    #cart {
+        grid-area: cart;
+        max-height: 20%;
+        width: 100%;
+        overflow-y: scroll;
+        left: 0;
+        position: absolute;
+        scrollbar-width: none;
+    }
+
+    .display-cart {
+        display: none;
+    }
+    .display-cart2 {
+        grid-area: subtotal;
+        z-index: 1;
+        right: 0;
+        height: 30%;
+        width: 100%;
+        float: right;
+        position: absolute;
+        background-color: aliceblue;
+        opacity: 0;
+        bottom: 0;
+    }
+    #mobile {
+        display: inline-block;
+    }
+
+    #desktop {
+        display: none;
+    }
+    
 }

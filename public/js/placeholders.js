@@ -30,13 +30,40 @@ ready(() => {
                     <td>${rows[i].product_quantity}</td></tr>`
                 )
             }
-            document.querySelector("#subtotal").innerHTML = string;
-            document.getElementById("display-cart").style.opacity = 0.75;
+            if (window.innerWidth > 720) {
+                document.querySelector(".subtotal").innerHTML = string;
+                document.querySelector(".display-cart").style.opacity = 0.75;
+                updatePrice(rows);
+            } else {
+                document.querySelector(".subtotal2").innerHTML = string;
+                document.querySelector(".display-cart2").style.opacity = 0.75;
+                updatePrice(rows);
+            }
+           
+            
         })
-        document.querySelector("#close").addEventListener("click", function (e) {
-            document.getElementById("display-cart").style.opacity = 0;
-        });
+        if (window.innerWidth > 720) {
+            document.querySelector("#close").addEventListener("click", function (e) {
+                document.querySelector(".display-cart").style.opacity = 0;
+            });
+        } else {
+            document.querySelector("#close-m").addEventListener("click", function (e) {
+                document.querySelector(".display-cart2").style.opacity = 0;
+            });
+        }
 
+    }
+
+    function updatePrice(rows) {
+        let total = 0;
+        for (let i = 0; i < rows.length; i++) {
+            total += parseInt(rows[i].price);
+        }
+        if (window.innerWidth > 720) {
+            document.querySelector("#total1").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
+        } else {
+            document.querySelector("#total2").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
+        }
     }
 
     ajaxGET("/nav", function (data) {
@@ -44,11 +71,15 @@ ready(() => {
         navbar.innerHTML = data;
         document.querySelector("#profile").addEventListener("click", () => {
             getProfile();
-        })
+        });
         document.querySelector("#landing").addEventListener("click", () => {
             getLanding();
-        })
-        document.querySelector("#cart-icon").addEventListener("click", getCart);
+        });
+        let carts = document.querySelectorAll(".cart-container");
+        for (let i = 0; i < carts.length; i++) {
+            carts[i].addEventListener("click", getCart);
+        }
+        
     });
 
     var path = window.location.pathname;
