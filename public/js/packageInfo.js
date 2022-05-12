@@ -75,7 +75,7 @@ function getPackage() {
                 console.log("fail");
             } else {
                 console.log(dataParsed);
-                document.getElementById("image").setAttribute("src", "/img/" + dataParsed.rows[0].package_image);
+                document.getElementById("image").setAttribute("src", dataParsed.rows[0].package_image);
                 document.getElementById("package-name").innerHTML = dataParsed.rows[0].package_name;
                 document.getElementById("price").innerHTML = dataParsed.rows[0].package_price;
                 document.getElementById("description").innerHTML = dataParsed.rows[0].description_of_package;
