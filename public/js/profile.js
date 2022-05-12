@@ -299,6 +299,7 @@ function getImage() {
     };
     window.addEventListener('click', onClick);
     displayImage ();
+    displayImage ();
 };
 
 getImage();
@@ -316,5 +317,3 @@ function displayImage() {
         }
     });
 }
-
-displayImage();
