@@ -347,7 +347,7 @@ app.get("/user-name", (req, res) => {
     if (req.session.loggedIn) {
         res.send({
             status: "success",
-            name: userName
+            name: req.session.user_name
         });
     } else {
         res.redirect("/");
@@ -358,7 +358,7 @@ app.get("/email", (req, res) => {
     if (req.session.loggedIn) {
         let stat;
         connection.query(
-            `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+            `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [req.session.user_name], (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -380,7 +380,7 @@ app.get("/first-name", (req, res) => {
     if (req.session.loggedIn) {
         let stat;
         connection.query(
-            `SELECT first_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+            `SELECT first_name FROM bby_33_user WHERE user_name = ?`, [req.session.user_name], (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -402,7 +402,7 @@ app.get("/last-name", (req, res) => {
     if (req.session.loggedIn) {
         let stat;
         connection.query(
-            `SELECT last_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+            `SELECT last_name FROM bby_33_user WHERE user_name = ?`, [req.session.user_name], (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -427,7 +427,7 @@ app.post("/update-user-name", (req, res) => {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET user_name = ? WHERE user_name = ?`, [req.body.name, userName], (err, result) => {
+            `UPDATE bby_33_user SET user_name = ? WHERE user_name = ?`, [req.body.name, req.session.user_name], (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -436,7 +436,7 @@ app.post("/update-user-name", (req, res) => {
                 }
             }
         );
-        userName = req.body.name;
+        req.session.user_name = req.body.name;
         res.send(send);
 
     } else {
@@ -451,7 +451,7 @@ app.post("/update-email", (req, res) => {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET email_address = ? WHERE user_name = ?`, [req.body.email, userName], (err) => {
+            `UPDATE bby_33_user SET email_address = ? WHERE user_name = ?`, [req.body.email, req.session.user_name], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -569,7 +569,7 @@ app.post("/update-password", async (req, res) => {
             msg: ""
         };
         await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName], async (err, rows) => {
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.session.user_name], async (err, rows) => {
                 existingPassword = rows[0].password
                 let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
                 if (comparison) {
@@ -577,7 +577,7 @@ app.post("/update-password", async (req, res) => {
                     bcrypt.hash(existingPassword, salt, function (err, hash) {
                         hashedPassword = hash;
                         connection.execute(
-                            "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
+                            "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, req.session.user_name]
                         );
                     });
                     send.status = "success";
@@ -634,7 +634,7 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET user_image = ? WHERE user_name = ?`, [req.files[0].filename, userName], (err) => {
+            `UPDATE bby_33_user SET user_image = ? WHERE user_name = ?`, [req.files[0].filename, req.session.user_name], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -657,7 +657,7 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
             path: " "
         };
         connection.query(
-            `SELECT user_image FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
+            `SELECT user_image FROM bby_33_user WHERE user_name = ?`, [req.session.user_name], (err, result) => {
                 if (err) {
                     res.send({
                         status: "fail"
@@ -778,7 +778,7 @@ app.post("/add-packages", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var price = "";
-        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
                 let send = {
                     status: " "
@@ -857,7 +857,7 @@ app.post("/display-package", function (req, res) {
 
 app.get("/get-cart", (req, res) => {
     if (req.session.loggedIn) {
-        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
                 let send = {
                     rows: ""
