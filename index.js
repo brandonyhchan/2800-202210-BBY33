@@ -839,13 +839,6 @@ app.post("/display-package", function (req, res) {
 
     let packageName = req.body.packageName;
     if (req.session.loggedIn) {
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
             function (error, results) {
@@ -862,18 +855,8 @@ app.post("/display-package", function (req, res) {
 });
 
 
-
-
-
 app.get("/get-cart", (req, res) => {
     if (req.session.loggedIn) {
-        const connection = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "COMP2800"
-        });
-        connection.connect();
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
             function (err, rows) {
                 let send = {
