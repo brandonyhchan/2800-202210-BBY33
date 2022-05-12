@@ -282,12 +282,13 @@ function uploadImages(e) {
 // getImage();
 
 function getImage() {
+    var dataParsed = "";
     let onClick = (event) => {
         if (event.target.className == "showImage") {
             ajaxGET("/get-user-images", function (data) {
 
                 if (data) {
-                    let dataParsed = JSON.parse(data);
+                    dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
                     } else {
@@ -298,22 +299,9 @@ function getImage() {
         }
     };
     window.addEventListener('click', onClick);
-    displayImage ();
-    displayImage ();
+    document.querySelector("#profileImage").setAttribute("src", dataParsed.path)
+
 };
 
 getImage();
 
-function displayImage() {
-    ajaxGET("/get-user-images", function (data) {
-
-        if (data) {
-            let dataParsed = JSON.parse(data);
-            if (dataParsed.status == "fail") {
-                console.log("fail");
-            } else {
-                document.querySelector("#profileImage").setAttribute("src", dataParsed.path);
-            }
-        }
-    });
-}
