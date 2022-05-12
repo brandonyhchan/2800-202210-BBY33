@@ -864,7 +864,7 @@ app.post("/display-package", function (req, res) {
 
 
 
-var port = process.env.PORT || 8000;
+
 app.get("/get-cart", (req, res) => {
     if (req.session.loggedIn) {
         const connection = mysql.createConnection({
@@ -894,7 +894,7 @@ app.get("/get-cart", (req, res) => {
     }
 })
 
-let port = 8000;
+var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
