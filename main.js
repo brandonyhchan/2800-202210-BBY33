@@ -362,6 +362,13 @@ app.get("/whoWeAre", function (req, res) {
     res.send(profileDOM.serialize());
 });
 
+app.get("/FAQ", function (req, res) {
+    let profile = fs.readFileSync("./app/html/faq.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
 app.get("/profile", function (req, res) {
 
     if (req.session.loggedIn) {

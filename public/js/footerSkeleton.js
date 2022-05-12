@@ -21,6 +21,10 @@ ready(() => {
         document.querySelector("#whoWeAre").addEventListener("click", () =>{
             getWhoWeAre();
         })
+
+        document.querySelector("#faq").addEventListener("click", () =>{
+            getFAQ();
+        })
     });
 
     async function getWhoWeAre(){
@@ -30,6 +34,19 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/whoWeAre");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getFAQ(){
+        try {
+            let response = await fetch("/FAQ", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/FAQ");
             }
         } catch (err) {
 
