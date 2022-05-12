@@ -64,6 +64,10 @@ ready(() => {
         document.querySelector("#map-icon").addEventListener("click", () =>{
             getMap();
         })
+
+        document.querySelector("#whoWeAre").addEventListener("click", () =>{
+            getWhoWeAre();
+        })
     });
 
     async function getProfile() {
@@ -126,6 +130,19 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/admin");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getWhoWeAre(){
+        try {
+            let response = await fetch("/whoWeAre", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/whoWeAre");
             }
         } catch (err) {
 

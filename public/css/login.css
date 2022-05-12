@@ -123,39 +123,6 @@ body {
     transform: translateY(4px);
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #00394f;
-}
-
-#desktop-footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    font-family: 'Fonttype';
-    color: white;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-footer a {
-    text-decoration: none;
-    color: white;
-    transition-duration: 0.5s;
-}
-
-footer a:hover {
-    color: rgb(114, 186, 213);
-}
-
-.footer-section {
-    display: grid;
-    padding: 3%;
-    text-align: left;
-    justify-content: center;
-}
 
 @media only screen and (max-width: 720px) {
     #logo {
@@ -168,16 +135,5 @@ footer a:hover {
     #login-container {
         padding: 4%;
         margin-top: 5%;
-    }
-    #desktop-footer {
-        display: grid;
-        width: 100%;
-        grid-template-columns: 1fr 1fr;
-        justify-items: center;
-        align-items: center;
-        padding-bottom: 3%;
-    }
-    #about-us {
-        display: none;
     }
 }

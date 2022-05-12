@@ -132,6 +132,7 @@ app.get("/footer", (req, res) => {
 })
 
 
+
 app.post("/login", async function (req, res) {
     if (req.session.loggedIn && isAdmin == true) {
         res.redirect("/admin");
@@ -344,9 +345,23 @@ app.get("/createAccount", function (req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
+    res.send(profileDOM.serialize());
+});
+
+app.get("/footer2", function (req, res) {
+    let profile = fs.readFileSync("./app/html/footer2.html", "utf8");
+    let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
+
+app.get("/whoWeAre", function (req, res) {
+    let profile = fs.readFileSync("./app/html/whoWeAre.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
 app.get("/profile", function (req, res) {
 
     if (req.session.loggedIn) {
