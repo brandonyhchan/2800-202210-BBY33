@@ -297,6 +297,17 @@ function getImage() {
             });
         }
     };
+    ajaxGET("/get-user-images", function (data) {
+
+        if (data) {
+            let dataParsed = JSON.parse(data);
+            if (dataParsed.status == "fail") {
+                console.log("fail");
+            } else {
+                document.querySelector("#profileImage").setAttribute("src", dataParsed.path);
+            }
+        }
+    });
     window.addEventListener('click', onClick);
 };
 
