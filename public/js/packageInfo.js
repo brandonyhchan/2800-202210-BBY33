@@ -1,12 +1,12 @@
 var package = sessionStorage.getItem("package");
+
 'use strict';
-console.log(package);
 
 /**
  * Controls the tabbed image gallery in desktop view.
  * @param image is the image that will replace the current main image.
  */
-function changeImage(image) {
+function changeImageTab(image) {
     var switchedImage = document.getElementById("image");
     switchedImage.src = image.src;
 }
@@ -46,12 +46,12 @@ function showImage(n) {
 
 function ajaxGET(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) {
+        function(k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -68,7 +68,7 @@ function getPackage() {
     var packageName = package;
     var queryString;
     queryString = "packageName=" + packageName;
-    ajaxGET("/display-package", function (data) {
+    ajaxGET("/display-package", function(data) {
         if (data) {
             let dataParsed = JSON.parse(data);
             if (dataParsed.status == "fail") {
