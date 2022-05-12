@@ -75,7 +75,7 @@ app.use(session({
 // redirects user after successful login
 app.get("/", function (req, res) {
     if (req.session.loggedIn) {
-        if (isAdmin === false) {
+        if (req.session.isAdmin === 'n') {
             res.redirect("/landing");
         } else {
             res.redirect("/admin");
@@ -98,7 +98,7 @@ app.get("/admin", async (req, res) => {
 });
 
 app.get("/admin-add-users", async (req, res) => {
-    if (req.session.loggedIn && isAdmin === true) {
+    if (req.session.loggedIn && req.session.isAdmin === 'y') {
         let profile = fs.readFileSync("./app/html/adminAddUsers.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
@@ -155,9 +155,9 @@ app.get("/footer", (req, res) => {
 
 
 app.post("/login", async function (req, res) {
-    if (req.session.loggedIn && isAdmin == true) {
+    if (req.session.loggedIn && req.session.isAdmin === 'y') {
         res.redirect("/admin");
-    } else if (req.session.loggedIn && isAdmin == false) {
+    } else if (req.session.loggedIn && req.session.isAdmin === 'n') {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
