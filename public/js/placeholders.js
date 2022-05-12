@@ -2,7 +2,6 @@
 var show;
 ready(() => {
     function ajaxGET(url, callback) {
-
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -20,8 +19,8 @@ ready(() => {
             let dataParsed = JSON.parse(data);
             var string = `<tr>
             <th class="package_id">Package</th>
-            <th class="price">$</th>
-            <th class="quantity">Q</th>
+            <th class="price">Price</th>
+            <th class="quantity">Quantity</th>
             </tr>`;
             let rows = dataParsed.rows;
             for (let i = 0; i < dataParsed.rows.length; i++) {
@@ -36,13 +35,6 @@ ready(() => {
         })
         document.querySelector("#close").addEventListener("click", function (e) {
             document.getElementById("display-cart").style.opacity = 0;
-
-            // for (let i = 0; i < this.parentNode.childNodes.length; i++) {
-            //     if (this.parentNode.childNodes[i].nodeType == Node.ELEMENT_NODE) {
-            //         this.parentNode.childNodes[i].innerHTML = "";
-            //     }
-            // }
-
         });
 
     }
@@ -53,12 +45,10 @@ ready(() => {
         document.querySelector("#profile").addEventListener("click", () => {
             getProfile();
         })
-
         document.querySelector("#landing").addEventListener("click", () => {
             getLanding();
         })
         document.querySelector("#cart-icon").addEventListener("click", getCart);
-
     });
 
     var path = window.location.pathname;
