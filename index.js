@@ -19,21 +19,16 @@ const localconfig = {
 };
 const herokuconfig = {
     host: "us-cdbr-east-05.cleardb.net",
-    user: "bc5280534f4148",
-    password: "174d7e43",
-    database: "heroku_05ec56092238160",
+    user: "baf45e51bb6699",
+    password: "96b73edd",
+    database: "heroku_ecb002aef4014be"
 };
 var connection;
 if (is_heroku) {
-    connection = mysql.createConnection(herokuconfig);
+    connection = mysql.createPool(herokuconfig);
 } else {
-    connection = mysql.createConnection(localconfig);
+    connection = mysql.createPool(localconfig);
 }
-connection.connect(function (err) {
-    if (err) {
-        throw err;
-    }
-});
 console.log("heroku " + is_heroku)
 
 const storage = multer.diskStorage({
@@ -842,7 +837,7 @@ app.get("/packageInfo", function (req, res) {
 
 
 
-let port = 8000;
+var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
