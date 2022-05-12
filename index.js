@@ -163,7 +163,7 @@ app.post("/login", async function (req, res) {
         userName = req.body.user_name;
         let pwd = req.body.password;
         await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'], async (err, rows) => {
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [req.session.user_name, 'n'], async (err, rows) => {
                 if (rows.length > 0) {
                     let hashedPassword = rows[0].password
                     let comparison = await bcrypt.compare(req.body.password, hashedPassword);
