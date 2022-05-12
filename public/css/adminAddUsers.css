@@ -159,6 +159,7 @@ td {
     .dropdown {
         display: inline-block;
         font-size: 24px;
+        cursor: pointer;
     }
     #dropdown-items {
         opacity: 0;
