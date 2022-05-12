@@ -299,9 +299,6 @@ function getImage() {
         }
     };
     window.addEventListener('click', onClick);
-    displayImage ();
-    document.querySelector("#profileImage").setAttribute("src", dataParsed.path)
-
 };
 
 getImage();
@@ -320,4 +317,4 @@ function displayImage() {
     });
 }
 
-
+displayImage();
