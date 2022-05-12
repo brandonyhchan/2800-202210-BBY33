@@ -291,7 +291,7 @@ function getImage() {
                     if (dataParsed.status == "fail") {
                         console.log("fail");
                     } else {
-                        document.querySelector("#profileImage").setAttribute("src", data.path);
+                        document.querySelector("#profileImage").setAttribute("src", dataParsed.path);
                     }
                 }
             });
