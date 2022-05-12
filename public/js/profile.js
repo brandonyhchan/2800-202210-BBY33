@@ -298,6 +298,12 @@ function getImage() {
         }
     };
     window.addEventListener('click', onClick);
+    displayImage ();
+};
+
+getImage();
+
+function displayImage() {
     ajaxGET("/get-user-images", function (data) {
 
         if (data) {
@@ -309,6 +315,6 @@ function getImage() {
             }
         }
     });
-};
+}
 
-getImage();
+displayImage();
