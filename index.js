@@ -13,11 +13,32 @@ const {
     JSDOM
 } = require('jsdom');
 
+const is_heroku = process.env.IS_HEROKU || false;
+const localconfig = {
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "COMP2800",
+};
+const herokuconfig = {
+    host: "us-cdbr-east-05.cleardb.net",
+    user: "baf45e51bb6699",
+    password: "96b73edd",
+    database: "heroku_ecb002aef4014be"
+};
+var connection;
+if (is_heroku) {
+    connection = mysql.createPool(herokuconfig);
+} else {
+    connection = mysql.createPool(localconfig);
+}
+console.log("heroku " + is_heroku)
+
 const storage = multer.diskStorage({
-    destination: function(req, file, callback) {
+    destination: function (req, file, callback) {
         callback(null, "./public/userImg/")
     },
-    filename: function(req, file, callback) {
+    filename: function (req, file, callback) {
         callback(null, "profilePic-" + file.originalname.split('/').pop().trim());
     }
 });
@@ -54,7 +75,7 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     if (req.session.loggedIn) {
         if (isAdmin === false) {
             res.redirect("/landing");
@@ -68,7 +89,7 @@ app.get("/", function(req, res) {
     }
 });
 
-app.get("/admin", async(req, res) => {
+app.get("/admin", async (req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -78,7 +99,7 @@ app.get("/admin", async(req, res) => {
     }
 });
 
-app.get("/admin-add-users", async(req, res) => {
+app.get("/admin-add-users", async (req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/adminAddUsers.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -89,7 +110,7 @@ app.get("/admin-add-users", async(req, res) => {
     }
 });
 
-app.get("/landing", async(req, res) => {
+app.get("/landing", async (req, res) => {
     if (req.session.loggedIn && isAdmin === false) {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -135,16 +156,16 @@ app.get("/footer", (req, res) => {
 })
 
 
-app.post("/login", async function(req, res) {
+app.post("/login", async function (req, res) {
     if (req.session.loggedIn && isAdmin == true) {
         res.redirect("/admin");
     } else if (req.session.loggedIn && isAdmin == false) {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
-
         userName = req.body.user_name;
         let pwd = req.body.password;
+<<<<<<< HEAD
         const mysql = require("mysql2/promise");
         const connection = await mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
@@ -166,33 +187,46 @@ app.post("/login", async function(req, res) {
             if (comparison) {
                 if (rows[0].admin_user === 'y') {
                     isAdmin = true;
+=======
+        await connection.execute(
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'], async (err, rows) => {
+                if (rows.length > 0) {
+                    let hashedPassword = rows[0].password
+                    let comparison = await bcrypt.compare(req.body.password, hashedPassword);
+                    if (comparison) {
+                        if (rows[0].admin_user === 'y') {
+                            isAdmin = true;
+                        }
+                        req.session.loggedIn = true;
+                        req.session.user_name = userName;
+                        req.session.password = pwd;
+                        req.session.name = rows[0].first_name;
+                        res.send({
+                            status: "success",
+                            msg: "Logged in."
+                        });
+                    } else {
+                        res.send({
+                            status: "fail",
+                            msg: "Invalid Username or Password."
+                        });
+                    }
+                } else {
+                    res.send({
+                        status: "fail",
+                        msg: "Invalid Username or Password."
+                    });
+>>>>>>> Ryan_add_configs
                 }
-                req.session.loggedIn = true;
-                req.session.user_name = userName;
-                req.session.password = pwd;
-                req.session.name = rows[0].first_name;
-                res.send({
-                    status: "success",
-                    msg: "Logged in."
-                });
-            } else {
-                res.send({
-                    status: "fail",
-                    msg: "Invalid Username or Password."
-                });
             }
-        } else {
-            res.send({
-                status: "fail",
-                msg: "Invalid Username or Password."
-            });
-        }
-    }
+        );
 
+    }
 });
 
-app.get("/get-users", function(req, res) {
+app.get("/get-users", function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -200,9 +234,11 @@ app.get("/get-users", function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+>>>>>>> Ryan_add_configs
         connection.query(
             "SELECT * FROM bby_33_user",
-            function(error, results) {
+            function (error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -217,10 +253,10 @@ app.get("/get-users", function(req, res) {
     }
 });
 
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
 
     if (req.session) {
-        req.session.destroy(function(error) {
+        req.session.destroy(function (error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
@@ -232,9 +268,10 @@ app.get("/logout", function(req, res) {
     }
 });
 
-app.post("/user-update", function(req, res) {
+app.post("/user-update", function (req, res) {
     if (req.session.loggedIn) {
         let adminUsers = [];
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -242,9 +279,11 @@ app.post("/user-update", function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+>>>>>>> Ryan_add_configs
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function(error, results) {
+            function (error, results) {
                 adminUsers = results;
                 let send = {
                     status: "fail",
@@ -272,7 +311,7 @@ app.post("/user-update", function(req, res) {
     }
 });
 
-app.post("/register", function(req, res) {
+app.post("/register", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -286,6 +325,7 @@ app.post("/register", function(req, res) {
     let salt = 5;
     let hashedPassword = "";
 
+<<<<<<< HEAD
     const connection = mysql.createConnection({
         host: "us-cdbr-east-05.cleardb.net",
         user: "baf45e51bb6699",
@@ -298,9 +338,11 @@ app.post("/register", function(req, res) {
             console.log("failed to connect");
         }
     });
+=======
+>>>>>>> Ryan_add_configs
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
-        function(error, results, fields) {
+        function (error, results, fields) {
             existingUsers = results;
             let send = {
                 status: " ",
@@ -323,7 +365,7 @@ app.post("/register", function(req, res) {
                         i++;
                     }
                     if (alreadyExists == false) {
-                        bcrypt.hash(pwd, salt, function(err, hash) {
+                        bcrypt.hash(pwd, salt, function (err, hash) {
                             hashedPassword = hash;
                             connection.execute(
                                 "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password, user_image) VALUES(?, ?, ?, ?, 'n', 'n', ?, 'stock-profile.png')", [usr, firstName, lastName, email, hashedPassword]
@@ -344,14 +386,14 @@ app.post("/register", function(req, res) {
     connection.end();
 });
 
-app.get("/createAccount", function(req, res) {
+app.get("/createAccount", function (req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
 
     res.send(profileDOM.serialize());
 });
-app.get("/profile", function(req, res) {
+app.get("/profile", function (req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/profile.html", "utf8");
@@ -376,14 +418,16 @@ app.get("/user-name", (req, res) => {
 
 app.get("/email", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let stat;
-        connection.connect();
         connection.query(
             `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
                 if (err) {
@@ -406,14 +450,16 @@ app.get("/email", (req, res) => {
 
 app.get("/first-name", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let stat;
-        connection.connect();
         connection.query(
             `SELECT first_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
                 if (err) {
@@ -436,14 +482,16 @@ app.get("/first-name", (req, res) => {
 
 app.get("/last-name", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let stat;
-        connection.connect();
         connection.query(
             `SELECT last_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
                 if (err) {
@@ -466,17 +514,19 @@ app.get("/last-name", (req, res) => {
 
 app.post("/update-user-name", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET user_name = ? WHERE user_name = ?`, [req.body.name, userName], (err, result) => {
                 if (err) {
@@ -498,17 +548,19 @@ app.post("/update-user-name", (req, res) => {
 
 app.post("/update-email", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET email_address = ? WHERE user_name = ?`, [req.body.email, userName], (err) => {
                 if (err) {
@@ -529,17 +581,19 @@ app.post("/update-email", (req, res) => {
 
 app.post("/admin-update-firstName", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET first_name = ? WHERE email_address = ?`, [req.body.firstName, req.body.email], (err) => {
                 if (err) {
@@ -560,17 +614,19 @@ app.post("/admin-update-firstName", (req, res) => {
 
 app.post("/admin-update-lastName", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET last_name = ? WHERE email_address = ?`, [req.body.lastName, req.body.email], (err) => {
                 if (err) {
@@ -591,17 +647,19 @@ app.post("/admin-update-lastName", (req, res) => {
 
 app.post("/admin-update-admin", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET admin_user = ? WHERE email_address = ?`, [req.body.admin, req.body.email], (err) => {
                 if (err) {
@@ -622,17 +680,19 @@ app.post("/admin-update-admin", (req, res) => {
 
 app.post("/admin-update-email", (req, res) => {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET email_address = ? WHERE email_address = ?`, [req.body.email_address, req.body.email], (err) => {
                 if (err) {
@@ -651,26 +711,46 @@ app.post("/admin-update-email", (req, res) => {
     }
 })
 
-app.post("/update-password", async(req, res) => {
+app.post("/update-password", async (req, res) => {
     if (req.session.loggedIn) {
-        const mysql = require("mysql2/promise");
         let existingPassword;
         let salt = 5;
         let hashedPassword = "";
+<<<<<<< HEAD
         const connection = await mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "",
             msg: ""
         };
-        connection.connect();
-        const [rows] = await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName],
+        await connection.execute(
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [userName], async (err, rows) => {
+                existingPassword = rows[0].password
+                let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
+                if (comparison) {
+                    existingPassword = req.body.newPass;
+                    bcrypt.hash(existingPassword, salt, function (err, hash) {
+                        hashedPassword = hash;
+                        connection.execute(
+                            "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
+                        );
+                    });
+                    send.status = "success";
+                    send.msg = "Password Updated";
+                } else {
+                    send.status = "fail";
+                    send.msg = "Current Password is Incorrect";
+                }
+                res.send(send);
+            }
         );
+<<<<<<< HEAD
         existingPassword = rows[0].password
         let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
         if (comparison) {
@@ -689,27 +769,35 @@ app.post("/update-password", async(req, res) => {
             send.msg = "Current Password is Incorrect";
         }
         res.send(send);
+=======
+
+>>>>>>> Ryan_add_configs
     } else {
         res.redirect("/");
     }
 })
 
-app.post("/admin-update-password", async(req, res) => {
+app.post("/admin-update-password", async (req, res) => {
     if (req.session.loggedIn) {
         const mysql = require("mysql2/promise");
         let existingPassword;
         let salt = 5;
         let hashedPassword = "";
+<<<<<<< HEAD
         const connection = await mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+
+>>>>>>> Ryan_add_configs
         let send = {
             status: "",
             msg: ""
         };
+<<<<<<< HEAD
         connection.connect();
         const [rows] = await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email],
@@ -724,26 +812,44 @@ app.post("/admin-update-password", async(req, res) => {
         });
         send.status = "success";
         send.msg = "Password Updated";
+=======
+        await connection.execute(
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email], async (err, rows) => {
+                existingPassword = req.body.newPass;
+                bcrypt.hash(existingPassword, salt, function (err, hash) {
+                    hashedPassword = hash;
+                    connection.execute(
+                        "UPDATE bby_33_user SET password = ? WHERE email_address = ?", [hashedPassword, req.body.email]
+                    );
+                });
+                send.status = "success";
+                send.msg = "Password Updated";
 
-        res.send(send);
+                res.send(send);
+            }
+        );
+>>>>>>> Ryan_add_configs
+
     } else {
         res.redirect("/");
     }
 })
 
-app.post('/upload-user-images', upload.array("files", 1), function(req, res) {
+app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
             password: "96b73edd",
             database: "heroku_ecb002aef4014be"
         });
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
-        connection.connect();
         connection.execute(
             `UPDATE bby_33_user SET user_image = ? WHERE user_name = ?`, [req.files[0].filename, userName], (err) => {
                 if (err) {
@@ -762,8 +868,9 @@ app.post('/upload-user-images', upload.array("files", 1), function(req, res) {
 
 });
 
-app.get('/get-user-images', upload.array("files", 1), function(req, res) {
+app.get('/get-user-images', upload.array("files", 1), function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -771,6 +878,8 @@ app.get('/get-user-images', upload.array("files", 1), function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+>>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             path: " "
@@ -797,13 +906,9 @@ app.get('/get-user-images', upload.array("files", 1), function(req, res) {
 
 });
 
-app.post("/delete-users", function(req, res) {
-    res.setHeader("Content-Type", "application/json");
-
-    let adminUsers = [];
-    let userID = req.body.userID;
-
+app.post("/delete-users", function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -811,21 +916,27 @@ app.post("/delete-users", function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+        res.setHeader("Content-Type", "application/json");
+
+        let adminUsers = [];
+        let userID = req.body.userID;
+>>>>>>> Ryan_add_configs
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function(error, results) {
+            function (error, results) {
                 adminUsers = results;
                 let send = {
                     status: ""
                 };
                 connection.execute(
                     "SELECT * FROM bby_33_user WHERE USER_ID = ?", [userID],
-                    function(error, admins) {
+                    function (error, admins) {
                         if (admins[0].admin_user == 'y') {
                             if (adminUsers.length > 1) {
                                 connection.execute(
                                     "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'y'],
-                                    function(error, results) {
+                                    function (error, results) {
                                         if (error) {
                                             console.log(error);
                                             send.status = "fail";
@@ -840,7 +951,7 @@ app.post("/delete-users", function(req, res) {
                         } else {
                             connection.execute(
                                 "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'n'],
-                                function(error, results) {
+                                function (error, results) {
                                     if (error) {
                                         console.log(error);
                                         send.status = "fail";
@@ -860,11 +971,9 @@ app.post("/delete-users", function(req, res) {
     }
 });
 
-app.post("/undelete-users", function(req, res) {
-    res.setHeader("Content-Type", "application/json");
-
-    let userID = req.body.userID;
+app.post("/undelete-users", function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -872,9 +981,14 @@ app.post("/undelete-users", function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+        res.setHeader("Content-Type", "application/json");
+
+        let userID = req.body.userID;
+>>>>>>> Ryan_add_configs
         connection.execute(
             "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ?", ['n', userID],
-            function(error, results) {
+            function (error, results) {
                 if (error) {
                     console.log(error);
                     res.send({
@@ -891,11 +1005,9 @@ app.post("/undelete-users", function(req, res) {
     }
 });
 
-app.post("/get-packages", function(req, res) {
-    res.setHeader("Content-Type", "application/json");
-
-    let countryID = req.body.countryID;
+app.post("/get-packages", function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -903,9 +1015,13 @@ app.post("/get-packages", function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+        res.setHeader("Content-Type", "application/json");
+        let countryID = req.body.countryID;
+>>>>>>> Ryan_add_configs
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
-            function(error, results) {
+            function (error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -919,10 +1035,9 @@ app.post("/get-packages", function(req, res) {
     }
 });
 
-app.post("/add-packages", function(req, res) {
-    res.setHeader("Content-Type", "application/json");
-    var price = "";
+app.post("/add-packages", function (req, res) {
     if (req.session.loggedIn) {
+<<<<<<< HEAD
         const connection = mysql.createConnection({
             host: "us-cdbr-east-05.cleardb.net",
             user: "baf45e51bb6699",
@@ -930,8 +1045,12 @@ app.post("/add-packages", function(req, res) {
             database: "heroku_ecb002aef4014be"
         });
         connection.connect();
+=======
+        res.setHeader("Content-Type", "application/json");
+        var price = "";
+>>>>>>> Ryan_add_configs
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
-            function(err, rows) {
+            function (err, rows) {
                 let send = {
                     status: " "
                 }
@@ -940,16 +1059,16 @@ app.post("/add-packages", function(req, res) {
                 var userid = rows[0].USER_ID;
                 userFound = true;
                 connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                    function(err, prices) {
+                    function (err, prices) {
                         price = prices[0].package_price
                     });
                 if (userFound) {
                     connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
-                        function(err, packages) {
+                        function (err, packages) {
                             console.log(packages.length);
                             if (packages.length > 0) {
                                 connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
-                                    function(err, totalPrice) {
+                                    function (err, totalPrice) {
                                         var tPrice = totalPrice[0].price
                                         connection.execute(
                                             `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
@@ -975,7 +1094,12 @@ app.post("/add-packages", function(req, res) {
         res.redirect("/");
     }
 });
+<<<<<<< HEAD
 app.get("/packageInfo", function(req, res) {
+=======
+
+app.get("/packageInfo", function (req, res) {
+>>>>>>> Ryan_add_configs
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/packageInfo.html", "utf8");
