@@ -74,7 +74,6 @@ function getPackage() {
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
-                console.log(dataParsed);
                 document.getElementById("image").setAttribute("src", dataParsed.rows[0].package_image);
                 document.getElementById("package-name").innerHTML = dataParsed.rows[0].package_name;
                 document.getElementById("price").innerHTML = dataParsed.rows[0].package_price;

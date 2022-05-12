@@ -66,9 +66,7 @@ function addPackage() {
     var queryString;
     let onClick = (event) => {
         if (event.target.className == "packages") {
-            console.log(event.target.id);
             packageId = event.target.id;
-            console.log(packageId);
             queryString = "packageID=" + packageId;
             console.log(queryString);
             ajaxGET("/add-packages", function (data) {
@@ -79,18 +77,6 @@ function addPackage() {
                         console.log("fail");
                     } else {
                         console.log("success")
-                        // console.log("This is data" + dataParsed.rows.length);
-                        // let str = ""
-                        // for (let i = 0; i < dataParsed.rows.length; i++) {
-                        //     let row = dataParsed.rows[i];
-                        //     str += (`<div class='card'> 
-                        //         <div id='title'>${row.package_name} 
-                        //         </div><div id='pImage'><img width='100' height='100' src="${row.package_image}">
-                        //         </div><div id='price'> $${row.package_price} 
-                        //         </div><div id='description'>${row.description_of_package}
-                        //         </div><input type='submit' value='submit' id='${row.package_id}'></div><br>`);
-                        // }
-                        // document.getElementById("pList").innerHTML = str
                     }
                 }
             }, queryString);
@@ -103,7 +89,6 @@ function displayPackage() {
     var packageId;
     let onClick = (event) => {
         if (event.target.className == "packagesDisplay") {
-            console.log(event.target.id);
             packageId = event.target.id;
             sessionStorage.setItem("package", packageId);
             showPackage();

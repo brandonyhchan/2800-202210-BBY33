@@ -266,20 +266,19 @@ function uploadImages(e) {
 
 
 
-// async function getImage() {
-//     try {
-//         let responseObj = await fetch("/get-user-images", {
-//             method: 'GET',
-//         });
-//         if (responseObj.status === 200) {
-//             let data = await responseObj.json();
-//             document.querySelector("#profileImage").setAttribute("src", data.path);
-//         }
-//     } catch (error) {
-//     }
-// }
+async function displayImage() {
+    try {
+        let responseObj = await fetch("/get-user-images", {
+            method: 'GET',
+        });
+        if (responseObj.status === 200) {
+            let data = await responseObj.json();
+            document.querySelector("#profileImage").setAttribute("src", data.path);
+        }
+    } catch (error) {
+    }
+}
 
-// getImage();
 
 function getImage() {
     var dataParsed = "";
@@ -305,18 +304,5 @@ function getImage() {
 
 getImage();
 
-function displayImage() {
-    ajaxGET("/get-user-images", function (data) {
-
-        if (data) {
-            let dataParsed = JSON.parse(data);
-            if (dataParsed.status == "fail") {
-                console.log("fail");
-            } else {
-                document.querySelector("#profileImage").setAttribute("src", dataParsed.path);
-            }
-        }
-    });
-}
 
 displayImage();
