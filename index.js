@@ -1,10 +1,7 @@
 'use strict';
-
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
-let http = require('http');
-let url = require('url');
 const app = express();
 const fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -21,7 +18,7 @@ const localconfig = {
     database: "COMP2800",
 };
 const herokuconfig = {
-    host: "us-cdbr-east-05.cleardb.net",
+    host: "us-cdbr-east-05.cleardb.net", 
     user: "baf45e51bb6699",
     password: "96b73edd",
     database: "heroku_ecb002aef4014be"
@@ -165,29 +162,6 @@ app.post("/login", async function (req, res) {
         res.setHeader("Content-Type", "application/json");
         userName = req.body.user_name;
         let pwd = req.body.password;
-<<<<<<< HEAD
-        const mysql = require("mysql2/promise");
-        const connection = await mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-
-        connection.connect(function(err) {
-            if (err) throw err;
-        });
-        const [rows] = await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'],
-        );
-        connection.end();
-        if (rows.length > 0) {
-            let hashedPassword = rows[0].password
-            let comparison = await bcrypt.compare(req.body.password, hashedPassword);
-            if (comparison) {
-                if (rows[0].admin_user === 'y') {
-                    isAdmin = true;
-=======
         await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [userName, 'n'], async (err, rows) => {
                 if (rows.length > 0) {
@@ -216,7 +190,6 @@ app.post("/login", async function (req, res) {
                         status: "fail",
                         msg: "Invalid Username or Password."
                     });
->>>>>>> Ryan_add_configs
                 }
             }
         );
@@ -226,16 +199,6 @@ app.post("/login", async function (req, res) {
 
 app.get("/get-users", function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
->>>>>>> Ryan_add_configs
         connection.query(
             "SELECT * FROM bby_33_user",
             function (error, results) {
@@ -271,16 +234,6 @@ app.get("/logout", function (req, res) {
 app.post("/user-update", function (req, res) {
     if (req.session.loggedIn) {
         let adminUsers = [];
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
->>>>>>> Ryan_add_configs
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
             function (error, results) {
@@ -305,10 +258,11 @@ app.post("/user-update", function (req, res) {
                 connection.end();
             }
         );
-        connection.end();
     } else {
         res.redirect("/");
     }
+
+
 });
 
 app.post("/register", function (req, res) {
@@ -325,21 +279,6 @@ app.post("/register", function (req, res) {
     let salt = 5;
     let hashedPassword = "";
 
-<<<<<<< HEAD
-    const connection = mysql.createConnection({
-        host: "us-cdbr-east-05.cleardb.net",
-        user: "baf45e51bb6699",
-        password: "96b73edd",
-        database: "heroku_ecb002aef4014be"
-    });
-
-    connection.connect(function(err) {
-        if (err) {
-            console.log("failed to connect");
-        }
-    });
-=======
->>>>>>> Ryan_add_configs
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
@@ -383,7 +322,6 @@ app.post("/register", function (req, res) {
 
         }
     )
-    connection.end();
 });
 
 app.get("/createAccount", function (req, res) {
@@ -418,15 +356,6 @@ app.get("/user-name", (req, res) => {
 
 app.get("/email", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let stat;
         connection.query(
             `SELECT email_address FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
@@ -442,7 +371,6 @@ app.get("/email", (req, res) => {
             }
 
         )
-        connection.end();
     } else {
         res.redirect("/");
     }
@@ -450,15 +378,6 @@ app.get("/email", (req, res) => {
 
 app.get("/first-name", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let stat;
         connection.query(
             `SELECT first_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
@@ -474,7 +393,6 @@ app.get("/first-name", (req, res) => {
             }
 
         )
-        connection.end();
     } else {
         res.redirect("/");
     }
@@ -482,15 +400,6 @@ app.get("/first-name", (req, res) => {
 
 app.get("/last-name", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let stat;
         connection.query(
             `SELECT last_name FROM bby_33_user WHERE user_name = ?`, [userName], (err, result) => {
@@ -506,7 +415,6 @@ app.get("/last-name", (req, res) => {
             }
 
         )
-        connection.end();
     } else {
         res.redirect("/");
     }
@@ -514,15 +422,6 @@ app.get("/last-name", (req, res) => {
 
 app.post("/update-user-name", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -537,7 +436,6 @@ app.post("/update-user-name", (req, res) => {
                 }
             }
         );
-        connection.end();
         userName = req.body.name;
         res.send(send);
 
@@ -548,15 +446,6 @@ app.post("/update-user-name", (req, res) => {
 
 app.post("/update-email", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -571,7 +460,6 @@ app.post("/update-email", (req, res) => {
                 }
             }
         );
-        connection.end();
         res.send(send);
 
     } else {
@@ -581,15 +469,6 @@ app.post("/update-email", (req, res) => {
 
 app.post("/admin-update-firstName", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -604,7 +483,6 @@ app.post("/admin-update-firstName", (req, res) => {
                 }
             }
         );
-        connection.end();
         res.send(send);
 
     } else {
@@ -614,15 +492,6 @@ app.post("/admin-update-firstName", (req, res) => {
 
 app.post("/admin-update-lastName", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -637,7 +506,6 @@ app.post("/admin-update-lastName", (req, res) => {
                 }
             }
         );
-        connection.end();
         res.send(send);
 
     } else {
@@ -647,15 +515,6 @@ app.post("/admin-update-lastName", (req, res) => {
 
 app.post("/admin-update-admin", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -670,7 +529,6 @@ app.post("/admin-update-admin", (req, res) => {
                 }
             }
         );
-        connection.end();
         res.send(send);
 
     } else {
@@ -680,15 +538,6 @@ app.post("/admin-update-admin", (req, res) => {
 
 app.post("/admin-update-email", (req, res) => {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -703,7 +552,6 @@ app.post("/admin-update-email", (req, res) => {
                 }
             }
         );
-        connection.end();
         res.send(send);
 
     } else {
@@ -716,15 +564,6 @@ app.post("/update-password", async (req, res) => {
         let existingPassword;
         let salt = 5;
         let hashedPassword = "";
-<<<<<<< HEAD
-        const connection = await mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "",
             msg: ""
@@ -750,28 +589,7 @@ app.post("/update-password", async (req, res) => {
                 res.send(send);
             }
         );
-<<<<<<< HEAD
-        existingPassword = rows[0].password
-        let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
-        if (comparison) {
-            existingPassword = req.body.newPass;
-            bcrypt.hash(existingPassword, salt, function(err, hash) {
-                hashedPassword = hash;
-                connection.execute(
-                    "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, userName]
-                );
-                
-            });
-            send.status = "success";
-            send.msg = "Password Updated";
-        } else {
-            send.status = "fail";
-            send.msg = "Current Password is Incorrect";
-        }
-        res.send(send);
-=======
 
->>>>>>> Ryan_add_configs
     } else {
         res.redirect("/");
     }
@@ -783,36 +601,11 @@ app.post("/admin-update-password", async (req, res) => {
         let existingPassword;
         let salt = 5;
         let hashedPassword = "";
-<<<<<<< HEAD
-        const connection = await mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
 
->>>>>>> Ryan_add_configs
         let send = {
             status: "",
             msg: ""
         };
-<<<<<<< HEAD
-        connection.connect();
-        const [rows] = await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email],
-        );
-        existingPassword = req.body.newPass;
-        bcrypt.hash(existingPassword, salt, function(err, hash) {
-            hashedPassword = hash;
-            connection.execute(
-                "UPDATE bby_33_user SET password = ? WHERE email_address = ?", [hashedPassword, req.body.email]
-            );
-            connection.end();
-        });
-        send.status = "success";
-        send.msg = "Password Updated";
-=======
         await connection.execute(
             "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email], async (err, rows) => {
                 existingPassword = req.body.newPass;
@@ -828,7 +621,6 @@ app.post("/admin-update-password", async (req, res) => {
                 res.send(send);
             }
         );
->>>>>>> Ryan_add_configs
 
     } else {
         res.redirect("/");
@@ -837,15 +629,6 @@ app.post("/admin-update-password", async (req, res) => {
 
 app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             msg: "Record not updated."
@@ -860,7 +643,6 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
                 }
             }
         );
-        connection.end();
 
     } else {
         res.redirect("/");
@@ -870,16 +652,6 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
 
 app.get('/get-user-images', upload.array("files", 1), function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
->>>>>>> Ryan_add_configs
         let send = {
             status: "fail",
             path: " "
@@ -899,7 +671,6 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
             }
 
         )
-        connection.end();
     } else {
         res.redirect("/");
     }
@@ -908,20 +679,10 @@ app.get('/get-user-images', upload.array("files", 1), function (req, res) {
 
 app.post("/delete-users", function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
         res.setHeader("Content-Type", "application/json");
 
         let adminUsers = [];
         let userID = req.body.userID;
->>>>>>> Ryan_add_configs
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
             function (error, results) {
@@ -973,19 +734,9 @@ app.post("/delete-users", function (req, res) {
 
 app.post("/undelete-users", function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
         res.setHeader("Content-Type", "application/json");
 
         let userID = req.body.userID;
->>>>>>> Ryan_add_configs
         connection.execute(
             "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ?", ['n', userID],
             function (error, results) {
@@ -1001,24 +752,13 @@ app.post("/undelete-users", function (req, res) {
                 }
             }
         );
-        connection.end();
     }
 });
 
 app.post("/get-packages", function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
         res.setHeader("Content-Type", "application/json");
         let countryID = req.body.countryID;
->>>>>>> Ryan_add_configs
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
             function (error, results) {
@@ -1031,24 +771,13 @@ app.post("/get-packages", function (req, res) {
                 });
             }
         );
-        connection.end();
     }
 });
 
 app.post("/add-packages", function (req, res) {
     if (req.session.loggedIn) {
-<<<<<<< HEAD
-        const connection = mysql.createConnection({
-            host: "us-cdbr-east-05.cleardb.net",
-            user: "baf45e51bb6699",
-            password: "96b73edd",
-            database: "heroku_ecb002aef4014be"
-        });
-        connection.connect();
-=======
         res.setHeader("Content-Type", "application/json");
         var price = "";
->>>>>>> Ryan_add_configs
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [userName],
             function (err, rows) {
                 let send = {
@@ -1088,18 +817,12 @@ app.post("/add-packages", function (req, res) {
                 }
 
             });
-
-        connection.end();
     } else {
         res.redirect("/");
     }
 });
-<<<<<<< HEAD
-app.get("/packageInfo", function(req, res) {
-=======
 
 app.get("/packageInfo", function (req, res) {
->>>>>>> Ryan_add_configs
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/packageInfo.html", "utf8");
@@ -1118,18 +841,3 @@ var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
 });
-
-// app.listen(process.env.PORT || 3000, function(){
-//     console.log("Server started" + "!");
-//   });
-
-// http.createServer((req, res) => {
-//     let q = url.parse(req.url, true);
-
-//     res.writeHead(200, {
-//         "Content-Type": "text/html",
-//         "Access-Control-Allow-Origin": "*"
-//     });
-
-//     res.end(`Hello ${q.query['Artem']}`);
-// }).listen(process.env.Port || 3000);
