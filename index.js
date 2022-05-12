@@ -855,7 +855,6 @@ app.post("/delete-users", function (req, res) {
                 );
             }
         );
-        connection.end();
     } else {
         res.redirect("/");
     }
