@@ -221,6 +221,7 @@ function updateInfo(e, p, newClass) {
 }
 
 
+
 /**
  * Expands the admin dashboard menu onclick in a mobile viewport.
  */
@@ -235,6 +236,8 @@ function expandDropdown() {
         expandables.style.opacity = "0";
     }
 }
+
+
 
 
 /**
