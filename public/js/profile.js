@@ -298,13 +298,9 @@ function getImage() {
         }
     };
     window.addEventListener('click', onClick);
-    displayImage();
-    displayImage();
-    displayImage();
 
 };
 
 getImage();
-
 
 displayImage();
