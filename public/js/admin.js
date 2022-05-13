@@ -58,43 +58,6 @@ function getUsers() {
 }
 getUsers();
 
-
-// Jquery snippet from https://jqueryui.com/dialog/#modal-confirmation for the Jquery UI
-// function update(e) {
-//     var parent = e.target.parentNode;
-//     var sentEmail = {
-//         email: parent.parentNode.querySelector(".email").innerHTML
-//     };
-//     $(function () {
-//         $("#dialog-confirm").dialog({
-//             resizable: false,
-//             height: "auto",
-//             width: 300,
-//             modal: true,
-//             buttons: {
-//                 "Delete account": function () {
-//                     const xhr = new XMLHttpRequest();
-//                     xhr.onload = function () {
-//                         if (this.readyState == XMLHttpRequest.DONE) {
-//                             if (xhr.status === 200) {
-//                                 getUsers();
-//                             }
-//                         }
-//                     }
-//                     xhr.open("POST", "/user-update");
-//                     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-//                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//                     xhr.send("email=" + sentEmail.email);
-//                     $(this).dialog("close");
-//                 },
-//                 Cancel: function () {
-//                     $(this).dialog("close");
-//                 }
-//             }
-//         });
-//     });
-// }
-
 function ajaxGET(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function(k) {
@@ -120,11 +83,8 @@ function deleteUser() {
     let queryString;
     const onClick = (event) => {
         if (event.target.className === "remove") {
-            console.log(event.target.id);
             userId = event.target.id;
-            console.log(userId);
             queryString = "userID=" + userId;
-            console.log(queryString);
             ajaxGET("/delete-users", function(data) {
 
                 if (data) {
@@ -151,11 +111,8 @@ function undeleteUser() {
     let queryString;
     const onClick = (event) => {
         if (event.target.className === "undelete") {
-            console.log(event.target.id);
             userId = event.target.id;
-            console.log(userId);
             queryString = "userID=" + userId;
-            console.log(queryString);
             ajaxGET("/undelete-users", function(data) {
 
                 if (data) {
@@ -219,7 +176,6 @@ function updateInfo(e, p, newClass) {
                             xhr.onload = function() {
                                 if (this.readyState == XMLHttpRequest.DONE) {
                                     if (xhr.status === 200) {
-                                        // statusDiv.innerHTML = "Email updated.";
                                         getUsers();
                                     }
                                 }

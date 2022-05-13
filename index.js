@@ -29,7 +29,6 @@ if (is_heroku) {
 } else {
     connection = mysql.createPool(localconfig);
 }
-console.log("heroku " + is_heroku)
 
 const storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -829,7 +828,6 @@ app.post("/add-packages", function (req, res) {
                 if (userFound) {
                     connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
                         function (err, packages) {
-                            console.log(packages.length);
                             if (packages.length > 0) {
                                 connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
                                     function (err, totalPrice) {
