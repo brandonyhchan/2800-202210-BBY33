@@ -215,7 +215,6 @@ body {
     border-style: none;
     border-radius: 7px;
     transition-duration: 0.7s;
-    border-color: none;
 }
 
 .ui-button.ui-corner-all.ui-widget:hover{

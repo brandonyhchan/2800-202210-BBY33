@@ -80,7 +80,7 @@ button:hover {
     padding: 3%;
     grid-column: 1 / 2;
     display: grid;
-    grid-template-columns: 1fr 1fr 1r;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
 }
 
