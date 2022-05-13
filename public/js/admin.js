@@ -1,7 +1,8 @@
 'use strict';
+
 function getUsers() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
@@ -22,7 +23,7 @@ function getUsers() {
                             "</span></td><td class='email'><span class='email-address'>" + row.email_address +
                             "</span></td><td class='admin'><span class='isAdmin'>" + row.admin_user +
                             "</span></td><td class='change-pass'><input type='password' placeholder='New Password' class='newPass'>" +
-                            `</span><td class='manage' valign='middle'><button id='${row.USER_ID}' class='remove'>Delete</button><button class='view'>View</button>` +
+                            `</span><td class='manage'><button id='${row.USER_ID}' class='remove'>Delete</button>` +
                             "</td></tr>");
                     }
                     document.getElementById("userTable").innerHTML = str;
@@ -96,12 +97,12 @@ getUsers();
 
 function ajaxGET(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) {
+        function(k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -124,8 +125,8 @@ function deleteUser() {
             console.log(userId);
             queryString = "userID=" + userId;
             console.log(queryString);
-            ajaxGET("/delete-users", function (data) {
-    
+            ajaxGET("/delete-users", function(data) {
+
                 if (data) {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
@@ -134,7 +135,7 @@ function deleteUser() {
                         event.target.classList.add('undelete');
                         event.target.classList.remove('remove');
                         event.target.innerHTML = "Undelete";
-                        
+
                     }
                 }
             }, queryString);
@@ -155,7 +156,7 @@ function undeleteUser() {
             console.log(userId);
             queryString = "userID=" + userId;
             console.log(queryString);
-            ajaxGET("/undelete-users", function (data) {
+            ajaxGET("/undelete-users", function(data) {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);
@@ -191,7 +192,7 @@ function updateInfo(e, p, newClass) {
     let input = document.createElement("input");
     let emailID = parent.parentNode.querySelector(".email").innerText
     input.value = currentValue;
-    input.addEventListener("keyup", function (e) {
+    input.addEventListener("keyup", function(e) {
         let newInput = null;
         if (e.which == 13) {
             newInput = input.value;
@@ -206,16 +207,16 @@ function updateInfo(e, p, newClass) {
                 email: emailID
             };
 
-            $(function () {
+            $(function() {
                 $("#update-confirm").dialog({
                     resizable: false,
                     height: "auto",
                     width: 300,
                     modal: true,
                     buttons: {
-                        "Update account": function () {
+                        "Update account": function() {
                             const xhr = new XMLHttpRequest();
-                            xhr.onload = function () {
+                            xhr.onload = function() {
                                 if (this.readyState == XMLHttpRequest.DONE) {
                                     if (xhr.status === 200) {
                                         // statusDiv.innerHTML = "Email updated.";
@@ -243,7 +244,7 @@ function updateInfo(e, p, newClass) {
                                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                                 xhr.send("admin=" + sent.value + "&email=" + sent.email);
-                            }else if (newClass == 'newPass') {
+                            } else if (newClass == 'newPass') {
                                 xhr.open("POST", "/admin-update-password");
                                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -251,7 +252,7 @@ function updateInfo(e, p, newClass) {
                             }
                             $(this).dialog("close");
                         },
-                        Cancel: function () {
+                        Cancel: function() {
                             $(this).dialog("close");
                         }
                     }
@@ -262,3 +263,34 @@ function updateInfo(e, p, newClass) {
     parent.innerHTML = "";
     parent.appendChild(input);
 }
+
+
+/**
+ * Expands the admin dashboard menu onclick in a mobile viewport.
+ */
+function expandDropdown() {
+    var expandables = document.getElementById("dropdown-items");
+    if (expandables.style.height === "0px") {
+        expandables.style.height = "100px";
+        expandables.style.opacity = "1";
+        expandables.style.transition = "0.3s";
+    } else {
+        expandables.style.height = "0px";
+        expandables.style.opacity = "0";
+    }
+}
+
+
+/**
+ * Ensures that the admin dashboard items are always visible when resizing from mobile to desktop viewports.
+ */
+function reDisplay() {
+
+    if (window.innerWidth > 720) {
+        var expandables = document.getElementById("dropdown-items");
+        expandables.style.opacity = "1";
+        expandables.style.height = "auto";
+
+    }
+}
+window.addEventListener('resize', reDisplay);
