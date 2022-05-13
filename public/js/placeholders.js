@@ -75,6 +75,10 @@ ready(() => {
         document.querySelector("#landing").addEventListener("click", () => {
             getLanding();
         });
+
+        document.querySelector("#map").addEventListener("click", ()=>{
+            getMap();
+        })
         let carts = document.querySelectorAll(".cart-container");
         for (let i = 0; i < carts.length; i++) {
             carts[i].addEventListener("click", getCart);
@@ -103,6 +107,22 @@ ready(() => {
     ajaxGET("/footer", function (data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
+
+        document.querySelector("#profile-icon").addEventListener("click", () =>{
+            getProfile();
+        })
+
+        document.querySelector("#map-icon").addEventListener("click", () =>{
+            getMap();
+        })
+
+        document.querySelector("#whoWeAre").addEventListener("click", () =>{
+            getWhoWeAre();
+        })
+
+        document.querySelector("#faq").addEventListener("click", ()=>{
+            getFAQ();
+        })
     });
 
     async function getProfile() {
@@ -117,6 +137,20 @@ ready(() => {
 
         }
     }
+
+    async function getMap() {
+        try {
+            let response = await fetch("/map", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/map");
+            }
+        } catch (err) {
+
+        }
+    }
+
 
     async function getLanding() {
         try {
@@ -151,6 +185,32 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/admin");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getWhoWeAre(){
+        try {
+            let response = await fetch("/whoWeAre", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/whoWeAre");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getFAQ(){
+        try {
+            let response = await fetch("/FAQ", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/FAQ");
             }
         } catch (err) {
 

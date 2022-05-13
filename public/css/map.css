@@ -9,11 +9,11 @@
 }
 
 body {
-    background-color: #01171b;
     overflow-x: hidden;
     font-family: 'Fonttype';
     max-height: 1080px;
     height: 100vh;
+    background-color: #01171b;
 }
 
 .display-cart {
@@ -36,7 +36,8 @@ body {
     top: 0;
 }
 
-.container {
+#container {
+    width: 100%;
     display: grid;
     grid-template-columns: 10% 90%;
     grid-template-rows: 70% 30%;
@@ -53,7 +54,7 @@ svg path {
 }
 
 svg path:hover {
-    fill:dodgerblue;
+    fill: rgb(114, 186, 213);
     transition: 0.6s;
     cursor: pointer;
 }
@@ -115,6 +116,7 @@ svg path:hover {
 
 .card {
     background-color: white;
+    float:inline-start;
     padding: 2%;
     text-align: center;
 }
@@ -123,7 +125,7 @@ svg path:hover {
     body {
         margin-right: 0;
     }
-    .container {
+    .cart-container {
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: 20% 65% 25%;

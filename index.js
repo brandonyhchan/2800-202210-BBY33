@@ -154,6 +154,7 @@ app.get("/footer", (req, res) => {
 })
 
 
+
 app.post("/login", async function (req, res) {
     if (req.session.loggedIn && req.session.isAdmin === 'y') {
         res.redirect("/admin");
@@ -329,13 +330,46 @@ app.get("/createAccount", function (req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
+    res.send(profileDOM.serialize());
+});
+
+app.get("/footer2", function (req, res) {
+    let profile = fs.readFileSync("./app/html/footer2.html", "utf8");
+    let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
+
+app.get("/whoWeAre", function (req, res) {
+    let profile = fs.readFileSync("./app/html/whoWeAre.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
+app.get("/FAQ", function (req, res) {
+    let profile = fs.readFileSync("./app/html/faq.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
 app.get("/profile", function (req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/profile.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.get("/map", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/map.html", "utf8");
         let profileDOM = new JSDOM(profile);
 
         res.send(profileDOM.serialize());
