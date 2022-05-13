@@ -66,6 +66,7 @@ body {
 .material-symbols-outlined.md-24.cart{
     margin-right: 5%;
     margin-bottom: 10%;
+    cursor: pointer;
 }
 
 .navbar li a:hover {
