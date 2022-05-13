@@ -16,7 +16,7 @@ body {
     background-color: #00394f;
     box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
     display: grid;
-    grid-template-columns: 40% 45% 15%;
+    grid-template-columns: 30% 45% 25%;
 }
 
 .logo {
@@ -63,6 +63,12 @@ body {
     transition-duration: 0.5s;
 }
 
+.material-symbols-outlined.md-24.cart{
+    margin-right: 5%;
+    margin-bottom: 10%;
+    cursor: pointer;
+}
+
 .navbar li a:hover {
     color: rgb(114, 186, 213);
 }
@@ -82,7 +88,7 @@ body {
     color: rgb(114, 186, 213);
 }
 
-#cart-container {
+.cart-holder {
     text-align: end;
     padding-right: 5%;
 }
@@ -103,13 +109,19 @@ body {
         align-items: center;
         margin: 0;
         justify-content: space-between;
+        padding-top: 1%;
+        padding-bottom: 1%;
     }
+
+
     #mobile-logo {
-        max-height: 150px;
+        max-height: 140px;
         justify-content: center;
     }
     #mobile-nav1 {
         grid-column: 1 / 2;
+        margin-left: 2%;
+        font-size: 36px;
     }
     #mobile-nav2 {
         grid-column: 2 / 3;
@@ -117,5 +129,7 @@ body {
     }
     #mobile-nav3 {
         grid-column: 3 / 4;
+        margin-right: 2.5%;
+        font-size: 36px;
     }
 }

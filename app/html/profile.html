@@ -7,15 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/profile.css" type="text/css" />
     <link rel="stylesheet" href="/css/nav.css" type="text/css" />
     <link rel="stylesheet" href="/css/footer.css" type="text/css" />
+    <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <title>Profile</title>
 </head>
 
 <body>
     <nav id="navbarPlaceholder"></nav>
+    <div id="display-cart">
+        <input id="close" type="button" value="Close">
+        <h2>Your Cart</h2>
+        <table id="subtotal"></table>
+    </div>
 
     <div id="container">
         <div id="profile-container">
@@ -24,7 +32,7 @@
             <div id="upload-image">
                 <form id="profile-images">
                     <input id="upload" type="file" accept="image/png, image/gif, image/jpeg" multiple="multiple" />
-                    <input id="submitImg" type="submit" value="Change photo" />
+                    <input class="showImage" id="submitImg" type="submit" value="Change photo" />
                 </form>
             </div>
 
@@ -59,14 +67,19 @@
                 <input id="logout" type="submit" value="Logout" />
             </form>
         </div>
+        <!-- Snippet from https://jqueryui.com/dialog/#modal-confirmation for content inside pop up -->
+        <div id="dialog-confirm" title="update Account?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
+        </div>
         <div class="order-history"></div>
-
-
 
     </div>
     <footer id="footerPlaceholder"></footer>
     <script src="/js/placeholders.js"></script>
     <script src="/js/profile.js"></script>
+    <!-- Jquery scripts from https://jqueryui.com/dialog/#modal-confirmation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </body>
 
 </html>
