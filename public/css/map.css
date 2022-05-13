@@ -42,8 +42,8 @@ body {
     display: grid;
     grid-template-columns: 15% 85%;
     grid-template-areas:
-        "cart""map"
-        "cart""map";
+        "cart" "map"
+        "cart" "map";
     height: 100vh;
 }
 
@@ -206,6 +206,10 @@ td {
 
 .packagesDisplay {
     margin-left: 2%;
+}
+
+#heading2 {
+    display: none;
 }
 
 @media only screen and (max-width: 720px) {

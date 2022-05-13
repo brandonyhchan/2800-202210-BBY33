@@ -54,6 +54,7 @@ ready(() => {
 
     }
 
+
     function updatePrice(rows) {
         let total = 0;
         for (let i = 0; i < rows.length; i++) {
@@ -79,12 +80,18 @@ ready(() => {
         document.querySelector("#map").addEventListener("click", ()=>{
             getMap();
         })
-        let carts = document.querySelectorAll(".cart-container");
+        let carts = document.querySelectorAll(".cart-holder");
         for (let i = 0; i < carts.length; i++) {
             carts[i].addEventListener("click", getCart);
         }
         
     });
+
+    if (window.innerWidth > 390) {
+        document.querySelector(".display-cart2").style.display = 'none';
+        document.querySelector(".subtotal2").style.display = 'none';
+        
+    }
 
     var path = window.location.pathname;
     if (path.startsWith("/admin")) {
