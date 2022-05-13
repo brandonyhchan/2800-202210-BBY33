@@ -29,6 +29,7 @@ function getPackage() {
     var queryString;
     let onClick = (event) => {
         countryId = event.target.id;
+        countryId = countryId.slice(7);
         countryName = "Ukraine";
         queryString = "countryID=" + countryId + "&countryName=" + countryName;
         ajaxGET("/get-packages", function (data) {

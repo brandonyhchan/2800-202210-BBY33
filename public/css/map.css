@@ -27,6 +27,10 @@ body {
     opacity: 0;
 }
 
+.display-cart2 {
+    visibility: hidden;
+}
+
 #mobile {
     display: none;
 }
@@ -73,6 +77,7 @@ svg path:hover {
     left: 0;
     position: absolute;
     scrollbar-width: none;
+    z-index: 1;
 }
 
 #cart::-webkit-scrollbar {
@@ -231,6 +236,7 @@ td {
             "cart"
             "map"
             "subtotal";
+            
     }
 
     .map {
@@ -267,6 +273,7 @@ td {
         opacity: 0;
         bottom: 0;
         margin-bottom: 15%;
+        visibility: visible;
     }
 
     .card {
