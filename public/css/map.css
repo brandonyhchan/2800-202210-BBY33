@@ -27,6 +27,10 @@ body {
     opacity: 0;
 }
 
+.display-cart2 {
+    visibility: hidden;
+}
+
 #mobile {
     display: none;
 }
@@ -265,6 +269,7 @@ td {
         opacity: 0;
         bottom: 0;
         margin-bottom: 15%;
+        visibility: visible;
     }
 
     .card {
