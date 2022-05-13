@@ -120,11 +120,8 @@ function deleteUser() {
     let queryString;
     const onClick = (event) => {
         if (event.target.className === "remove") {
-            console.log(event.target.id);
             userId = event.target.id;
-            console.log(userId);
             queryString = "userID=" + userId;
-            console.log(queryString);
             ajaxGET("/delete-users", function(data) {
 
                 if (data) {
@@ -151,11 +148,8 @@ function undeleteUser() {
     let queryString;
     const onClick = (event) => {
         if (event.target.className === "undelete") {
-            console.log(event.target.id);
             userId = event.target.id;
-            console.log(userId);
             queryString = "userID=" + userId;
-            console.log(queryString);
             ajaxGET("/undelete-users", function(data) {
 
                 if (data) {
