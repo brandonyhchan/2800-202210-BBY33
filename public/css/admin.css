@@ -20,7 +20,7 @@
         overflow-x: hidden;
     }
     
-    #control-panel {
+    #control-panel-placeholder {
         background-color: #00394f;
         box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
         border: 1px solid black;
@@ -35,10 +35,19 @@
         text-align: center;
         color: white;
         align-self: center;
+        padding-top: 5%;
+    }
+    
+    #control-panel {
+        display: grid;
     }
     
     #userTable {
         text-align: center;
+    }
+    
+    #dialog-confirm {
+        display: none;
     }
     
     #table-container {
@@ -46,9 +55,10 @@
         margin: 3%;
     }
     
-    #manage-users {
+    .page-header {
         text-align: center;
         padding: 3%;
+        color: #00394f;
     }
     
     tr:nth-child(odd) {
@@ -56,7 +66,6 @@
     }
     
     th {
-        height: 20px;
         background-color: #00394f;
         color: white;
         height: 20px;
@@ -66,6 +75,7 @@
         display: flex;
         justify-content: space-around;
         align-content: center;
+        padding-top: 25%;
     }
     
     .remove {
@@ -102,10 +112,6 @@
         transform: translateY(4px);
     }
     
-    button:hover {
-        background-color: rgb(114, 186, 213);
-    }
-    
     .admin-buttons {
         cursor: pointer;
         background: none;
@@ -117,25 +123,52 @@
     
     .admin-buttons:hover {
         color: rgb(114, 186, 213);
-        background-color: #00394f;
     }
     
     td {
         height: 60px;
     }
     
+    td.manage {
+        height: 100%;
+        vertical-align: text-bottom;
+    }
+    
+    .dropdown {
+        display: none;
+    }
+    
+    #dropdown-items {
+        display: grid;
+    }
+    
+    #update-confirm {
+        display: none;
+    }
+    
     @media only screen and (max-width: 720px) {
         #container {
             grid-template-columns: 100%;
             grid-template-rows: auto;
+            overflow-x: scroll;
+            width: 100vw;
         }
-        #control-panel {
+        #control-panel-header {
+            text-align: center;
+            color: white;
+            align-self: center;
+            padding-top: 5%;
+        }
+        #control-panel-placeholder {
             grid-row: 1 / 2;
             display: flex;
-            flex-direction: column;
             padding: 5%;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            min-width: 390px;
         }
-        #manage-users {
+        .page-header {
             grid-row: 2 / 3;
             font-size: 20px;
         }
@@ -144,10 +177,66 @@
             padding: 0;
             margin: 0;
             padding-bottom: 10%;
+            width: 100%;
+            object-fit: cover;
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: auto;
+            font-size: 14px;
         }
         .manage {
             display: flex;
             flex-direction: column;
             min-height: 150px;
+            max-width: 100px;
+            padding-top: 0;
+        }
+        .undelete {
+            align-self: center;
+            justify-self: center;
+            grid-row: 2 / 3;
+        }
+        .remove {
+            align-self: center;
+            justify-self: center;
+            grid-row: 2 / 3;
+        }
+        .view {
+            align-self: center;
+            justify-self: center;
+            grid-row: 2 / 3;
+        }
+        button {
+            text-align: center;
+            white-space: nowrap;
+            height: 40px;
+            font-size: 12px;
+            border-style: none;
+            background-color: rgb(14, 76, 109);
+            color: white;
+            border-radius: 7px;
+            padding-top: 2%;
+            padding-bottom: 2%;
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+        .dropdown {
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #dropdown-items {
+            opacity: 0;
+            height: 0px;
+            display: block;
+        }
+        th {
+            word-wrap: break-word;
+        }
+        input {
+            max-width: 100px;
+        }
+        .admin-buttons {
+            font-size: 16px;
         }
     }

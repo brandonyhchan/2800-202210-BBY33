@@ -12,29 +12,41 @@
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 </head>
 
 <body>
     <nav id="navbarPlaceholder"></nav>
 
     <div id="container">
-        <h1 id="manage-users">Manage Users</h1>
-        <div id="control-panel">
-            <h2 id="control-panel-header">Admin Dashboard</h2>
-            <button id="manage-users-button" class="admin-buttons">Manage Users</button>
-            <button id="delete-users-button" class="admin-buttons">Add Users</button>
+        <h1 class="page-header">Manage Users - Click to Edit a Field</h1>
+
+        <div id="control-panel-placeholder">
         </div>
 
         <div id="table-container">
+
             <table id="userTable"></table>
+
         </div>
 
+        <!-- Snippet from https://jqueryui.com/dialog/#modal-confirmation for content inside pop up -->
+        <div id="dialog-confirm" title="Deactivate Account?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
+        </div>
+        <div id="update-confirm" title="Update Account Information?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
+        </div>
 
     </div>
 
     <footer id="footerPlaceholder"></footer>
     <script src="/js/placeholders.js"></script>
     <script src="/js/admin.js"></script>
+    <!-- Jquery scripts from https://jqueryui.com/dialog/#modal-confirmation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </body>
 
 </html>

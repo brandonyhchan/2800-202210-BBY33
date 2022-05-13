@@ -1,0 +1,170 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    display: grid;
+    height: 100vh;
+    width: 100%;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 10% 90%;
+    padding-bottom: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#control-panel-placeholder {
+    background-color: #00394f;
+    box-shadow: 0 1px 10px 0 rgb(0, 0, 0, .6);
+    border: 1px solid black;
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 10% 10%;
+}
+
+#control-panel-header {
+    text-align: center;
+    color: white;
+    align-self: center;
+    padding-top: 5%;
+}
+
+#control-panel {
+    display: grid;
+}
+
+#register-container {
+    display: grid;
+    margin: 3%;
+}
+
+.page-header {
+    text-align: center;
+    padding: 3%;
+    color: #00394f;
+}
+
+button {
+    text-align: center;
+    white-space: nowrap;
+    height: 40px;
+    font-size: 16px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 10%;
+    padding-right: 10%;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
+}
+
+button:active {
+    transform: translateY(4px);
+}
+
+.admin-buttons {
+    cursor: pointer;
+    background: none;
+    outline: inherit;
+    color: white;
+    font-family: 'Fonttype';
+    margin-top: 1%;
+}
+
+.admin-buttons:hover {
+    color: rgb(114, 186, 213);
+}
+
+td {
+    height: 60px;
+}
+
+#submit {
+    text-align: center;
+    white-space: nowrap;
+    height: 40px;
+    font-size: 16px;
+    border-style: none;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
+    margin-top: 3%;
+    padding-bottom: 0;
+}
+
+#submit:hover {
+    color: rgb(114, 186, 213);
+}
+
+#input-container {
+    display: grid;
+}
+
+#errorMsg {
+    text-align: center;
+    color: #00394f;
+    font-size: 20px;
+}
+
+.dropdown {
+    display: none;
+}
+
+#dropdown-items {
+    display: grid;
+}
+
+@media only screen and (max-width: 720px) {
+    #container {
+        grid-template-columns: 100%;
+        grid-template-rows: auto;
+        padding-bottom: 15%;
+    }
+    #control-panel-placeholder {
+        grid-row: 1 / 2;
+        display: flex;
+        padding: 5%;
+        justify-content: center;
+        text-align: center;
+        height: auto;
+    }
+    .page-header {
+        grid-row: 2 / 3;
+        font-size: 20px;
+    }
+    input {
+        margin-top: 7%;
+        margin-bottom: 7%;
+        padding: 2%;
+    }
+    #submit {
+        padding: 0;
+    }
+    .dropdown {
+        display: inline-block;
+        font-size: 24px;
+        cursor: pointer;
+    }
+    #dropdown-items {
+        opacity: 0;
+        height: 0px;
+        display: block;
+    }
+}
