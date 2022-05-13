@@ -198,7 +198,7 @@ function ajaxPOST(url, callback, data) {
 function ajaxGET(url, callback) {
 
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -279,25 +279,22 @@ async function displayImage() {
     }
 }
 
-
+document.querySelector(".showImage").addEventListener("click", getImage);
 function getImage() {
     var dataParsed = "";
-    let onClick = (event) => {
-        if (event.target.className == "showImage") {
-            ajaxGET("/get-user-images", function (data) {
+    () => {
+        ajaxGET("/get-user-images", function (data) {
 
-                if (data) {
-                    dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        console.log("fail");
-                    } else {
-                        document.querySelector("#profileImage").setAttribute("src", dataParsed.path);
-                    }
+            if (data) {
+                dataParsed = JSON.parse(data);
+                if (dataParsed.status == "fail") {
+                    console.log("fail");
+                } else {
+                    document.querySelector("#profileImage").setAttribute("src", dataParsed.path);
                 }
-            });
-        }
+            }
+        });
     };
-    window.addEventListener('click', onClick);
     displayImage();
     displayImage();
     displayImage();
