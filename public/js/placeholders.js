@@ -77,6 +77,10 @@ ready(() => {
             getLanding();
         });
 
+        document.querySelector("#landing").addEventListener("click", () => {
+            getLanding();
+        });
+
         document.querySelector("#map").addEventListener("click", ()=>{
             getMap();
         })
