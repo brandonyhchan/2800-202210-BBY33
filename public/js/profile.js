@@ -296,9 +296,9 @@ function getImage() {
         });
     };
     displayImage();
+    displayImage();
+    displayImage();
 };
-displayImage();
-displayImage();
 
 getImage();
 
