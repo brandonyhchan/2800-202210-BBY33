@@ -73,7 +73,7 @@ ready(() => {
         document.querySelector("#profile").addEventListener("click", () => {
             getProfile();
         });
-        document.querySelector("#landing").addEventListener("click", () => {
+        document.querySelector("#mobile-logo").addEventListener("click", () => {
             getLanding();
         });
 

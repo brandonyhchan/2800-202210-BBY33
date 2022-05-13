@@ -69,7 +69,6 @@ function addPackage() {
         if (event.target.className == "packages") {
             packageId = event.target.id;
             queryString = "packageID=" + packageId;
-            console.log(queryString);
             ajaxGET("/add-packages", function (data) {
 
                 if (data) {
