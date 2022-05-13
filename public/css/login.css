@@ -123,7 +123,6 @@ body {
     transform: translateY(4px);
 }
 
-
 @media only screen and (max-width: 720px) {
     #logo {
         display: flex;
@@ -135,5 +134,14 @@ body {
     #login-container {
         padding: 4%;
         margin-top: 5%;
+    }
+    footer {
+        display: none;
+    }
+    #container {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
     }
 }
