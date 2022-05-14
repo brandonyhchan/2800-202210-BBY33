@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+    <nav id="navbarPlaceholder"></nav>
+
+    <div id="container">
+        <h1 class="page-header">Create Care Packages</h1>
+
+        <div id="care-package">
+
+            <form id="input-container">
+                <input type="text" id="country_id" required="required" placeholder="Country ID" pattern="[A-Za-z]{4,20}" />
+
+                <input type="text" id="package_name" required="required" placeholder="Package Name" pattern="[A-Za-z]{4,20}" />
+
+                <input id="package_price" required="required" type="text" placeholder="Package Price" pattern="[A-Za-z0-9]{4,20}" />
+
+                <input type="text" id="package_description" required="required" placeholder="Package Description" pattern="[A-Za-z]{4,15}" />
+
+                <input type="button" id="submit" value="Create Package">
+
+
+
+                <p id="msg"></p>
+
+            </form>
+
+        </div>
+
+        <!-- Snippet from https://jqueryui.com/dialog/#modal-confirmation for content inside pop up -->
+        <div id="dialog-confirm" title="Deactivate Account?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
+        </div>
+        <div id="update-confirm" title="Update Account Information?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
+        </div>
+
+    </div>
+
+    <footer id="footerPlaceholder"></footer>
+    <script src="/js/placeholders.js"></script>
+    <script src="/js/charity.js"></script>
+    <!-- Jquery scripts from https://jqueryui.com/dialog/#modal-confirmation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+</body>
+
+</html>

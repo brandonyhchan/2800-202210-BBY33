@@ -74,9 +74,11 @@ app.use(session({
 // redirects user after successful login
 app.get("/", function (req, res) {
     if (req.session.loggedIn) {
-        if (req.session.isAdmin === 'n') {
+        if (req.session.isAdmin === 'n' && req.session.isCharity === 'n') {
             res.redirect("/landing");
-        } else {
+        } else if (req.session.isCharity === 'y' && req.session.isAdmin === 'n') {
+            res.redirect("/charity");
+        }else {
             res.redirect("/admin");
         }
 
@@ -108,7 +110,7 @@ app.get("/admin-add-users", async (req, res) => {
 });
 
 app.get("/landing", async (req, res) => {
-    if (req.session.loggedIn && req.session.isAdmin === 'n') {
+    if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'n') {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
 
@@ -118,6 +120,16 @@ app.get("/landing", async (req, res) => {
     }
 });
 
+app.get("/charity", async (req, res) => {
+    if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'y') {
+        let profile = fs.readFileSync("./app/html/charityAccounts.html", "utf-8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
 
 app.get("/nav", (req, res) => {
     if (req.session.loggedIn) {
@@ -157,7 +169,9 @@ app.get("/footer", (req, res) => {
 app.post("/login", async function (req, res) {
     if (req.session.loggedIn && req.session.isAdmin === 'y') {
         res.redirect("/admin");
-    } else if (req.session.loggedIn && req.session.isAdmin === 'n') {
+    } else if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'y') {
+        res.redirect("/charity");
+    }else if (req.session.loggedIn && req.session.isAdmin === 'n') {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
@@ -176,6 +190,7 @@ app.post("/login", async function (req, res) {
                         req.session.password = pwd;
                         req.session.name = rows[0].first_name;
                         req.session.isAdmin = rows[0].admin_user;
+                        req.session.isCharity = rows[0].charity_user;
                         res.send({
                             status: "success",
                             msg: "Logged in."
@@ -308,7 +323,7 @@ app.post("/register", function (req, res) {
                         bcrypt.hash(pwd, salt, function (err, hash) {
                             hashedPassword = hash;
                             connection.execute(
-                                "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, user_removed, password, user_image) VALUES(?, ?, ?, ?, 'n', 'n', ?, 'stock-profile.png')", [usr, firstName, lastName, email, hashedPassword]
+                                "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, charity_user, user_removed, password, user_image) VALUES(?, ?, ?, ?, 'n', 'n', 'n', ?, 'stock-profile.png')", [usr, firstName, lastName, email, hashedPassword]
                             );
                         });
                         send.status = "success";
@@ -910,6 +925,37 @@ app.get("/get-cart", (req, res) => {
         res.redirect("/");
     }
 })
+
+app.post("/charity-create", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let country = req.body.country;
+    let packageName = req.body.package;
+    let packagePrice = req.body.price;
+    let packageDesc = req.body.description;
+    var existingPackage = "";
+    connection.execute(
+        "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageName],
+        function (error, results, fields) {
+            existingPackage = results;
+            let send = {
+                status: " ",
+                msg: " "
+            }
+            if (existingPackage.length == 0) {
+                connection.execute(
+                    "INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [country, packageName, packagePrice, packageDesc]
+                );
+                send.status = "success";
+            } else {
+                send.status = "fail";
+                send.msg = "Package Already Exists";
+            }
+            res.send(send);
+
+        }
+    )
+});
 
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
