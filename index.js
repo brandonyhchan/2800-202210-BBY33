@@ -835,9 +835,12 @@ app.post("/add-packages", function (req, res) {
                                             send.status = "success";
                                         });
                                 } else {
-                                    connection.execute(
-                                        "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, price]
-                                    )
+                                    connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
+                                        function (err, pricePakcage) {
+                                            connection.execute(
+                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price]
+                                            )
+                                        });
                                     send.status = "success";
                                 }
                             });
