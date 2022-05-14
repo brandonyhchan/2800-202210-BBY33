@@ -18,7 +18,7 @@ const localconfig = {
     database: "COMP2800",
 };
 const herokuconfig = {
-    host: "us-cdbr-east-05.cleardb.net", 
+    host: "us-cdbr-east-05.cleardb.net",
     user: "baf45e51bb6699",
     password: "96b73edd",
     database: "heroku_ecb002aef4014be"
@@ -817,16 +817,16 @@ app.post("/add-packages", function (req, res) {
                 let userFound = false;
                 var userid = rows[0].USER_ID;
                 userFound = true;
-                connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                    function (err, prices) {
-                        price = prices[0].package_price
-                    });
                 if (userFound) {
                     connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
                         function (err, packages) {
                             if (packages.length > 0) {
                                 connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
                                     function (err, totalPrice) {
+                                        connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
+                                            function (err, prices) {
+                                                price = prices[0].package_price
+                                            });
                                         var tPrice = totalPrice[0].price
                                         connection.execute(
                                             `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
@@ -851,7 +851,7 @@ app.post("/add-packages", function (req, res) {
     }
 });
 
-app.get("/packageInfo", function(req, res) {
+app.get("/packageInfo", function (req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/packageInfo.html", "utf8");
