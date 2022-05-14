@@ -805,7 +805,6 @@ app.post("/get-packages", function (req, res) {
 });
 
 app.post("/add-packages", function (req, res) {
-    var priceFound = false;
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var price = "";
