@@ -805,6 +805,7 @@ app.post("/get-packages", function (req, res) {
 });
 
 app.post("/add-packages", function (req, res) {
+    var priceFound = false;
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var price = "";
@@ -816,35 +817,37 @@ app.post("/add-packages", function (req, res) {
                 var packageID = req.body.packageID;
                 let userFound = false;
                 var userid = rows[0].USER_ID;
+                connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
+                    function (err, prices) {
+                        price = prices[0].package_price
+                    });
                 userFound = true;
-                if (userFound) {
-                    connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
-                        function (err, packages) {
-                            if (packages.length > 0) {
-                                connection.query("SELECT * FROM bby_33_cart WHERE PACKAGE_ID = ? AND user_id = ?", [packageID, userid],
-                                    function (err, totalPrice) {
-                                        connection.query("SELECT * FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                                            function (err, prices) {
-                                                price = prices[0].package_price
-                                            });
-                                        var tPrice = totalPrice[0].price
-                                        connection.execute(
-                                            `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
-                                        )
-                                        send.status = "success";
-                                    });
-                            } else {
-                                connection.execute(
-                                    "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, price]
-                                )
-                                send.status = "success";
-                            }
-                        });
+                if (price != '0') {
+                    if (userFound) {
+                        connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
+                            function (err, packages) {
+                                if (packages.length > 0) {
+                                    connection.query("SELECT * FROM bby_33_cart WHERE package_id = ? AND user_id = ?", [packageID, userid],
+                                        function (err, totalPrice) {
+                                            var tPrice = totalPrice[0].price
+                                            connection.execute(
+                                                `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
+                                            )
+                                            send.status = "success";
+                                        });
+                                } else {
+                                    connection.execute(
+                                        "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, price]
+                                    )
+                                    send.status = "success";
+                                }
+                            });
 
-                } else {
-                    send.status = "fail";
+                    } else {
+                        send.status = "fail";
+                    }
+
                 }
-
             });
     } else {
         res.redirect("/");
