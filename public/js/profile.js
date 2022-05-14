@@ -298,10 +298,8 @@ function getImage() {
     displayImage();
     displayImage();
     displayImage();
-
 };
 
 getImage();
-
 
 displayImage();

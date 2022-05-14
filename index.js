@@ -684,12 +684,8 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-app.get('/get-user-images', upload.array("files", 1), function (req, res) {
+app.get('/get-user-images', upload.array("files"), function (req, res) {
     if (req.session.loggedIn) {
-        let send = {
-            status: "fail",
-            path: " "
-        };
         connection.query(
             `SELECT user_image FROM bby_33_user WHERE user_name = ?`, [req.session.user_name], (err, result) => {
                 if (err) {
