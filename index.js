@@ -960,7 +960,7 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_package SET package_image = ? WHERE package_name = ?`, [req.files[0].filename, packageN], (err) => {
+            `UPDATE bby_33_package SET package_image = ? WHERE package_name = ?`, ["/userImg/" + req.files[0].filename, packageN], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
