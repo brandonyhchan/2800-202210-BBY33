@@ -25,20 +25,26 @@
         <div id="care-package">
 
             <form id="input-container">
-                <input type="text" id="country_id" required="required" placeholder="Country ID" pattern="[A-Za-z]{4,20}" />
 
-                <input type="text" id="package_name" required="required" placeholder="Package Name" pattern="[A-Za-z]{4,20}" />
+                <input type="text" id="country_id" required="required" placeholder="Country ID"/>
 
-                <input id="package_price" required="required" type="text" placeholder="Package Price" pattern="[A-Za-z0-9]{4,20}" />
+                <input type="text" id="package_name" required="required" placeholder="Package Name"/>
 
-                <input type="text" id="package_description" required="required" placeholder="Package Description" pattern="[A-Za-z]{4,15}" />
+                <input id="package_price" required="required" type="text" placeholder="Package Price"/>
 
-                <input type="button" id="submit" value="Create Package">
+                <input type="text" id="package_description" required="required" placeholder="Package Description"/>
+
+                <input type="submit" id="submit" value="Create Package">
 
 
 
                 <p id="msg"></p>
 
+            </form>
+
+            <form id="package-images">
+                <input id="upload" type="file" accept="image/png, image/gif, image/jpeg" multiple="multiple" />
+                <input class="showImage" id="submitImg" type="submit" value="Change photo" />
             </form>
 
         </div>

@@ -43,9 +43,7 @@ const upload = multer({
 });
 
 var isAdmin = false;
-var loggedInAsAdmin = false;
-var userName;
-var userEmail;
+var packageN = "";
 
 
 
@@ -926,16 +924,16 @@ app.get("/get-cart", (req, res) => {
     }
 })
 
-app.post("/charity-create", function (req, res) {
+app.post("/charity-create", upload.array("files"), function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let country = req.body.country;
-    let packageName = req.body.package;
+    packageN = req.body.package;
     let packagePrice = req.body.price;
     let packageDesc = req.body.description;
     var existingPackage = "";
     connection.execute(
-        "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageName],
+        "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
         function (error, results, fields) {
             existingPackage = results;
             let send = {
@@ -943,9 +941,7 @@ app.post("/charity-create", function (req, res) {
                 msg: " "
             }
             if (existingPackage.length == 0) {
-                connection.execute(
-                    "INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [country, packageName, packagePrice, packageDesc]
-                );
+                connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [country, packageN, packagePrice, packageDesc]);
                 send.status = "success";
             } else {
                 send.status = "fail";
@@ -955,6 +951,29 @@ app.post("/charity-create", function (req, res) {
 
         }
     )
+});
+
+app.post('/upload-package-images', upload.array("files"), function (req, res) {
+    if (req.session.loggedIn) {
+        let send = {
+            status: "fail",
+            msg: "Record not updated."
+        };
+        connection.execute(
+            `UPDATE bby_33_package SET package_image = ? WHERE package_name = ?`, [req.files[0].filename, packageN], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    send.status = "success";
+                    send.msg = "Record Updated";
+                }
+            }
+        );
+
+    } else {
+        res.redirect("/");
+    }
+
 });
 
 var port = process.env.PORT || 8000;
