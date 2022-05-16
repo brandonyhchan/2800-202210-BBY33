@@ -47,7 +47,7 @@ function getPackage() {
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
                             </div><div class='description'>${row.description_of_package}
-                            </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
+                            </div><div class='options'><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
                     }
                     document.getElementById("cart").innerHTML = str;
                 }

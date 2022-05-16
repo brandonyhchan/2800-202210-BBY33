@@ -6,6 +6,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Fonttype';
 }
 
 #container {
@@ -74,6 +75,18 @@ button {
 
 button:active {
     transform: translateY(4px);
+}
+
+#first_name,
+#last_name,
+#email,
+#username,
+#password,
+#confirm_password {
+    font-size: 20px;
+    border-radius: 4px;
+    border-style: solid;
+    font-family: 'Fonttype';
 }
 
 .admin-buttons {
