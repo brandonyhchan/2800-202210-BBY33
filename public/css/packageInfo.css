@@ -72,7 +72,7 @@ button:hover {
     background-color: rgb(114, 186, 213);
 }
 
-#add-to-cart {
+.add-to-cart {
     align-self: flex-end;
 }
 

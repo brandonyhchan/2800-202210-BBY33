@@ -76,7 +76,7 @@ app.get("/", function (req, res) {
             res.redirect("/landing");
         } else if (req.session.isCharity === 'y' && req.session.isAdmin === 'n') {
             res.redirect("/charity");
-        }else {
+        } else {
             res.redirect("/admin");
         }
 
@@ -169,7 +169,7 @@ app.post("/login", async function (req, res) {
         res.redirect("/admin");
     } else if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'y') {
         res.redirect("/charity");
-    }else if (req.session.loggedIn && req.session.isAdmin === 'n') {
+    } else if (req.session.loggedIn && req.session.isAdmin === 'n') {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
@@ -823,9 +823,6 @@ app.post("/add-packages", function (req, res) {
         var price = "";
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
-                let send = {
-                    status: " "
-                }
                 var packageID = req.body.packageID;
                 let userFound = false;
                 var userid = rows[0].USER_ID;
@@ -834,6 +831,10 @@ app.post("/add-packages", function (req, res) {
                         price = prices[0].package_price
                     });
                 userFound = true;
+                var send = {
+                    status: "fail",
+                    msg: "hello"
+                };
                 if (price != '0') {
                     if (userFound) {
                         connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
@@ -845,8 +846,10 @@ app.post("/add-packages", function (req, res) {
                                             connection.execute(
                                                 `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
                                             )
-                                            send.status = "success";
                                         });
+                                    send.status = "success";
+                                    send.msg = "Package Added To Cart";
+                                    res.send(send);
                                 } else {
                                     connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
                                         function (err, pricePakcage) {
@@ -855,13 +858,15 @@ app.post("/add-packages", function (req, res) {
                                             )
                                         });
                                     send.status = "success";
+                                    send.msg = "Package Added To Cart";
+                                    res.send(send);
                                 }
                             });
 
                     } else {
                         send.status = "fail";
+                        send.msg = "Package Did Not Get Added";
                     }
-
                 }
             });
     } else {
@@ -887,7 +892,7 @@ app.post("/display-package", function (req, res) {
     let packageName = req.body.packageName;
     if (req.session.loggedIn) {
         connection.query(
-            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
+            "SELECT bby_33_package.PACKAGE_ID, bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
             function (error, results) {
                 if (error) {
                     console.log(error);
