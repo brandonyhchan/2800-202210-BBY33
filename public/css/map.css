@@ -136,7 +136,7 @@ button,
     transition-duration: 0.7s;
 }
 
-#close {
+#close, .btn-danger {
     background-color: rgb(14, 76, 109);
     color: white;
     border-style: none;
@@ -223,6 +223,7 @@ td {
     position: absolute;
     background-color: aliceblue;
     opacity: 0;
+    border: solid black 2px;
 }
 
 @media only screen and (max-width: 720px) {

@@ -912,11 +912,12 @@ app.get("/get-cart", (req, res) => {
     }
 })
 
-app.post("/update-quantity", (req, res) => {
+app.post("/delete-item", (req, res) => {
     if (req.session.loggedIn) {
         let send = { status: "success" };
+        console.log(req.body.packageID)
         connection.execute(
-            `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
+            `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ?`, [req.session.user_id, req.body.packageID]
         );
         res.send(send);
     }

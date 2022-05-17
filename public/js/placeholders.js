@@ -45,7 +45,7 @@ ready(() => {
                     `<tr><td>${rows[i].package_id}</td>
                     <td>${rows[i].price}</td>
                     <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
-                    <td><button class ='btn btn-danger' type='button'>REMOVE</button></td></tr>`
+                    <td><button class='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
                 )
             }
             if (window.innerWidth > 720) {
@@ -57,6 +57,11 @@ ready(() => {
                 document.querySelector(".display-cart2").style.opacity = 0.75;
                 updatePrice();
             }
+            let removeBtns = document.querySelectorAll(".btn");
+            for (let j = 0; j < removeBtns.length; j++) {
+                removeBtns[j].addEventListener('click', deleteItem);
+            }
+
             let quantities = document.querySelectorAll(".cart-quantity-input");
             for (let j = 0; j < quantities.length; j++) {
                 quantities[j].addEventListener('change', updateQuantity);
@@ -73,7 +78,6 @@ ready(() => {
             });
         }
     }
-
 
     function updateQuantity(event) {
         if (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) <= 0) {
@@ -97,6 +101,20 @@ ready(() => {
 
     }
 
+    function deleteItem(event) {
+        let packID = event.target.id;
+        let queryString = "packageID=" + packID;
+        ajaxPOST("/delete-item", (data) => {
+            if (data) {
+                let dataParsed = JSON.parse(data);
+                if (dataParsed.status == "fail") {
+                    console.log("fail");
+                }
+            }
+        }, queryString);
+        getCart();
+    }
+
     function updatePrice() {
         var total = 0;
         ajaxGET("/get-cart", (data) => {
@@ -112,8 +130,6 @@ ready(() => {
             }
         })
     }
-
-
 
     ajaxGET("/nav", function (data) {
         let navbar = document.querySelector("#navbarPlaceholder");
@@ -137,43 +153,6 @@ ready(() => {
             carts[i].addEventListener("click", getCart);
         }
     });
-
-    // function editFromPackages(event) {
-    //     if (event.target.className == "packages") {
-    //         var quantity;
-    //         let packageId = event.target.id;
-    //         ajaxGET("/get-cart", (data) => {
-    //             let dataParsed = JSON.parse(data);
-    //             var packs = dataParsed.rows;
-    //             var i = 0;
-    //             console.log(packs.length)
-    //             while (packs[i].package_id != packageId) {
-    //                 console.log(packageId + " " + packs[i].package_id);
-    //                 if (packs[i].id == packageId) {
-    //                     quantity = (parseInt(packs[i].value) + 1);
-    //                     console.log("new" + quantity)
-
-    //                 } else {
-    //                     i++;
-    //                 }
-    //             }
-    //             let queryString = "packageID=" + packageId + "&quantity=" + quantity;
-    //             ajaxPOST("/update-quantity", function (data) {
-
-    //                 if (data) {
-    //                     let parsed = JSON.parse(data);
-    //                     if (parsed.status == "fail") {
-    //                         console.log("fail");
-    //                     }
-    //                 }
-    //             }, queryString);
-    //             updatePrice()
-    //             getCart();
-    //             updatePrice();
-    //         })
-    //     }
-    // }
-    // window.addEventListener("click", editFromPackages);
 
     var path = window.location.pathname;
     if (path.startsWith("/admin")) {
