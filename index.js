@@ -173,6 +173,7 @@ app.post("/login", async function (req, res) {
                         }
                         req.session.loggedIn = true;
                         req.session.user_name = rows[0].user_name;
+                        req.session.user_id = rows[0].USER_ID;
                         req.session.password = pwd;
                         req.session.name = rows[0].first_name;
                         req.session.isAdmin = rows[0].admin_user;
@@ -830,15 +831,15 @@ app.post("/add-packages", function (req, res) {
                                         function (err, totalPrice) {
                                             var tPrice = totalPrice[0].price
                                             connection.execute(
-                                                `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
+                                                `UPDATE bby_33_cart SET product_quantity = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, packageID]
                                             )
                                             send.status = "success";
                                         });
                                 } else {
                                     connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                                        function (err, pricePakcage) {
+                                        function (err, pricePackage) {
                                             connection.execute(
-                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price]
+                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, pricePackage[0].package_price]
                                             )
                                         });
                                     send.status = "success";
@@ -910,6 +911,16 @@ app.get("/get-cart", (req, res) => {
         res.redirect("/");
     }
 })
+
+app.post("/update-quantity", (req, res) => {
+    if (req.session.loggedIn) {
+        let send = { status: "success" };
+        connection.execute(
+            `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
+        );
+        res.send(send);
+    }
+});
 
 var port = process.env.PORT || 8000;
 app.listen(port, function () {

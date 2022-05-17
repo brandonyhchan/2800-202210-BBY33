@@ -14,6 +14,23 @@ ready(() => {
         xhr.send();
     }
 
+    function ajaxPOST(url, callback, data) {
+        let params = typeof data == 'string' ? data : Object.keys(data).map(
+            function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+        ).join('&');
+
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                callback(this.responseText);
+            }
+        }
+        xhr.open("POST", url);
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(params);
+    }
+
     function getCart() {
         ajaxGET("/get-cart", (data) => {
             let dataParsed = JSON.parse(data);
@@ -27,21 +44,25 @@ ready(() => {
                 string += (
                     `<tr><td>${rows[i].package_id}</td>
                     <td>${rows[i].price}</td>
-                    <td>${rows[i].product_quantity}</td></tr>`
+                    <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
+                    <td><button class ='btn btn-danger' type='button'>REMOVE</button></td></tr>`
                 )
             }
             if (window.innerWidth > 720) {
                 document.querySelector(".subtotal").innerHTML = string;
                 document.querySelector(".display-cart").style.opacity = 0.75;
-                updatePrice(rows);
+                updatePrice();
             } else {
                 document.querySelector(".subtotal2").innerHTML = string;
                 document.querySelector(".display-cart2").style.opacity = 0.75;
-                updatePrice(rows);
+                updatePrice();
             }
-           
-            
+            let quantities = document.querySelectorAll(".cart-quantity-input");
+            for (let j = 0; j < quantities.length; j++) {
+                quantities[j].addEventListener('change', updateQuantity);
+            }
         })
+
         if (window.innerWidth > 720) {
             document.querySelector("#close").addEventListener("click", function (e) {
                 document.querySelector(".display-cart").style.opacity = 0;
@@ -51,21 +72,48 @@ ready(() => {
                 document.querySelector(".display-cart2").style.opacity = 0;
             });
         }
-
     }
 
 
-    function updatePrice(rows) {
-        let total = 0;
-        for (let i = 0; i < rows.length; i++) {
-            total += parseInt(rows[i].price);
+    function updateQuantity(event) {
+        if (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) <= 0) {
+            event.target.value = 1
         }
-        if (window.innerWidth > 720) {
-            document.querySelector("#total1").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
-        } else {
-            document.querySelector("#total2").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
-        }
+        var packageId;
+        var queryString;
+        var newQuantity = event.target.value;
+        packageId = event.target.id;
+        queryString = "packageID=" + packageId + "&quantity=" + newQuantity;
+        ajaxPOST("/update-quantity", function (data) {
+            if (data) {
+                let dataParsed = JSON.parse(data);
+                if (dataParsed.status == "fail") {
+                    console.log("fail");
+                }
+            }
+        }, queryString);
+        getCart();
+        getCart();
+
     }
+
+    function updatePrice() {
+        var total = 0;
+        ajaxGET("/get-cart", (data) => {
+            let dataParsed = JSON.parse(data);
+            let rows = dataParsed.rows;
+            for (let i = 0; i < rows.length; i++) {
+                total += (parseInt(rows[i].product_quantity) * parseInt(rows[i].price));
+            }
+            if (window.innerWidth > 720) {
+                document.querySelector("#total1").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
+            } else {
+                document.querySelector("#total2").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
+            }
+        })
+    }
+
+
 
     ajaxGET("/nav", function (data) {
         let navbar = document.querySelector("#navbarPlaceholder");
@@ -81,7 +129,7 @@ ready(() => {
             getLanding();
         });
 
-        document.querySelector("#map").addEventListener("click", ()=>{
+        document.querySelector("#map").addEventListener("click", () => {
             getMap();
         })
         let carts = document.querySelectorAll(".cart-holder");
@@ -89,6 +137,43 @@ ready(() => {
             carts[i].addEventListener("click", getCart);
         }
     });
+
+    // function editFromPackages(event) {
+    //     if (event.target.className == "packages") {
+    //         var quantity;
+    //         let packageId = event.target.id;
+    //         ajaxGET("/get-cart", (data) => {
+    //             let dataParsed = JSON.parse(data);
+    //             var packs = dataParsed.rows;
+    //             var i = 0;
+    //             console.log(packs.length)
+    //             while (packs[i].package_id != packageId) {
+    //                 console.log(packageId + " " + packs[i].package_id);
+    //                 if (packs[i].id == packageId) {
+    //                     quantity = (parseInt(packs[i].value) + 1);
+    //                     console.log("new" + quantity)
+
+    //                 } else {
+    //                     i++;
+    //                 }
+    //             }
+    //             let queryString = "packageID=" + packageId + "&quantity=" + quantity;
+    //             ajaxPOST("/update-quantity", function (data) {
+
+    //                 if (data) {
+    //                     let parsed = JSON.parse(data);
+    //                     if (parsed.status == "fail") {
+    //                         console.log("fail");
+    //                     }
+    //                 }
+    //             }, queryString);
+    //             updatePrice()
+    //             getCart();
+    //             updatePrice();
+    //         })
+    //     }
+    // }
+    // window.addEventListener("click", editFromPackages);
 
     var path = window.location.pathname;
     if (path.startsWith("/admin")) {
@@ -112,19 +197,19 @@ ready(() => {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
 
-        document.querySelector("#profile-icon").addEventListener("click", () =>{
+        document.querySelector("#profile-icon").addEventListener("click", () => {
             getProfile();
         })
 
-        document.querySelector("#map-icon").addEventListener("click", () =>{
+        document.querySelector("#map-icon").addEventListener("click", () => {
             getMap();
         })
 
-        document.querySelector("#whoWeAre").addEventListener("click", () =>{
+        document.querySelector("#whoWeAre").addEventListener("click", () => {
             getWhoWeAre();
         })
 
-        document.querySelector("#faq").addEventListener("click", ()=>{
+        document.querySelector("#faq").addEventListener("click", () => {
             getFAQ();
         })
     });
@@ -195,7 +280,7 @@ ready(() => {
         }
     }
 
-    async function getWhoWeAre(){
+    async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
                 method: 'GET'
@@ -208,7 +293,7 @@ ready(() => {
         }
     }
 
-    async function getFAQ(){
+    async function getFAQ() {
         try {
             let response = await fetch("/FAQ", {
                 method: 'GET'
@@ -220,7 +305,6 @@ ready(() => {
 
         }
     }
-
 })
 
 function ready(callback) {

@@ -19,7 +19,7 @@ body {
 .display-cart {
     z-index: 1;
     right: 0;
-    height: 30%;
+    height: 40%;
     width: 30%;
     float: right;
     position: absolute;
@@ -213,6 +213,18 @@ td {
     display: none;
 }
 
+.display-cart2 {
+    display: none;
+}
+
+.cart-quantity-input {
+    width: 30%;
+    height: 20%;
+}
+.btn-danger:hover {
+    background-color: red;
+}
+
 @media only screen and (max-width: 720px) {
     body {
         margin-right: 0;
@@ -258,6 +270,7 @@ td {
     }
 
     .display-cart2 {
+        display: block;
         grid-area: subtotal;
         z-index: 1;
         right: 0;
@@ -279,18 +292,6 @@ td {
         margin-right: 6%;
     }
 
-    #mobile {
-        display: inline-block;
-    }
-
-    #desktop {
-        display: none;
-    }
-
-    #mobile-cart-container {
-        margin: 2%;
-    }
-
     #close-m {
         display: flex;
         background-color: rgb(14, 76, 109);
@@ -309,5 +310,9 @@ td {
 
     #close-m:active{
         transform: translateY(4px);
+    }
+
+    .quantity {
+        width: 30%;
     }
 }
