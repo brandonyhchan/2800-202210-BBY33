@@ -149,8 +149,9 @@ function addPackage() {
                     }
                 }
             }, queryString);
+            updateQuantity(event);
+            getCart();
         }
-        getCart();
     };
     window.addEventListener('click', onClick);
 }

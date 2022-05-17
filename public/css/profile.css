@@ -169,10 +169,23 @@ body {
     font-family: 'Fonttype';
 }
 
-#display-cart {
+/* Cart */
+.display-cart2 {
+    display: none;
+}
+
+.cart-quantity-input {
+    width: 30%;
+    height: 20%;
+}
+.btn-danger:hover {
+    background-color: red;
+}
+
+.display-cart {
     z-index: 1;
     right: 0;
-    height: 15%;
+    height: 40%;
     width: 30%;
     float: right;
     position: absolute;
@@ -180,10 +193,51 @@ body {
     opacity: 0;
 }
 
+.cart-heading {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 1%;
+}
+
+#close-m {
+    display: none;
+}
+
+.subtotal,
+.subtotal2 {
+    width: 100%;
+}
+
+#total1 {
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 9%;
+}
+
+th,
+td {
+    text-align: center;
+}
+
+
 #close {
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    padding: 2%;
+    cursor: pointer;
+    font-family: 'Fonttype';
+    transition-duration: 0.7s;
+}
+
+#close,
+#close-m {
     float: right;
     top: 0;
 }
+/* Cart */
+
 #ui-id-1{
     font-family: 'Fonttype';
     color: black;
@@ -255,4 +309,49 @@ body {
         font-size: 15px;
         padding: 2%;
     }
+
+    /* Cart */
+    .display-cart {
+        display: none;
+    }
+
+    .display-cart2 {
+        display: block;
+        grid-area: subtotal;
+        z-index: 1;
+        right: 0;
+        height: 25%;
+        width: 100%;
+        float: right;
+        position: absolute;
+        background-color: aliceblue;
+        opacity: 0;
+        bottom: 0;
+        margin-bottom: 15%;
+    }
+
+    #close-m {
+        display: flex;
+        background-color: rgb(14, 76, 109);
+        color: white;
+        border-style: none;
+        border-radius: 5px;
+        padding: 2%;
+        cursor: pointer;
+        font-family: 'Fonttype';
+        transition-duration: 0.7s;
+    }
+
+    #close-m:hover{
+        background-color: rgb(114, 186, 213);
+    }
+
+    #close-m:active{
+        transform: translateY(4px);
+    }
+
+    .quantity {
+        width: 30%;
+    }
+    /* Cart */
 }

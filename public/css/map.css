@@ -16,17 +16,6 @@ body {
     background-color: #01171b;
 }
 
-.display-cart {
-    z-index: 1;
-    right: 0;
-    height: 40%;
-    width: 30%;
-    float: right;
-    position: absolute;
-    background-color: aliceblue;
-    opacity: 0;
-}
-
 #mobile {
     display: none;
 }
@@ -223,6 +212,17 @@ td {
 }
 .btn-danger:hover {
     background-color: red;
+}
+
+.display-cart {
+    z-index: 1;
+    right: 0;
+    height: 40%;
+    width: 30%;
+    float: right;
+    position: absolute;
+    background-color: aliceblue;
+    opacity: 0;
 }
 
 @media only screen and (max-width: 720px) {
