@@ -12,8 +12,9 @@ body {
 
 #container {
     width: 100%;
-    max-height: calc(100vh - 20%);
-    overflow-x: hidden;
+    height: 100%;
+    margin-bottom: 3%;
+    overflow-y: scroll;
     align-items: center;
 }
 
@@ -44,7 +45,37 @@ body {
     font-size: 26px;
 }
 
+.home{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1%;
+    font-size: 30px;
+    border-style: none;
+    border-radius: 5px;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    padding: 0.5%;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
+}
+
+.home:hover {
+    background-color: rgb(114, 186, 213);
+}
+
+.home:active {
+    transform: translateY(4px);
+}
+
 @media only screen and (max-width: 720px) {
+
+    body{
+        height: 100vh;
+    }
+
     #logo {
         max-width: 70%;
         margin-top: 12%;
@@ -65,6 +96,11 @@ body {
 
     .question{
         margin-top: 7%;
+    }
+
+    .home{
+        font-size: 20px; 
+        padding: 1.25%;
     }
 
 
