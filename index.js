@@ -31,10 +31,10 @@ if (is_heroku) {
 }
 
 const storage = multer.diskStorage({
-    destination: function (req, file, callback) {
+    destination: function(req, file, callback) {
         callback(null, "./public/userImg/")
     },
-    filename: function (req, file, callback) {
+    filename: function(req, file, callback) {
         callback(null, "profilePic-" + file.originalname.split('/').pop().trim());
     }
 });
@@ -70,13 +70,13 @@ app.use(session({
 
 
 // redirects user after successful login
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
     if (req.session.loggedIn) {
         if (req.session.isAdmin === 'n' && req.session.isCharity === 'n') {
             res.redirect("/landing");
         } else if (req.session.isCharity === 'y' && req.session.isAdmin === 'n') {
             res.redirect("/charity");
-        }else {
+        } else {
             res.redirect("/admin");
         }
 
@@ -86,7 +86,7 @@ app.get("/", function (req, res) {
     }
 });
 
-app.get("/admin", async (req, res) => {
+app.get("/admin", async(req, res) => {
     if (req.session.loggedIn && isAdmin === true) {
         let profile = fs.readFileSync("./app/html/admin.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -96,7 +96,7 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/admin-add-users", async (req, res) => {
+app.get("/admin-add-users", async(req, res) => {
     if (req.session.loggedIn && req.session.isAdmin === 'y') {
         let profile = fs.readFileSync("./app/html/adminAddUsers.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -107,7 +107,7 @@ app.get("/admin-add-users", async (req, res) => {
     }
 });
 
-app.get("/landing", async (req, res) => {
+app.get("/landing", async(req, res) => {
     if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'n') {
         let profile = fs.readFileSync("./app/html/landing.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -118,7 +118,7 @@ app.get("/landing", async (req, res) => {
     }
 });
 
-app.get("/charity", async (req, res) => {
+app.get("/charity", async(req, res) => {
     if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'y') {
         let profile = fs.readFileSync("./app/html/charityAccounts.html", "utf-8");
         let profileDOM = new JSDOM(profile);
@@ -164,18 +164,18 @@ app.get("/footer", (req, res) => {
 
 
 
-app.post("/login", async function (req, res) {
+app.post("/login", async function(req, res) {
     if (req.session.loggedIn && req.session.isAdmin === 'y') {
         res.redirect("/admin");
     } else if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'y') {
         res.redirect("/charity");
-    }else if (req.session.loggedIn && req.session.isAdmin === 'n') {
+    } else if (req.session.loggedIn && req.session.isAdmin === 'n') {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
         let pwd = req.body.password;
         await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [req.body.user_name, 'n'], async (err, rows) => {
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ? AND BBY_33_user.user_removed = ?", [req.body.user_name, 'n'], async(err, rows) => {
                 if (rows.length > 0) {
                     let hashedPassword = rows[0].password
                     let comparison = await bcrypt.compare(req.body.password, hashedPassword);
@@ -211,11 +211,11 @@ app.post("/login", async function (req, res) {
     }
 });
 
-app.get("/get-users", function (req, res) {
+app.get("/get-users", function(req, res) {
     if (req.session.loggedIn) {
         connection.query(
             "SELECT * FROM bby_33_user",
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -230,10 +230,10 @@ app.get("/get-users", function (req, res) {
     }
 });
 
-app.get("/logout", function (req, res) {
+app.get("/logout", function(req, res) {
 
     if (req.session) {
-        req.session.destroy(function (error) {
+        req.session.destroy(function(error) {
             if (error) {
                 res.status(400).send("Unable to log out")
             } else {
@@ -245,12 +245,12 @@ app.get("/logout", function (req, res) {
     }
 });
 
-app.post("/user-update", function (req, res) {
+app.post("/user-update", function(req, res) {
     if (req.session.loggedIn) {
         let adminUsers = [];
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function (error, results) {
+            function(error, results) {
                 adminUsers = results;
                 let send = {
                     status: "fail",
@@ -279,7 +279,7 @@ app.post("/user-update", function (req, res) {
 
 });
 
-app.post("/register", function (req, res) {
+app.post("/register", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
@@ -295,7 +295,7 @@ app.post("/register", function (req, res) {
 
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
-        function (error, results, fields) {
+        function(error, results, fields) {
             existingUsers = results;
             let send = {
                 status: " ",
@@ -318,7 +318,7 @@ app.post("/register", function (req, res) {
                         i++;
                     }
                     if (alreadyExists == false) {
-                        bcrypt.hash(pwd, salt, function (err, hash) {
+                        bcrypt.hash(pwd, salt, function(err, hash) {
                             hashedPassword = hash;
                             connection.execute(
                                 "INSERT INTO BBY_33_user(user_name, first_name, last_name, email_address, admin_user, charity_user, user_removed, password, user_image) VALUES(?, ?, ?, ?, 'n', 'n', 'n', ?, 'stock-profile.png')", [usr, firstName, lastName, email, hashedPassword]
@@ -338,35 +338,35 @@ app.post("/register", function (req, res) {
     )
 });
 
-app.get("/createAccount", function (req, res) {
+app.get("/createAccount", function(req, res) {
     let profile = fs.readFileSync("./app/html/createAccount.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
 
-app.get("/footer2", function (req, res) {
+app.get("/footer2", function(req, res) {
     let profile = fs.readFileSync("./app/html/footer2.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
 
-app.get("/whoWeAre", function (req, res) {
+app.get("/whoWeAre", function(req, res) {
     let profile = fs.readFileSync("./app/html/whoWeAre.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
 
-app.get("/FAQ", function (req, res) {
+app.get("/FAQ", function(req, res) {
     let profile = fs.readFileSync("./app/html/faq.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
 
-app.get("/profile", function (req, res) {
+app.get("/profile", function(req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/profile.html", "utf8");
@@ -378,7 +378,7 @@ app.get("/profile", function (req, res) {
     }
 });
 
-app.get("/map", function (req, res) {
+app.get("/map", function(req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/map.html", "utf8");
@@ -606,7 +606,7 @@ app.post("/admin-update-email", (req, res) => {
     }
 })
 
-app.post("/update-password", async (req, res) => {
+app.post("/update-password", async(req, res) => {
     if (req.session.loggedIn) {
         let existingPassword;
         let salt = 5;
@@ -616,12 +616,12 @@ app.post("/update-password", async (req, res) => {
             msg: ""
         };
         await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.session.user_name], async (err, rows) => {
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.session.user_name], async(err, rows) => {
                 existingPassword = rows[0].password
                 let comparison = await bcrypt.compare(req.body.currentPass, existingPassword);
                 if (comparison) {
                     existingPassword = req.body.newPass;
-                    bcrypt.hash(existingPassword, salt, function (err, hash) {
+                    bcrypt.hash(existingPassword, salt, function(err, hash) {
                         hashedPassword = hash;
                         connection.execute(
                             "UPDATE bby_33_user SET password = ? WHERE user_name = ?", [hashedPassword, req.session.user_name]
@@ -642,7 +642,7 @@ app.post("/update-password", async (req, res) => {
     }
 })
 
-app.post("/admin-update-password", async (req, res) => {
+app.post("/admin-update-password", async(req, res) => {
     if (req.session.loggedIn) {
         const mysql = require("mysql2/promise");
         let existingPassword;
@@ -654,9 +654,9 @@ app.post("/admin-update-password", async (req, res) => {
             msg: ""
         };
         await connection.execute(
-            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email], async (err, rows) => {
+            "SELECT * FROM BBY_33_user WHERE BBY_33_user.user_name = ?", [req.body.email], async(err, rows) => {
                 existingPassword = req.body.newPass;
-                bcrypt.hash(existingPassword, salt, function (err, hash) {
+                bcrypt.hash(existingPassword, salt, function(err, hash) {
                     hashedPassword = hash;
                     connection.execute(
                         "UPDATE bby_33_user SET password = ? WHERE email_address = ?", [hashedPassword, req.body.email]
@@ -674,7 +674,7 @@ app.post("/admin-update-password", async (req, res) => {
     }
 })
 
-app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
+app.post('/upload-user-images', upload.array("files", 1), function(req, res) {
     if (req.session.loggedIn) {
         let send = {
             status: "fail",
@@ -697,7 +697,7 @@ app.post('/upload-user-images', upload.array("files", 1), function (req, res) {
 
 });
 
-app.get('/get-user-images', upload.array("files"), function (req, res) {
+app.get('/get-user-images', upload.array("files"), function(req, res) {
     if (req.session.loggedIn) {
         connection.query(
             `SELECT user_image FROM bby_33_user WHERE user_name = ?`, [req.session.user_name], (err, result) => {
@@ -720,7 +720,7 @@ app.get('/get-user-images', upload.array("files"), function (req, res) {
 
 });
 
-app.post("/delete-users", function (req, res) {
+app.post("/delete-users", function(req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
 
@@ -728,19 +728,19 @@ app.post("/delete-users", function (req, res) {
         let userID = req.body.userID;
         connection.execute(
             "SELECT * FROM bby_33_user WHERE admin_user = ? AND user_removed = ?", ['y', 'n'],
-            function (error, results) {
+            function(error, results) {
                 adminUsers = results;
                 let send = {
                     status: ""
                 };
                 connection.execute(
                     "SELECT * FROM bby_33_user WHERE USER_ID = ?", [userID],
-                    function (error, admins) {
+                    function(error, admins) {
                         if (admins[0].admin_user == 'y') {
                             if (adminUsers.length > 1) {
                                 connection.execute(
                                     "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'y'],
-                                    function (error, results) {
+                                    function(error, results) {
                                         if (error) {
                                             console.log(error);
                                             send.status = "fail";
@@ -755,7 +755,7 @@ app.post("/delete-users", function (req, res) {
                         } else {
                             connection.execute(
                                 "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ? AND admin_user = ?", ['y', userID, 'n'],
-                                function (error, results) {
+                                function(error, results) {
                                     if (error) {
                                         console.log(error);
                                         send.status = "fail";
@@ -775,14 +775,14 @@ app.post("/delete-users", function (req, res) {
     }
 });
 
-app.post("/undelete-users", function (req, res) {
+app.post("/undelete-users", function(req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
 
         let userID = req.body.userID;
         connection.execute(
             "UPDATE bby_33_user SET user_removed = ? WHERE USER_ID = ?", ['n', userID],
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                     res.send({
@@ -798,13 +798,13 @@ app.post("/undelete-users", function (req, res) {
     }
 });
 
-app.post("/get-packages", function (req, res) {
+app.post("/get-packages", function(req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         let countryID = req.body.countryID;
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -817,12 +817,12 @@ app.post("/get-packages", function (req, res) {
     }
 });
 
-app.post("/add-packages", function (req, res) {
+app.post("/add-packages", function(req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var price = "";
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
-            function (err, rows) {
+            function(err, rows) {
                 let send = {
                     status: " "
                 }
@@ -830,17 +830,17 @@ app.post("/add-packages", function (req, res) {
                 let userFound = false;
                 var userid = rows[0].USER_ID;
                 connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                    function (err, prices) {
+                    function(err, prices) {
                         price = prices[0].package_price
                     });
                 userFound = true;
                 if (price != '0') {
                     if (userFound) {
                         connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
-                            function (err, packages) {
+                            function(err, packages) {
                                 if (packages.length > 0) {
                                     connection.query("SELECT * FROM bby_33_cart WHERE package_id = ? AND user_id = ?", [packageID, userid],
-                                        function (err, totalPrice) {
+                                        function(err, totalPrice) {
                                             var tPrice = totalPrice[0].price
                                             connection.execute(
                                                 `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
@@ -849,7 +849,7 @@ app.post("/add-packages", function (req, res) {
                                         });
                                 } else {
                                     connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                                        function (err, pricePakcage) {
+                                        function(err, pricePakcage) {
                                             connection.execute(
                                                 "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price]
                                             )
@@ -869,7 +869,7 @@ app.post("/add-packages", function (req, res) {
     }
 });
 
-app.get("/packageInfo", function (req, res) {
+app.get("/packageInfo", function(req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/packageInfo.html", "utf8");
@@ -881,14 +881,14 @@ app.get("/packageInfo", function (req, res) {
     }
 });
 
-app.post("/display-package", function (req, res) {
+app.post("/display-package", function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let packageName = req.body.packageName;
     if (req.session.loggedIn) {
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
-            function (error, results) {
+            function(error, results) {
                 if (error) {
                     console.log(error);
                 }
@@ -905,7 +905,7 @@ app.post("/display-package", function (req, res) {
 app.get("/get-cart", (req, res) => {
     if (req.session.loggedIn) {
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
-            function (err, rows) {
+            function(err, rows) {
                 let send = {
                     rows: ""
                 }
@@ -924,7 +924,7 @@ app.get("/get-cart", (req, res) => {
     }
 })
 
-app.post("/charity-create", upload.array("files"), function (req, res) {
+app.post("/charity-create", upload.array("files"), function(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let country = req.body.country;
@@ -934,7 +934,7 @@ app.post("/charity-create", upload.array("files"), function (req, res) {
     var existingPackage = "";
     connection.execute(
         "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
-        function (error, results, fields) {
+        function(error, results, fields) {
             existingPackage = results;
             let send = {
                 status: " ",
@@ -953,7 +953,7 @@ app.post("/charity-create", upload.array("files"), function (req, res) {
     )
 });
 
-app.post('/upload-package-images', upload.array("files"), function (req, res) {
+app.post('/upload-package-images', upload.array("files"), function(req, res) {
     if (req.session.loggedIn) {
         let send = {
             status: "fail",
@@ -976,7 +976,14 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
 
 });
 
+app.get("/order-confirmation", function(req, res) {
+    let profile = fs.readFileSync("./app/html/orderConfirmation.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
 var port = process.env.PORT || 8000;
-app.listen(port, function () {
+app.listen(port, function() {
     console.log("Server started on " + port + "!");
 });

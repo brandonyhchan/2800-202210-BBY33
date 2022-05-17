@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/css/orderConfirmation.css">
@@ -25,25 +24,28 @@
 
         <div id="container-content">
             <div id="page-header-container">
+                <img src="/img/logo-only.png" alt="Hope in a Box Logo" id="logo">
                 <h1 id="page-header">Thank you for your purchase!</h1>
 
                 <p>If you have attached a personalized message, we will ensure that your words reach the recipient.</p>
             </div>
 
             <div id="checkout-detail-container">
-                <p id="order-number-container">Order Number: <span id="order-number"></span></p>
-                <p id="order-date-container">Order Date: <span id="order-date"></span></p>
-                <p id="order-destination-container">Order Destination: <span id="order-destination"></span></p>
-                <p id="order-payment-container">Payment Type: <span id="order-payment"></span></p>
+                <p id="order-number-container" class="order-detail">Order Number: <span id="order-number"></span></p>
+                <p id="order-date-container" class="order-detail">Order Date: <span id="order-date"></span></p>
+                <p id="order-destination-container" class="order-detail">Order Destination: <span id="order-destination"></span></p>
+                <p id="order-payment-container" class="order-detail">Payment Type: <span id="order-payment"></span></p>
             </div>
 
 
             <div id="order-summary-container">
 
-                <p id="subtotal-container">Subtotal: <span class="total"></span></p>
-                <p id="tax-container">Tax: $0.00</p>
-                <p id="shipping-container">Shipping: $0.00</p>
-                <p id="total-container">Total: <span class="total"></span></p>
+                <div id="packages-ordered"></div>
+
+                <p id="subtotal-container" class="order-detail">Subtotal: <span class="total"></span></p>
+                <p id="tax-container" class="order-detail">Tax: $0.00</p>
+                <p id="shipping-container" class="order-detail">Shipping: $0.00</p>
+                <p id="total-container" class="order-detail">Total: <span class="total"></span></p>
             </div>
 
             <div id="order-help-container">

@@ -18,14 +18,73 @@
     border-radius: 7px;
     background-color: rgb(245, 245, 245);
     display: grid;
-    margin: 3%;
-    padding: 3%;
+    margin: 5%;
+    padding: 5%;
 }
 
 #page-header-container {
     text-align: center;
+    border: 0px;
+    border-bottom: 3px;
+    border-style: solid;
+    border-color: rgb(14, 76, 109);
+    padding-bottom: 5%;
+    color: rgb(14, 76, 109);
 }
 
 #page-header {
     margin-bottom: 2%;
+}
+
+#checkout-detail-container {
+    padding-top: 5%;
+    border: 0px;
+    border-bottom: 3px;
+    border-style: solid;
+    border-color: rgb(14, 76, 109);
+    padding-bottom: 5%;
+    color: rgb(14, 76, 109);
+}
+
+#order-summary-container {
+    padding-top: 5%;
+    border: 0px;
+    border-bottom: 3px;
+    border-style: solid;
+    border-color: rgb(14, 76, 109);
+    padding-bottom: 5%;
+    color: rgb(14, 76, 109);
+}
+
+#order-help-container {
+    padding-top: 5%;
+    text-align: center;
+    color: rgb(14, 76, 109);
+}
+
+.order-detail {
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#logo {
+    animation: fade-logo 4s;
+}
+
+@keyframes fade-logo {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    #container {
+        margin-bottom: 20%;
+    }
+    #order-help {
+        font-size: 14px;
+    }
 }
