@@ -1034,6 +1034,14 @@ app.get("/get-orders", function (req, res) {
         res.redirect("/");
     }
 });
+
+app.post("/removeAll", function (req, res) {
+    if (req.session.loggedIn) {
+        res.setHeader("Content-Type", "application/json");
+        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']
+        );
+    }
+});
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");

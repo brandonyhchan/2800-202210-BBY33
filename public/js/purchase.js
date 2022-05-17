@@ -139,3 +139,28 @@ function checkout() {
 };
 
 checkout();
+
+function remove() {
+    var buttonId;
+    var queryString;
+    let onClick = (event) => {
+        if (event.target.className == "remove") {
+            buttonId = event.target.id;
+            queryString = "buttonID=" + buttonId;
+            ajaxGET("/removeAll", function (data) {
+
+                if (data) {
+                    let dataParsed = JSON.parse(data);
+                    if (dataParsed.status == "fail") {
+                        console.log("fail");
+                    } else {
+                        console.log("success")
+                    }
+                }
+            }, queryString);
+        }
+    };
+    window.addEventListener('click', onClick);
+};
+
+remove();
