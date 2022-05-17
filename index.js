@@ -185,6 +185,7 @@ app.post("/login", async function (req, res) {
                         }
                         req.session.loggedIn = true;
                         req.session.user_name = rows[0].user_name;
+                        req.session.user_id = rows[0].USER_ID;
                         req.session.password = pwd;
                         req.session.name = rows[0].first_name;
                         req.session.isAdmin = rows[0].admin_user;
@@ -856,7 +857,7 @@ app.post("/add-packages", function (req, res) {
                                         function (err, totalPrice) {
                                             var tPrice = totalPrice[0].price
                                             connection.execute(
-                                                `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ? AND package_purchased = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID, 'n']
+                                                `UPDATE bby_33_cart SET product_quantity = ? WHERE package_id = ? AND package_purchased = ?`, [packages[0].product_quantity + 1, packageID, 'n']
                                             )
                                         });
                                     send.status = "success";
@@ -864,9 +865,13 @@ app.post("/add-packages", function (req, res) {
                                     res.send(send);
                                 } else {
                                     connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
-                                        function (err, pricePakcage) {
+                                        function (err, pricePackage) {
                                             connection.execute(
+<<<<<<< HEAD
                                                 "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased) VALUES(?, ?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price, 'n']
+=======
+                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased) VALUES(?, ?, ?, ?, ?)", [packageID, 1, userid, pricePackage[0].package_price, 'n']
+>>>>>>> Ryan_change_quantity
                                             )
                                         });
                                     send.status = "success";
@@ -941,6 +946,7 @@ app.get("/get-cart", (req, res) => {
     }
 })
 
+<<<<<<< HEAD
 app.post("/charity-create", upload.array("files"), function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
@@ -1042,6 +1048,19 @@ app.post("/removeAll", function (req, res) {
         );
     }
 });
+=======
+app.post("/delete-item", (req, res) => {
+    if (req.session.loggedIn) {
+        let send = { status: "success" };
+        console.log(req.body.packageID)
+        connection.execute(
+            `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ?`, [req.session.user_id, req.body.packageID]
+        );
+        res.send(send);
+    }
+});
+
+>>>>>>> Ryan_change_quantity
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");

@@ -16,17 +16,6 @@ body {
     background-color: #01171b;
 }
 
-.display-cart {
-    z-index: 1;
-    right: 0;
-    height: 30%;
-    width: 30%;
-    float: right;
-    position: absolute;
-    background-color: aliceblue;
-    opacity: 0;
-}
-
 #mobile {
     display: none;
 }
@@ -147,8 +136,7 @@ button,
     transition-duration: 0.7s;
 }
 
-#close,
-#purchase.buy {
+#close, #purchase.buy, .btn-danger {
     background-color: rgb(14, 76, 109);
     color: white;
     border-style: none;
@@ -233,6 +221,30 @@ td {
     display: none;
 }
 
+.display-cart2 {
+    display: none;
+}
+
+.cart-quantity-input {
+    width: 30%;
+    height: 20%;
+}
+.btn-danger:hover {
+    background-color: red;
+}
+
+.display-cart {
+    z-index: 1;
+    right: 0;
+    height: 40%;
+    width: 30%;
+    float: right;
+    position: absolute;
+    background-color: aliceblue;
+    opacity: 0;
+    border: solid black 2px;
+}
+
 @media only screen and (max-width: 720px) {
     body {
         margin-right: 0;
@@ -284,6 +296,7 @@ td {
     }
 
     .display-cart2 {
+        display: block;
         grid-area: subtotal;
         z-index: 1;
         right: 0;
@@ -316,9 +329,8 @@ td {
     #mobile-cart-container {
         margin: 2%;
     }
-
-    #close-m,
-    #mobile-purchase.buy {
+    
+    #close-m, #mobile-purchase.buy {
         display: flex;
         background-color: rgb(14, 76, 109);
         color: white;
@@ -396,4 +408,7 @@ td {
     }
 
 
+    .quantity {
+        width: 30%;
+    }
 }

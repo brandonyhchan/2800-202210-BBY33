@@ -19,13 +19,24 @@
 
 <body>
     <nav id="navbarPlaceholder"></nav>
-    <div id="display-cart">
-        <input id="close" type="button" value="Close">
-        <h2>Your Cart</h2>
-        <table id="subtotal"></table>
+    <div class="display-cart" id="desktop">
+        <div id="desktop-cart-container">
+            <input id="close" type="button" value="Close">
+            <h1 class="cart-heading">Your Cart</h1>
+            <table class="subtotal"></table>
+            <div id="total1"></div>
+        </div>
     </div>
 
     <div id="container">
+        <div class="display-cart2">
+            <div id="mobile-cart-container">
+                <input id="close-m" type="button" value="Close">
+                <h2 id="heading2" class="cart-heading">Your Cart</h2>
+                <table class="subtotal2"></table>
+                <div id="total2"></div>
+            </div>
+        </div>
         <div id="profile-container">
             <img id="profileImage" src="/img/stock-profile.png" alt="Profile Image" width="200" height="200">
 

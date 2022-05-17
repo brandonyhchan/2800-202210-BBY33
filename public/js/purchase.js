@@ -2,8 +2,20 @@
 
 var buttons;
 var packagesDisplayed = false;
+function ajaxGET(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            callback(this.responseText);
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
 
-function ajaxGET(url, callback, data) {
+function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function (k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
@@ -25,14 +37,12 @@ function ajaxGET(url, callback, data) {
 
 function getPackage() {
     var countryId;
-    var countryName;
     var queryString;
     let onClick = (event) => {
         countryId = event.target.id;
         countryId = countryId.slice(7);
-        countryName = "Ukraine";
-        queryString = "countryID=" + countryId + "&countryName=" + countryName;
-        ajaxGET("/get-packages", function (data) {
+        queryString = "countryID=" + countryId;
+        ajaxPOST("/get-packages", function (data) {
 
             if (data) {
                 let dataParsed = JSON.parse(data);
@@ -62,6 +72,65 @@ function getPackage() {
 
 getPackage();
 
+function updatePrice() {
+    var total = 0;
+    ajaxGET("/get-cart", (data) => {
+        let dataParsed = JSON.parse(data);
+        let rows = dataParsed.rows;
+        for (let i = 0; i < rows.length; i++) {
+            total += (parseInt(rows[i].product_quantity) * parseInt(rows[i].price));
+        }
+        if (window.innerWidth > 720) {
+            document.querySelector("#total1").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
+        } else {
+            document.querySelector("#total2").innerHTML = `<table><tr><td>Total</td><td>$${total}.00</td></tr></table>`;
+        }
+    })
+}
+
+function getCart() {
+    ajaxGET("/get-cart", (data) => {
+        let dataParsed = JSON.parse(data);
+        var string = `<tr>
+        <th class="package_id">Package</th>
+        <th class="price">Price</th>
+        <th class="quantity">Quantity</th>
+        </tr>`;
+        let rows = dataParsed.rows;
+        for (let i = 0; i < dataParsed.rows.length; i++) {
+            string += (
+                `<tr><td>${rows[i].package_id}</td>
+                <td>${rows[i].price}</td>
+                <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
+                <td><button class ='btn btn-danger' type='button'>REMOVE</button></td></tr>`
+            )
+        }
+        if (window.innerWidth > 720) {
+            document.querySelector(".subtotal").innerHTML = string;
+            document.querySelector(".display-cart").style.opacity = 0.75;
+            updatePrice();
+        } else {
+            document.querySelector(".subtotal2").innerHTML = string;
+            document.querySelector(".display-cart2").style.opacity = 0.75;
+            updatePrice();
+        }
+        let quantities = document.querySelectorAll(".cart-quantity-input");
+        for (let j = 0; j < quantities.length; j++) {
+            quantities[j].addEventListener('change', updateQuantity);
+        }
+    })
+
+    if (window.innerWidth > 720) {
+        document.querySelector("#close").addEventListener("click", function (e) {
+            document.querySelector(".display-cart").style.opacity = 0;
+        });
+    } else {
+        document.querySelector("#close-m").addEventListener("click", function (e) {
+            document.querySelector(".display-cart2").style.opacity = 0;
+        });
+    }
+}
+
 function addPackage() {
     var packageId;
     var queryString;
@@ -69,7 +138,7 @@ function addPackage() {
         if (event.target.className == "packages") {
             packageId = event.target.id;
             queryString = "packageID=" + packageId;
-            ajaxGET("/add-packages", function (data) {
+            ajaxPOST("/add-packages", function (data) {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);
@@ -80,10 +149,34 @@ function addPackage() {
                     }
                 }
             }, queryString);
+            updateQuantity(event);
+            getCart();
         }
     };
     window.addEventListener('click', onClick);
-};
+}
+
+function updateQuantity(event) {
+    if (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) <= 0) {
+        event.target.value = 1
+    }
+    var packageId;
+    var queryString;
+    var newQuantity = event.target.value;
+    packageId = event.target.id;
+    queryString = "packageID=" + packageId + "&quantity=" + newQuantity;
+    ajaxPOST("/update-quantity", function (data) {
+        if (data) {
+            let dataParsed = JSON.parse(data);
+            if (dataParsed.status == "fail") {
+                console.log("fail");
+            }
+        }
+    }, queryString);
+    getCart();
+    getCart();
+
+}
 
 function displayPackage() {
     var packageId;
@@ -95,7 +188,7 @@ function displayPackage() {
         }
     };
     window.addEventListener('click', onClick);
-};
+}
 
 
 async function showPackage() {
