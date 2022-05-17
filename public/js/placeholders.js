@@ -84,6 +84,9 @@ ready(() => {
         document.querySelector("#map").addEventListener("click", ()=>{
             getMap();
         })
+        document.querySelector("#orders").addEventListener("click", ()=>{
+            getOrders();
+        })
         let carts = document.querySelectorAll(".cart-holder");
         for (let i = 0; i < carts.length; i++) {
             carts[i].addEventListener("click", getCart);
@@ -149,6 +152,19 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/map");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getOrders() {
+        try {
+            let response = await fetch("/getOrders", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/getOrders");
             }
         } catch (err) {
 

@@ -390,6 +390,18 @@ app.get("/map", function (req, res) {
     }
 });
 
+app.get("/getOrders", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/orders.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.get("/user-name", (req, res) => {
     if (req.session.loggedIn) {
         res.send({
@@ -998,6 +1010,30 @@ app.post("/checkout", function (req, res) {
     }
 });
 
+app.get("/get-orders", function (req, res) {
+    if (req.session.loggedIn) {
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
+            function (err, rows) {
+                var userid = rows[0].USER_ID;
+                connection.query(
+                    "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.user_id = ? AND bby_33_cart.package_purchased = ?", [userid, 'y'],
+                    function (error, results) {
+                        if (error) {
+                            console.log(error);
+                        }
+                        res.send({
+                            status: "success",
+                            rows: results
+                        });
+                    }
+                );
+            }
+        )
+        
+    } else {
+        res.redirect("/");
+    }
+});
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
