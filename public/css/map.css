@@ -42,8 +42,8 @@ body {
     display: grid;
     grid-template-columns: 15% 85%;
     grid-template-areas:
-        "cart" "map"
-        "cart" "map";
+        "cart""map"
+        "cart""map";
     height: 100vh;
 }
 
@@ -147,7 +147,8 @@ button,
     transition-duration: 0.7s;
 }
 
-#close {
+#close,
+#purchase.buy {
     background-color: rgb(14, 76, 109);
     color: white;
     border-style: none;
@@ -158,21 +159,34 @@ button,
     transition-duration: 0.7s;
 }
 
+#purchase.buy {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 4%;
+}
+
+#total1 {
+    margin: auto;
+}
+
 button:hover,
 .packagesDisplay:hover,
-#close:hover {
+#close:hover,
+#purchase.buy:hover {
     background-color: rgb(114, 186, 213);
 }
 
 button:active,
 .packagesDisplay:active,
-#close:active {
+#close:active,
+#purchase.buy:active {
     transform: translateY(4px);
 }
 
 #desktop-cart-container {
     height: 100%;
     margin: 4%;
+    padding-bottom: 5%;
 }
 
 .subtotal,
@@ -180,10 +194,12 @@ button:active,
     width: 100%;
 }
 
-#total1 {
-    position: absolute;
-    margin-top: 10%;
-    margin-left: 9%;
+#cart-layout {
+    position: relative;
+    top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
 }
 
 th,
@@ -198,6 +214,10 @@ td {
 }
 
 #close-m {
+    display: none;
+}
+
+#mobile-purchase.buy {
     display: none;
 }
 
@@ -232,7 +252,7 @@ td {
             "cart"
             "map"
             "subtotal";
-            
+
     }
 
     .map {
@@ -255,6 +275,12 @@ td {
 
     .display-cart {
         display: none;
+    }
+
+    #heading2 {
+        display: flex;
+        justify-content: center;
+        font-size: 25px;
     }
 
     .display-cart2 {
@@ -291,7 +317,8 @@ td {
         margin: 2%;
     }
 
-    #close-m {
+    #close-m,
+    #mobile-purchase.buy {
         display: flex;
         background-color: rgb(14, 76, 109);
         color: white;
@@ -301,13 +328,37 @@ td {
         cursor: pointer;
         font-family: 'Fonttype';
         transition-duration: 0.7s;
+        text-align: center;
     }
 
-    #close-m:hover{
+    #close-m:hover, #mobile-purchase.buy:hover {
         background-color: rgb(114, 186, 213);
     }
 
-    #close-m:active{
+    #close-m:active, #mobile-purchase.buy:active {
         transform: translateY(4px);
     }
+
+    .subtotal2 {
+        margin-top: 3%;
+    }
+
+    #cart-layout-mobile {
+        position: relative;
+        top: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #mobile-purchase.buy {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 4%;
+    }
+
+    #total2{
+        margin:auto;
+    }
+
+
 }

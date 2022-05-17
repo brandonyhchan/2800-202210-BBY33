@@ -20,8 +20,6 @@ body {
 
 #container {
     width: 100%;
-    max-height: calc(100vh - 20%);
-    overflow-x: hidden;
     align-items: center;
 }
 
@@ -239,6 +237,7 @@ body {
     #user-info {
         width: 100%;
     }
+    
     #submit {
         margin-top: 2%;
         border-radius: 5px;
