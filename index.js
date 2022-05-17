@@ -867,7 +867,7 @@ app.post("/add-packages", function (req, res) {
                                     connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
                                         function (err, pricePackage) {
                                             connection.execute(
-                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased) VALUES(?, ?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price, 'n']
+                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased) VALUES(?, ?, ?, ?, ?)", [packageID, 1, userid, pricePackage[0].package_price, 'n']
                                             )
                                         });
                                     send.status = "success";
