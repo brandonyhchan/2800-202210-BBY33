@@ -114,3 +114,28 @@ async function showPackage() {
 displayPackage();
 
 addPackage();
+
+function checkout() {
+    var buttonId;
+    var queryString;
+    let onClick = (event) => {
+        if (event.target.className == "buy") {
+            buttonId = event.target.id;
+            queryString = "buttonID=" + buttonId;
+            ajaxGET("/checkout", function (data) {
+
+                if (data) {
+                    let dataParsed = JSON.parse(data);
+                    if (dataParsed.status == "fail") {
+                        console.log("fail");
+                    } else {
+                        console.log("success")
+                    }
+                }
+            }, queryString);
+        }
+    };
+    window.addEventListener('click', onClick);
+};
+
+checkout();

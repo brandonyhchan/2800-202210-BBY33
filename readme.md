@@ -28,9 +28,9 @@ Stanley Chow (SET 1B)
 * clearDB
 
 ## Resources 
--Our logo was generated with keywords through looka.com and edited to match our brand's theme.
--npm multer was used to enable users to upload images.
--npm bcrypt was used to hash account passwords before sending them to the database, to avoid storing passwords as plaintext.
+- Our logo was generated with keywords through looka.com and edited to match our brand's theme.
+- npm multer was used to enable users to upload images.
+- npm bcrypt was used to hash account passwords before sending them to the database, to avoid storing passwords as plaintext.
 
 ## Photo Resources  
 - The instagram icon used in our mobile footer was obtained from pngEgg.com online.

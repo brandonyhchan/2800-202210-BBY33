@@ -76,7 +76,7 @@ app.get("/", function (req, res) {
             res.redirect("/landing");
         } else if (req.session.isCharity === 'y' && req.session.isAdmin === 'n') {
             res.redirect("/charity");
-        }else {
+        } else {
             res.redirect("/admin");
         }
 
@@ -169,7 +169,7 @@ app.post("/login", async function (req, res) {
         res.redirect("/admin");
     } else if (req.session.loggedIn && req.session.isAdmin === 'n' && req.session.isCharity === 'y') {
         res.redirect("/charity");
-    }else if (req.session.loggedIn && req.session.isAdmin === 'n') {
+    } else if (req.session.loggedIn && req.session.isAdmin === 'n') {
         res.redirect("/landing");
     } else {
         res.setHeader("Content-Type", "application/json");
@@ -382,6 +382,18 @@ app.get("/map", function (req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/map.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.get("/getOrders", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/orders.html", "utf8");
         let profileDOM = new JSDOM(profile);
 
         res.send(profileDOM.serialize());
@@ -823,9 +835,6 @@ app.post("/add-packages", function (req, res) {
         var price = "";
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
-                let send = {
-                    status: " "
-                }
                 var packageID = req.body.packageID;
                 let userFound = false;
                 var userid = rows[0].USER_ID;
@@ -834,34 +843,42 @@ app.post("/add-packages", function (req, res) {
                         price = prices[0].package_price
                     });
                 userFound = true;
+                var send = {
+                    status: "fail",
+                    msg: "hello"
+                };
                 if (price != '0') {
                     if (userFound) {
-                        connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ?", [userid, packageID],
+                        connection.query("SELECT * FROM bby_33_cart WHERE user_id = ? AND package_id = ? AND package_purchased = ?", [userid, packageID, 'n'],
                             function (err, packages) {
                                 if (packages.length > 0) {
-                                    connection.query("SELECT * FROM bby_33_cart WHERE package_id = ? AND user_id = ?", [packageID, userid],
+                                    connection.query("SELECT * FROM bby_33_cart WHERE package_id = ? AND user_id = ? AND package_purchased = ?", [packageID, userid, 'n'],
                                         function (err, totalPrice) {
                                             var tPrice = totalPrice[0].price
                                             connection.execute(
-                                                `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID]
+                                                `UPDATE bby_33_cart SET  product_quantity = ?, price = ? WHERE package_id = ? AND package_purchased = ?`, [packages[0].product_quantity + 1, tPrice + price, packageID, 'n']
                                             )
-                                            send.status = "success";
                                         });
+                                    send.status = "success";
+                                    send.msg = "Package Added To Cart";
+                                    res.send(send);
                                 } else {
                                     connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
                                         function (err, pricePakcage) {
                                             connection.execute(
-                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price) VALUES(?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price]
+                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased) VALUES(?, ?, ?, ?, ?)", [packageID, 1, userid, pricePakcage[0].package_price, 'n']
                                             )
                                         });
                                     send.status = "success";
+                                    send.msg = "Package Added To Cart";
+                                    res.send(send);
                                 }
                             });
 
                     } else {
                         send.status = "fail";
+                        send.msg = "Package Did Not Get Added";
                     }
-
                 }
             });
     } else {
@@ -887,7 +904,7 @@ app.post("/display-package", function (req, res) {
     let packageName = req.body.packageName;
     if (req.session.loggedIn) {
         connection.query(
-            "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
+            "SELECT bby_33_package.PACKAGE_ID, bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
             function (error, results) {
                 if (error) {
                     console.log(error);
@@ -911,7 +928,7 @@ app.get("/get-cart", (req, res) => {
                 }
                 var userid = rows[0].USER_ID;
                 connection.execute(
-                    `SELECT * FROM bby_33_cart WHERE user_id = ?`, [userid], (err, rows) => {
+                    `SELECT * FROM bby_33_cart WHERE user_id = ? AND package_purchased = ?`, [userid, 'n'], (err, rows) => {
                         send.rows = rows;
                         res.send(send);
                     }
@@ -976,6 +993,47 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
 
 });
 
+app.post("/checkout", function (req, res) {
+    if (req.session.loggedIn) {
+        res.setHeader("Content-Type", "application/json");
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
+            function (err, rows) {
+                let send = {
+                    rows: ""
+                }
+                var userid = rows[0].USER_ID;
+                connection.execute(
+                    `UPDATE bby_33_cart SET package_purchased = ? WHERE user_id = ?`, ['y', userid]
+                );
+            }
+        )
+    }
+});
+
+app.get("/get-orders", function (req, res) {
+    if (req.session.loggedIn) {
+        connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
+            function (err, rows) {
+                var userid = rows[0].USER_ID;
+                connection.query(
+                    "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.user_id = ? AND bby_33_cart.package_purchased = ?", [userid, 'y'],
+                    function (error, results) {
+                        if (error) {
+                            console.log(error);
+                        }
+                        res.send({
+                            status: "success",
+                            rows: results
+                        });
+                    }
+                );
+            }
+        )
+        
+    } else {
+        res.redirect("/");
+    }
+});
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");

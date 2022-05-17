@@ -1,5 +1,3 @@
-var package = sessionStorage.getItem("package");
-
 'use strict';
 
 /**
@@ -11,7 +9,7 @@ function changeImageTab(image) {
     switchedImage.src = image.src;
 }
 
-
+var packageView = sessionStorage.getItem("package");
 
 
 let slideIndex = 1;
@@ -65,7 +63,7 @@ function ajaxGET(url, callback, data) {
 }
 
 function getPackage() {
-    var packageName = package;
+    var packageName = packageView;
     var queryString;
     queryString = "packageName=" + packageName;
     ajaxGET("/display-package", function(data) {
@@ -74,13 +72,44 @@ function getPackage() {
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
+                
+                let string = "";
+                string += `<h2 id="package-name">${dataParsed.rows[0].package_name}</h2>
+                <br>
+                <p id="price">Price: $${dataParsed.rows[0].package_price}</p>
+                <br>
+                <p id="description">${dataParsed.rows[0].description_of_package}</p>
+                <br><button class="add-to-cart" id="${dataParsed.rows[0].PACKAGE_ID}">Add to Cart</button><p id="msg"></p>`
                 document.getElementById("image").setAttribute("src", dataParsed.rows[0].package_image);
-                document.getElementById("package-name").innerHTML = dataParsed.rows[0].package_name;
-                document.getElementById("price").innerHTML = dataParsed.rows[0].package_price;
-                document.getElementById("description").innerHTML = dataParsed.rows[0].description_of_package;
+                document.getElementById("package-description").innerHTML = string;
             }
         }
     }, queryString);
 };
 
 getPackage();
+
+function addPackage() {
+    var packageId;
+    var queryString;
+    let onClick = (event) => {
+        if (event.target.className == "add-to-cart") {
+            packageId = event.target.id;
+            queryString = "packageID=" + packageId;
+            ajaxGET("/add-packages", function (data) {
+
+                if (data) {
+                    let dataParsed = JSON.parse(data);
+                    if (dataParsed.status == "fail") {
+                        document.getElementById("msg").innerHTML = dataParsed.msg;
+                    } else {
+                        document.getElementById("msg").innerHTML = dataParsed.msg;
+                    }
+                }
+            }, queryString);
+        }
+    };
+    window.addEventListener('click', onClick);
+};
+
+addPackage();

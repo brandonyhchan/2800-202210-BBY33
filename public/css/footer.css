@@ -5,6 +5,7 @@
 
 footer {
     bottom: 0;
+    position: relative;
     width: 100%;
     background-color: #00394f;
     margin: 0;
