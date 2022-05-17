@@ -1054,6 +1054,16 @@ app.post("/delete-item", (req, res) => {
     }
 });
 
+app.post("/update-quantity", (req, res) => {
+    if (req.session.loggedIn) {
+        let send = { status: "success" };
+        connection.execute(
+            `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
+        );
+        res.send(send);
+    }
+});
+
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
