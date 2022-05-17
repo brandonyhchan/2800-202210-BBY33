@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Fonttype";
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+}
+
+#container-content {
+    border-radius: 7px;
+    background-color: rgb(245, 245, 245);
+    display: grid;
+    margin: 3%;
+    padding: 3%;
+}
+
+#page-header-container {
+    text-align: center;
+}
+
+#page-header {
+    margin-bottom: 2%;
+}
