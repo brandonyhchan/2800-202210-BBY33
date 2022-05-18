@@ -43,7 +43,6 @@ function getPackage() {
         countryId = countryId.slice(7);
         queryString = "countryID=" + countryId;
         ajaxPOST("/get-packages", function (data) {
-
             if (data) {
                 let dataParsed = JSON.parse(data);
                 if (dataParsed.status == "fail") {
@@ -52,7 +51,7 @@ function getPackage() {
                     let str = ""
                     for (let i = 0; i < dataParsed.rows.length; i++) {
                         let row = dataParsed.rows[i];
-                        str += (`<div class='card'> 
+                        str += (`<div class='card'><button class='close-package'>Close</button>
                             <div id='title'>${row.package_name} 
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
@@ -60,6 +59,14 @@ function getPackage() {
                             </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
                     }
                     document.getElementById("cart").innerHTML = str;
+                }
+            }
+            let removeBtns = document.querySelectorAll(".close-package");
+            for (let i = 0; i < removeBtns.length; i++) {
+                console.log("close")
+                removeBtns[i].onClick = () => {
+                    console.log("clicked")
+                    this.parentNode.innerHTML = "";
                 }
             }
         }, queryString);
@@ -120,9 +127,9 @@ function getCart() {
         }
 
         let removeBtns = document.querySelectorAll(".btn-danger");
-            for (let j = 0; j < removeBtns.length; j++) {
-                removeBtns[j].addEventListener('click', deleteItem);
-            }
+        for (let j = 0; j < removeBtns.length; j++) {
+            removeBtns[j].addEventListener('click', deleteItem);
+        }
     })
 
     if (window.innerWidth > 720) {
@@ -218,7 +225,7 @@ async function showPackage() {
         if (response.status === 200) {
             window.location.replace("/packageInfo");
         }
-    } catch (err){
+    } catch (err) {
 
     }
 }
