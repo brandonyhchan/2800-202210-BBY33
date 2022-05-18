@@ -18,16 +18,20 @@ ready(() => {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
 
-        document.querySelector("#whoWeAre").addEventListener("click", () =>{
+        document.querySelector("#whoWeAre").addEventListener("click", () => {
             getWhoWeAre();
         })
 
-        document.querySelector("#faq").addEventListener("click", () =>{
+        document.querySelector("#faq").addEventListener("click", () => {
             getFAQ();
+        })
+
+        document.querySelector("#howItWorks").addEventListener("click", () => {
+            getHowItWorks();
         })
     });
 
-    async function getWhoWeAre(){
+    async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
                 method: 'GET'
@@ -40,13 +44,26 @@ ready(() => {
         }
     }
 
-    async function getFAQ(){
+    async function getFAQ() {
         try {
             let response = await fetch("/FAQ", {
                 method: 'GET'
             })
             if (response.status === 200) {
                 window.location.replace("/FAQ");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getHowItWorks() {
+        try {
+            let response = await fetch("/howItWorks", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/howItWorks");
             }
         } catch (err) {
 

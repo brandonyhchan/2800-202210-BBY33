@@ -3,7 +3,7 @@ var show;
 ready(() => {
     function ajaxGET(url, callback) {
         const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
+        xhr.onload = function() {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
             } else {
@@ -39,15 +39,15 @@ ready(() => {
                 document.querySelector(".display-cart2").style.opacity = 0.75;
                 updatePrice(rows);
             }
-           
-            
+
+
         })
         if (window.innerWidth > 720) {
-            document.querySelector("#close").addEventListener("click", function (e) {
+            document.querySelector("#close").addEventListener("click", function(e) {
                 document.querySelector(".display-cart").style.opacity = 0;
             });
         } else {
-            document.querySelector("#close-m").addEventListener("click", function (e) {
+            document.querySelector("#close-m").addEventListener("click", function(e) {
                 document.querySelector(".display-cart2").style.opacity = 0;
             });
         }
@@ -67,7 +67,7 @@ ready(() => {
         }
     }
 
-    ajaxGET("/nav", function (data) {
+    ajaxGET("/nav", function(data) {
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
         document.querySelector("#profile").addEventListener("click", () => {
@@ -81,10 +81,10 @@ ready(() => {
             getLanding();
         });
 
-        document.querySelector("#map").addEventListener("click", ()=>{
+        document.querySelector("#map").addEventListener("click", () => {
             getMap();
         })
-        document.querySelector("#orders").addEventListener("click", ()=>{
+        document.querySelector("#orders").addEventListener("click", () => {
             getOrders();
         })
         let carts = document.querySelectorAll(".cart-holder");
@@ -95,7 +95,7 @@ ready(() => {
 
     var path = window.location.pathname;
     if (path.startsWith("/admin")) {
-        ajaxGET("/admin-sideBar", function (data) {
+        ajaxGET("/admin-sideBar", function(data) {
 
             let navbar = document.querySelector("#control-panel-placeholder");
             navbar.innerHTML = data;
@@ -111,24 +111,28 @@ ready(() => {
 
     }
 
-    ajaxGET("/footer", function (data) {
+    ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
 
-        document.querySelector("#profile-icon").addEventListener("click", () =>{
+        document.querySelector("#profile-icon").addEventListener("click", () => {
             getProfile();
         })
 
-        document.querySelector("#map-icon").addEventListener("click", () =>{
+        document.querySelector("#map-icon").addEventListener("click", () => {
             getMap();
         })
 
-        document.querySelector("#whoWeAre").addEventListener("click", () =>{
+        document.querySelector("#whoWeAre").addEventListener("click", () => {
             getWhoWeAre();
         })
 
-        document.querySelector("#faq").addEventListener("click", ()=>{
+        document.querySelector("#faq").addEventListener("click", () => {
             getFAQ();
+        })
+
+        document.querySelector("#howItWorks").addEventListener("click", () => {
+            getHowItWorks();
         })
     });
 
@@ -211,7 +215,7 @@ ready(() => {
         }
     }
 
-    async function getWhoWeAre(){
+    async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
                 method: 'GET'
@@ -224,7 +228,7 @@ ready(() => {
         }
     }
 
-    async function getFAQ(){
+    async function getFAQ() {
         try {
             let response = await fetch("/FAQ", {
                 method: 'GET'
@@ -236,6 +240,20 @@ ready(() => {
 
         }
     }
+
+    async function getHowItWorks() {
+        try {
+            let response = await fetch("/howItWorks", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/howItWorks");
+            }
+        } catch (err) {
+
+        }
+    }
+
 
 })
 
