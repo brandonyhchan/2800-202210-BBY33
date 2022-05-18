@@ -41,11 +41,14 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage
 });
+// Stripe implementation adapted from https://www.geeksforgeeks.org/how-to-integrate-stripe-payment-gateway-in-node-js/ and https://www.stripe.com/
+var Publishable_Key = 'pk_test_51L0tu4KoIBYNnVd1Ic04xcveGKx20cwgnVnSxuBQAWy5wbrN6fcJsb1EA9ssy4K6dOyR3UwKmA18rqZbf4aixJHd009Luil2x5'
+var Secret_Key = 'sk_test_51L0tu4KoIBYNnVd1nGBWg0YSY5PqYW95VKlRqiZvoF24fGUV2q5O6gxxfdsFuc369Sx9sgyBSMUxWDjIAZtf5ANt00PGpy276t'
+
+const stripe = require('stripe')(Secret_Key);
 
 var isAdmin = false;
 var packageN = "";
-
-
 
 //path mapping 
 app.use("/js", express.static("./public/js"));
