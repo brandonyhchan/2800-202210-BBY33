@@ -57,14 +57,15 @@ ready(() => {
                 document.querySelector(".display-cart2").style.opacity = 0.75;
                 updatePrice();
             }
-            let removeBtns = document.querySelectorAll(".btn");
-            for (let j = 0; j < removeBtns.length; j++) {
-                removeBtns[j].addEventListener('click', deleteItem);
-            }
 
             let quantities = document.querySelectorAll(".cart-quantity-input");
             for (let j = 0; j < quantities.length; j++) {
                 quantities[j].addEventListener('change', updateQuantity);
+            }
+
+            let removeBtns = document.querySelectorAll(".btn-danger");
+            for (let j = 0; j < removeBtns.length; j++) {
+                removeBtns[j].addEventListener('click', deleteItem);
             }
         })
 
@@ -97,7 +98,6 @@ ready(() => {
             }
         }, queryString);
         getCart();
-        getCart();
 
     }
 
@@ -111,8 +111,8 @@ ready(() => {
                     console.log("fail");
                 }
             }
+            getCart();
         }, queryString);
-        getCart();
     }
 
     function updatePrice() {
@@ -148,7 +148,7 @@ ready(() => {
         document.querySelector("#map").addEventListener("click", () => {
             getMap();
         })
-        document.querySelector("#orders").addEventListener("click", ()=>{
+        document.querySelector("#orders").addEventListener("click", () => {
             getOrders();
         })
         let carts = document.querySelectorAll(".cart-holder");

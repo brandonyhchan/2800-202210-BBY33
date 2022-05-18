@@ -1046,9 +1046,8 @@ app.post("/removeAll", function (req, res) {
 app.post("/delete-item", (req, res) => {
     if (req.session.loggedIn) {
         let send = { status: "success" };
-        console.log(req.body.packageID)
         connection.execute(
-            `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ?`, [req.session.user_id, req.body.packageID]
+            `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ? AND package_purchased = ?`, [req.session.user_id, req.body.packageID, 'n']
         );
         res.send(send);
     }

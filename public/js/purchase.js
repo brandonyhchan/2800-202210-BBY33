@@ -102,7 +102,7 @@ function getCart() {
                 `<tr><td>${rows[i].package_id}</td>
                 <td>${rows[i].price}</td>
                 <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
-                <td><button class ='btn btn-danger' type='button'>REMOVE</button></td></tr>`
+                <td><button class ='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
             )
         }
         if (window.innerWidth > 720) {
@@ -118,6 +118,11 @@ function getCart() {
         for (let j = 0; j < quantities.length; j++) {
             quantities[j].addEventListener('change', updateQuantity);
         }
+
+        let removeBtns = document.querySelectorAll(".btn-danger");
+            for (let j = 0; j < removeBtns.length; j++) {
+                removeBtns[j].addEventListener('click', deleteItem);
+            }
     })
 
     if (window.innerWidth > 720) {
@@ -129,6 +134,20 @@ function getCart() {
             document.querySelector(".display-cart2").style.opacity = 0;
         });
     }
+}
+
+function deleteItem(event) {
+    let packID = event.target.id;
+    let queryString = "packageID=" + packID;
+    ajaxPOST("/delete-item", (data) => {
+        if (data) {
+            let dataParsed = JSON.parse(data);
+            if (dataParsed.status == "fail") {
+                console.log("fail");
+            }
+        }
+        getCart();
+    }, queryString);
 }
 
 function addPackage() {
@@ -240,8 +259,7 @@ function remove() {
         if (event.target.className == "remove") {
             buttonId = event.target.id;
             queryString = "buttonID=" + buttonId;
-            ajaxGET("/removeAll", function (data) {
-
+            ajaxPOST("/removeAll", function (data) {
                 if (data) {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
