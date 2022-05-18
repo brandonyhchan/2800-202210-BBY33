@@ -7,7 +7,7 @@ function getUsers() {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
-                    let str = `        <tr>
+                    let str = `<table><tr>
                     <th class="firstName_header"><span>Package</span></th>
                     <th class="lastName_header"><span>Quantity</span></th>
                     <th class="email_header"><span>Price</span></th>
@@ -15,12 +15,12 @@ function getUsers() {
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         str += ("<tr>" +
-                            "<td class='packagedId'><span class='pId'>" + row.package_name +
-                            "</span></td><td class='quantity'><span class='quant'>" + row.product_quantity +
-                            "</span></td><td class='price'><span class='priceP'>" + row.price+
-                            `</span>` +
+                            "<td class='packagedId'>" + row.package_name +
+                            "</td><td class='quantity'>" + row.product_quantity +
+                            "</td><td class='price'>" + row.price +
                             "</td></tr>");
                     }
+                    str += "</table>"
                     document.getElementById("orderTable").innerHTML = str;
                 }
             }
