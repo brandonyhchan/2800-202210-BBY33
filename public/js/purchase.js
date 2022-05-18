@@ -248,7 +248,7 @@ function checkout() {
         }
     };
     window.addEventListener('click', onClick);
-};
+}
 
 checkout();
 
@@ -269,9 +269,10 @@ function remove() {
                     }
                 }
             }, queryString);
+            getCart();
         }
     };
     window.addEventListener('click', onClick);
-};
+}
 
 remove();

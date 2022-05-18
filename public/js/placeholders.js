@@ -131,6 +131,28 @@ ready(() => {
         })
     }
 
+    var removeAlls = document.querySelectorAll(".remove");
+    for (let i = 0; i < removeAlls.length; i++) {
+        removeAlls[i].addEventListener("click", remove);
+    }
+
+    function remove(event) {
+        var buttonId;
+        var queryString;
+        buttonId = event.target.id;
+        queryString = "buttonID=" + buttonId;
+        ajaxPOST("/removeAll", function (data) {
+            if (data) {
+                let dataParsed = JSON.parse(data);
+                if (dataParsed.status == "fail") {
+                    console.log("fail");
+                }
+            }
+        }, queryString);
+        getCart();
+        getCart();
+    }
+
     ajaxGET("/nav", function (data) {
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
@@ -300,6 +322,7 @@ ready(() => {
 
         }
     }
+
 })
 
 function ready(callback) {
