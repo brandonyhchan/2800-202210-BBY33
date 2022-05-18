@@ -2,6 +2,7 @@
 
 var buttons;
 var packagesDisplayed = false;
+
 function ajaxGET(url, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -51,7 +52,7 @@ function getPackage() {
                     let str = ""
                     for (let i = 0; i < dataParsed.rows.length; i++) {
                         let row = dataParsed.rows[i];
-                        str += (`<div class='card'><button class='close-package'>Close</button>
+                        str += (`<button class='close-package'>Close</button><div class='card'>
                             <div id='title'>${row.package_name} 
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
@@ -59,14 +60,12 @@ function getPackage() {
                             </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
                     }
                     document.getElementById("cart").innerHTML = str;
-                }
-            }
-            let removeBtns = document.querySelectorAll(".close-package");
-            for (let i = 0; i < removeBtns.length; i++) {
-                console.log("close")
-                removeBtns[i].onClick = () => {
-                    console.log("clicked")
-                    this.parentNode.innerHTML = "";
+                    document.querySelectorAll(".close-package").forEach(function (currentElement, currentIndex, listObj) {
+                        currentElement.addEventListener("click", function (e) {
+                            document.getElementById("cart").innerHTML = "";
+                
+                        });
+                    });
                 }
             }
         }, queryString);
