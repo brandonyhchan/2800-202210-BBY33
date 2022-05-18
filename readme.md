@@ -31,6 +31,8 @@ Stanley Chow (SET 1B)
 - Our logo was generated with keywords through looka.com and edited to match our brand's theme.
 - npm multer was used to enable users to upload images.
 - npm bcrypt was used to hash account passwords before sending them to the database, to avoid storing passwords as plaintext.
+- Heroku and clearDB were used to host the website
+- npm stripe was used to implement payment gateway
 
 ## Photo Resources  
 - The instagram icon used in our mobile footer was obtained from pngEgg.com online.
