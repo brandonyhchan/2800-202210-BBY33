@@ -25,6 +25,10 @@ ready(() => {
         document.querySelector("#faq").addEventListener("click", () =>{
             getFAQ();
         })
+
+        document.querySelector("#joinOurTeam").addEventListener("click", () =>{
+            getJoinOurTeam();
+        })
     });
 
     async function getWhoWeAre(){
@@ -52,7 +56,22 @@ ready(() => {
 
         }
     }
+
+    async function getJoinOurTeam(){
+        try {
+            let response = await fetch("/joinOurTeam", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/joinOurTeam");
+            }
+        } catch (err) {
+    
+        }
+    }
 })
+
+
 
 function ready(callback) {
     if (document.readyState != "loading") {

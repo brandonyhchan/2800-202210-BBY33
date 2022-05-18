@@ -38,3 +38,6 @@ Stanley Chow (SET 1B)
 - The instagram icon used in our mobile footer was obtained from pngEgg.com online.
 - The twitter icon used in our mobile footer was obtained from toppng.com online.    
 - The facebook icon used in our mobile footer was obtained from pngitem.com online.
+- The quality clipart used on joinOurTeam.html was obtained from kissclipart.com online.
+- The teamwork clipart used on joinOurTeam.html was obtained from kindpng.com online.
+- The passion clipart used on joinOurTeam.html was obtained from clipart-library.com online.
