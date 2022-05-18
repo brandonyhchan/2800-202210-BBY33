@@ -70,6 +70,12 @@ body {
     transform: translateY(4px);
 }
 
+.email{
+    text-decoration: none;
+    cursor: pointer;
+    color: rgb(14, 76, 109);
+}
+
 @media only screen and (max-width: 720px) {
 
     body{

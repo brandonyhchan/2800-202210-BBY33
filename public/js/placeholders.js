@@ -130,6 +130,10 @@ ready(() => {
         document.querySelector("#faq").addEventListener("click", ()=>{
             getFAQ();
         })
+
+        document.querySelector("#joinOurTeam").addEventListener("click", () =>{
+            getJoinOurTeam();
+        })
     });
 
     async function getProfile() {
@@ -218,6 +222,19 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/whoWeAre");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getJoinOurTeam(){
+        try {
+            let response = await fetch("/joinOurTeam", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/joinOurTeam");
             }
         } catch (err) {
 
