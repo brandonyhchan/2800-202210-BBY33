@@ -3,11 +3,6 @@
     src: url("/fonts/static/Raleway-Regular.ttf");
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
 body {
     width: 100%;
     overflow-x: hidden;
@@ -17,8 +12,7 @@ body {
 
 #container {
     width: 100%;
-    height: 100%;
-    margin-bottom: 3%;
+    min-height: 100vh;
     align-items: center;
 }
 
@@ -63,6 +57,7 @@ body {
     align-items: center;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 2%;
     margin-bottom: 1%;
     font-size: 30px;
     border-style: none;
@@ -81,4 +76,112 @@ body {
 
 .home:active {
     transform: translateY(4px);
+}
+
+.link{
+    cursor: pointer;
+    color: rgb(14, 76, 109);
+}
+
+#graphic{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+
+.core-value-title{
+    font-size: 30px;
+    margin: auto;
+}
+
+.core-value{
+    width: 250px; 
+    margin: auto;
+    text-align: center;
+    display: flex;
+}
+
+.description{
+    grid-column: 2/3;
+}
+
+.core-value-title{
+    text-align: center;
+    margin-top: 1%;
+}
+
+.core-value-writing{
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-size: 24px;
+}
+
+@media only screen and (max-width: 720px) {
+    body{
+        height: 100vh;
+    }
+
+    #information{
+        margin-left:5%;
+        margin-right:5%;
+    }
+
+    #logo {
+        max-width: 70%;
+        margin-top: 12%;
+    }
+
+    #title {
+        font-size: 28px;
+    }
+
+    #prompt{
+        font-size: 20px;
+        margin-top: 3%;
+        margin-bottom: 3%;
+    }
+
+    .bullet{
+        margin-top: 4%;
+        margin-bottom: 4%;
+        font-size: 20px;
+    }
+
+    .heading{
+        text-align: center;
+        margin-top: 6%;
+        margin-bottom: 4%;
+        font-size: 23px;
+    }
+    
+    .home{
+        font-size: 20px; 
+        padding: 1.25%;
+        margin-bottom: 4%;
+    }
+
+    .core-value{
+        width: 175px;
+    }
+
+    #graphic{
+        display: inline-block;
+    }
+
+    .core-value-title, .core-value-writing{
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .graphic-container{
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+    
+
 }
