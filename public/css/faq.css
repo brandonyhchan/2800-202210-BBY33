@@ -37,12 +37,13 @@ body {
 }
 
 .question {
-    margin-top: 5%;
+    margin-top: 4%;
     margin-bottom: 0%;
+    font-size: 30px;
 }
 
 .answer {
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .home{

@@ -34,10 +34,11 @@ body {
 
 .heading{
     text-align: center;
+    font-size: 40px;
 }
 
 .description{
-    font-size: 20px;
+    font-size: 26px;
     margin-bottom: 2%;
 }
 
