@@ -42,10 +42,8 @@ const upload = multer({
     storage: storage
 });
 // Stripe implementation adapted from https://www.geeksforgeeks.org/how-to-integrate-stripe-payment-gateway-in-node-js/ and https://www.stripe.com/
-var Publishable_Key = 'pk_test_51L0tu4KoIBYNnVd1Ic04xcveGKx20cwgnVnSxuBQAWy5wbrN6fcJsb1EA9ssy4K6dOyR3UwKmA18rqZbf4aixJHd009Luil2x5'
-var Secret_Key = 'sk_test_51L0tu4KoIBYNnVd1nGBWg0YSY5PqYW95VKlRqiZvoF24fGUV2q5O6gxxfdsFuc369Sx9sgyBSMUxWDjIAZtf5ANt00PGpy276t'
 
-const stripe = require('stripe')(Secret_Key);
+const stripe = require('stripe')(process.env.YOUR_SECRET_KEY);
 
 var isAdmin = false;
 var packageN = "";
@@ -1033,7 +1031,7 @@ app.get("/get-orders", function (req, res) {
                 );
             }
         )
-        
+
     } else {
         res.redirect("/");
     }
@@ -1042,13 +1040,14 @@ app.get("/get-orders", function (req, res) {
 app.post("/removeAll", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
-        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']
-        );
+        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']);
     }
 });
 app.post("/delete-item", (req, res) => {
     if (req.session.loggedIn) {
-        let send = { status: "success" };
+        let send = {
+            status: "success"
+        };
         connection.execute(
             `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ? AND package_purchased = ?`, [req.session.user_id, req.body.packageID, 'n']
         );
@@ -1058,13 +1057,63 @@ app.post("/delete-item", (req, res) => {
 
 app.post("/update-quantity", (req, res) => {
     if (req.session.loggedIn) {
-        let send = { status: "success" };
+        let send = {
+            status: "success"
+        };
         connection.execute(
             `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
         );
         res.send(send);
     }
 });
+
+app.post("/create-checkout-session", async (req, res) => {
+    
+    connection.query(
+        `SELECT * FROM bby_33_package`,
+        async function (error, results) {
+            var myMap = new Map()
+            for (let i = 0; i < results.length; i++) {
+                myMap.set(results[i].PACKAGE_ID, {
+                    priceindollars: results[i].package_price * 100,
+                    name: results[i].package_name
+                })
+            }
+            console.log(myMap)
+
+            try {
+                const session = await stripe.checkout.sessions.create({
+                    payment_method_types: ["card"],
+                    mode: "payment",
+                    line_items: req.body.items.map(item => {
+                        const storeItem = myMap.get(parseInt(item.id))
+                        console.log(storeItem);
+                        return {
+                            price_data: {
+                                currency: "usd",
+                                product_data: {
+                                    name: storeItem.name,
+                                },
+                                unit_amount: storeItem.priceindollars,
+                            },
+                            quantity: item.quantity,
+                        }
+                    }),
+                    success_url: `http://localhost:8000`,
+                    cancel_url: `http://localhost:8000/map`,
+                })
+                res.json({
+                    url: session.url
+                })
+            } catch (e) {
+                res.status(500).json({
+                    error: e.message
+                })
+            }
+        }
+    );
+
+})
 
 var port = process.env.PORT || 8000;
 app.listen(port, function () {

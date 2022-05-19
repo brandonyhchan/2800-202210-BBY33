@@ -105,7 +105,7 @@ function getCart() {
         let rows = dataParsed.rows;
         for (let i = 0; i < dataParsed.rows.length; i++) {
             string += (
-                `<tr><td>${rows[i].package_id}</td>
+                `<tr><td class='packageIds'>${rows[i].package_id}</td>
                 <td>${rows[i].price}</td>
                 <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
                 <td><button class ='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
@@ -282,3 +282,33 @@ function remove() {
 }
 
 remove();
+
+const button = document.querySelector("#purchase")
+button.addEventListener("click", () => {
+    let items = [];
+    let ids = document.querySelectorAll(".packageIds");
+    let quantities = document.querySelectorAll(".cart-quantity-input");
+    for(let i = 0; i < ids.length; i++) {
+        items.push({id: ids[i].innerHTML, quantity: quantities[i].value});
+    }
+    console.log(items);
+  fetch("/create-checkout-session", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      items
+    }),
+  })
+    .then(res => {
+      if (res.ok) return res.json()
+      return res.json().then(json => Promise.reject(json))
+    })
+    .then(({ url }) => {
+      window.location = url
+    })
+    .catch(e => {
+      console.error(e.error)
+    })
+})
