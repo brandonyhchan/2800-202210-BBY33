@@ -14,7 +14,6 @@
     height: 100%;
     display: grid;
     justify-content: center;
-    margin-top: 3%;
 }
 
 #gallery {
@@ -41,7 +40,7 @@
 
 #page-header {
     text-align: center;
-    font-size: 36px;
+    font-size: 40px;
 }
 
 #step1 {
@@ -67,12 +66,14 @@
 .steps {
     text-align: center;
     font-weight: bold;
+    font-size: 26px;
 }
 
 #description {
     text-align: center;
     width: 70%;
     justify-self: center;
+    font-size: 26px;
 }
 
 .home {
@@ -104,9 +105,19 @@ a {
     color: rgb(14, 76, 109);
 }
 
+#logo {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    max-width: 25%;
+}
+
 @media only screen and (max-width: 720px) {
     #page-header {
         margin: 2%;
+        font-size: 28px;
     }
     #gallery {
         width: 60%;
@@ -168,5 +179,10 @@ a {
         text-align: center;
         margin-top: 5%;
         margin-bottom: 5%;
+        font-size: 18px;
+    }
+    #logo {
+        max-width: 70%;
+        margin-top: 12%;
     }
 }
