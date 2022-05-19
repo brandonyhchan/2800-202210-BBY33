@@ -29,6 +29,10 @@ ready(() => {
         document.querySelector("#joinOurTeam").addEventListener("click", () =>{
             getJoinOurTeam();
         })
+
+        document.querySelector("#support").addEventListener("click", ()=>{
+            getSupport();
+        })
     });
 
     async function getWhoWeAre(){
@@ -64,6 +68,19 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/joinOurTeam");
+            }
+        } catch (err) {
+    
+        }
+    }
+
+    async function getSupport(){
+        try {
+            let response = await fetch("/Support", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/Support");
             }
         } catch (err) {
     

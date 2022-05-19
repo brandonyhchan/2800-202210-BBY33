@@ -220,6 +220,10 @@ ready(() => {
         document.querySelector("#joinOurTeam").addEventListener("click", () =>{
             getJoinOurTeam();
         })
+
+        document.querySelector("#support").addEventListener("click", ()=>{
+            getSupport();
+        })
     });
 
     async function getProfile() {
@@ -326,6 +330,20 @@ ready(() => {
 
         }
     }
+
+    async function getSupport(){
+        try {
+            let response = await fetch("/Support", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/Support");
+            }
+        } catch (err) {
+
+        }
+    }
+
 
     async function getFAQ(){
         try {
