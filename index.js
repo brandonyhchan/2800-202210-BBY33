@@ -50,6 +50,7 @@ const stripe = require('stripe')(process.env.YOUR_SECRET_KEY);
 var isAdmin = false;
 var packageN = "";
 
+
 //path mapping 
 app.use("/js", express.static("./public/js"));
 app.use("/css", express.static("./public/css"));
@@ -1016,7 +1017,7 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
 
 });
 
-app.get("/checkout", function (req, res) {
+app.post("/checkout", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var send = {
@@ -1026,13 +1027,29 @@ app.get("/checkout", function (req, res) {
             function (err, rows) {
                 var userid = rows[0].USER_ID;
                 send.userId = req.session.user_name;
-                connection.execute("SELECT bby_33_cart.CART_ID FROM bby_33_cart WHERE user_id = ?", [userid],
-                    function (err, cartid) {
-                        var orderid = cartid[0].CART_ID;
-                        connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [orderid, userid]);
-                        connection.execute(
-                            `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ?`, ['y', orderid, userid]
-                        );
+                var orderId = 1;
+                connection.execute("SELECT bby_33_order.ORDER_ID FROM bby_33_order",
+                    async function (err, cartid) {
+                        var doesExist = false;
+                        await new Promise(() => {
+                            
+                            // if (doesExist == true) {
+                                var order;
+                                if (cartid.length == 0) {
+                                    order = 1;
+                                    connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
+                                    connection.execute(
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ?`, ['y', order, userid]
+                                    );
+                                } else {
+                                    order = parseInt(cartid[cartid.length-1].ORDER_ID) + 1;
+                                    connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
+                                    connection.execute(
+                                        `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n']
+                                    );
+                                }
+                        })
+                       
                     }
                 )
                 res.send(send);
