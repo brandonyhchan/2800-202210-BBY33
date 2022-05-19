@@ -87,6 +87,7 @@
     "dicer": "^0.2.5",
     "dir-glob": "^3.0.1",
     "domexception": "^4.0.0",
+    "dotenv": "^16.0.1",
     "duplexer3": "^0.1.4",
     "edit-string": "^1.1.6",
     "ee-first": "^1.1.1",

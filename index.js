@@ -1,4 +1,6 @@
 'use strict';
+
+require('dotenv').config()
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
@@ -18,10 +20,10 @@ const localconfig = {
     database: "COMP2800",
 };
 const herokuconfig = {
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "baf45e51bb6699",
-    password: "96b73edd",
-    database: "heroku_ecb002aef4014be"
+    host: process.env.HEROKU_HOST,
+    user: process.env.HEROKU_USER,
+    password: process.env.HEROKU_PASSWORD,
+    database: process.env.HEROKU_DATABASE
 };
 var connection;
 if (is_heroku) {
@@ -1099,8 +1101,8 @@ app.post("/create-checkout-session", async (req, res) => {
                             quantity: item.quantity,
                         }
                     }),
-                    success_url: `http://localhost:8000`,
-                    cancel_url: `http://localhost:8000/map`,
+                    success_url: `${process.env.SERVER_URL}`,
+                    cancel_url: `${process.env.SERVER_URL}/map`,
                 })
                 res.json({
                     url: session.url
