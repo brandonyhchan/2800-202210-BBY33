@@ -1026,13 +1026,10 @@ app.post("/checkout", function (req, res) {
             function (err, rows) {
                 var userid = rows[0].USER_ID;
                 send.userId = req.session.user_name;
-                var orderId = 1;
                 connection.execute("SELECT bby_33_order.ORDER_ID FROM bby_33_order",
                     async function (err, cartid) {
-                        var doesExist = false;
                         await new Promise(() => {
                             
-                            // if (doesExist == true) {
                                 var order;
                                 if (cartid.length == 0) {
                                     order = 1;
@@ -1048,7 +1045,6 @@ app.post("/checkout", function (req, res) {
                                     );
                                 }
                         })
-                       
                     }
                 )
                 res.send(send);
