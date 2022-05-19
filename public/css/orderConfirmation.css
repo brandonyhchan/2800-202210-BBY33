@@ -27,9 +27,7 @@
     border: 0px;
     border-bottom: 3px;
     border-style: solid;
-    border-color: rgb(14, 76, 109);
     padding-bottom: 5%;
-    color: rgb(14, 76, 109);
 }
 
 #page-header {
@@ -41,9 +39,7 @@
     border: 0px;
     border-bottom: 3px;
     border-style: solid;
-    border-color: rgb(14, 76, 109);
     padding-bottom: 5%;
-    color: rgb(14, 76, 109);
 }
 
 #order-summary-container {
@@ -51,15 +47,12 @@
     border: 0px;
     border-bottom: 3px;
     border-style: solid;
-    border-color: rgb(14, 76, 109);
     padding-bottom: 5%;
-    color: rgb(14, 76, 109);
 }
 
 #order-help-container {
     padding-top: 5%;
     text-align: center;
-    color: rgb(14, 76, 109);
 }
 
 .order-detail {
@@ -78,6 +71,10 @@
     100% {
         opacity: 1;
     }
+}
+
+a {
+    color: rgb(14, 76, 109);
 }
 
 @media only screen and (max-width: 720px) {

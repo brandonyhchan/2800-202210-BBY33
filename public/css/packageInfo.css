@@ -35,10 +35,6 @@
     grid-template-rows: auto;
 }
 
-#package-name {
-    color: rgb(14, 76, 109);
-}
-
 #package-description {
     padding: 3%;
     text-align: left;
