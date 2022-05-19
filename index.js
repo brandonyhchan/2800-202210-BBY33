@@ -1153,8 +1153,8 @@ app.get("/get-total-purchases", (req, res) => {
             (err, results) => {
                 let sum = 0;
                 let send = {total: 0};
+                console.log(results)
                 for (let i = 0; i < results.length; i++) {
-                    console.log(parseInt(results[i].price));
                     sum += (parseInt(results[i].price) * parseInt(results[i].product_quantity))
                 }
                 send.total = sum;

@@ -232,8 +232,10 @@ td {
 /* Cart */
 
 #motivation {
-    color: aqua;
+    color: #00394f;
     font-size: large;
+    grid-column: 1 / 3;
+        grid-row: 2 / 2;
 }
     
     @media only screen and (max-width: 720px) {
