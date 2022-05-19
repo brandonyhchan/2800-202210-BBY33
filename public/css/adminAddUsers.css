@@ -52,7 +52,6 @@ body {
 .page-header {
     text-align: center;
     padding: 3%;
-    color: #00394f;
 }
 
 button {
@@ -142,6 +141,7 @@ td {
 
 #dropdown-items {
     display: grid;
+    justify-content: center;
 }
 
 @media only screen and (max-width: 720px) {
@@ -169,6 +169,7 @@ td {
     }
     #submit {
         padding: 0;
+        margin-bottom: 20%;
     }
     .dropdown {
         display: inline-block;
@@ -178,6 +179,6 @@ td {
     #dropdown-items {
         opacity: 0;
         height: 0px;
-        display: block;
+        display: grid;
     }
 }
