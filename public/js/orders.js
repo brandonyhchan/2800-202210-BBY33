@@ -8,17 +8,13 @@ function getUsers() {
                 let data = JSON.parse(this.responseText);
                 if (data.status == "success") {
                     let str = `        <tr>
-                    <th class="firstName_header"><span>Package</span></th>
-                    <th class="lastName_header"><span>Quantity</span></th>
-                    <th class="email_header"><span>Price</span></th>
+                    <th class="firstName_header"><span>Order Number</span></th>
                     </tr>`;
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
                         str += ("<tr>" +
-                            "<td class='packagedId'><span class='pId'>" + row.package_name +
-                            "</span></td><td class='quantity'><span class='quant'>" + row.product_quantity +
-                            "</span></td><td class='price'><span class='priceP'>" + row.price+
-                            `</span>` +
+                            "<td class='packagedId'><span class='pId'>" + row.ORDER_ID +
+                            `</span>` + `<button class="orderDisplay" type="submit" id="${row.ORDER_ID}">View</button>` +
                             "</td></tr>");
                     }
                     document.getElementById("orderTable").innerHTML = str;
@@ -30,3 +26,30 @@ function getUsers() {
     xhr.send();
 }
 getUsers();
+
+function displayPackage() {
+    var orderId;
+    let onClick = (event) => {
+        if (event.target.className == "orderDisplay") {
+            orderId = event.target.id;
+            sessionStorage.setItem("order", orderId);
+            showOrder();
+        }
+    };
+    window.addEventListener('click', onClick);
+}
+
+async function showOrder() {
+    try {
+        let response = await fetch("/orderInfo", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/orderInfo");
+        }
+    } catch (err) {
+
+    }
+}
+
+displayPackage()

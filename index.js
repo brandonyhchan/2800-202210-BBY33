@@ -1026,9 +1026,15 @@ app.get("/checkout", function (req, res) {
             function (err, rows) {
                 var userid = rows[0].USER_ID;
                 send.userId = req.session.user_name;
-                connection.execute(
-                    `UPDATE bby_33_cart SET package_purchased = ? WHERE user_id = ?`, ['y', userid]
-                );
+                connection.execute("SELECT bby_33_cart.CART_ID FROM bby_33_cart WHERE user_id = ?", [userid],
+                    function (err, cartid) {
+                        var orderid = cartid[0].CART_ID;
+                        connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [orderid, userid]);
+                        connection.execute(
+                            `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ?`, ['y', orderid, userid]
+                        );
+                    }
+                )
                 res.send(send);
             }
         )
@@ -1041,7 +1047,7 @@ app.get("/get-orders", function (req, res) {
             function (err, rows) {
                 var userid = rows[0].USER_ID;
                 connection.query(
-                    "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.user_id = ? AND bby_33_cart.package_purchased = ?", [userid, 'y'],
+                    "SELECT bby_33_order.ORDER_ID FROM bby_33_order WHERE bby_33_order.user_id = ? ", [userid],
                     function (error, results) {
                         if (error) {
                             console.log(error);
@@ -1124,7 +1130,7 @@ app.post("/create-checkout-session", async (req, res) => {
                             quantity: item.quantity,
                         }
                     }),
-                    success_url: `${link}`,
+                    success_url: `${link}/success`,
                     cancel_url: `${link}/map`,
                 })
                 res.json({
@@ -1142,6 +1148,37 @@ app.post("/create-checkout-session", async (req, res) => {
 
 
 
+app.get("/orderInfo", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/orderInfo.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.post("/display-order", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let order = req.body.orderId;
+    if (req.session.loggedIn) {
+        connection.query(
+            "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
+            function (error, results) {
+                if (error) {
+                    console.log(error);
+                }
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            }
+        );
+    }
+});
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
