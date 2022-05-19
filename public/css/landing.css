@@ -238,6 +238,39 @@ td {
         grid-row: 2 / 2;
 }
     
+    #easter-egg {
+        width: 70%;
+        object-fit: cover;
+        grid-row: 1 / 2;
+        grid-column: 1 / 3;
+        z-index: 0;
+        justify-self: center;
+        display: none;
+    }
+    
+    @keyframes easterEgg {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        99% {
+            opacity: 0;
+            transform: translateY(500px);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-500px);
+        }
+    }
+    
+    #learn-more {
+        z-index: 2;
+    }
+    
+    #get-started {
+        z-index: 2;
+    }
+    
     @media only screen and (max-width: 720px) {
         .container {
             display: grid;

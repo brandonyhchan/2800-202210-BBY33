@@ -22,7 +22,7 @@ window.onload = slider;
 
 function ajaxGET(url, callback) {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -55,3 +55,35 @@ function motivation() {
 
 }
 motivation();
+
+var counter = 0;
+
+/**
+ * Easter egg function that drops a care package down every 3 clicks on the landing page's main image.
+ */
+function easterEgg() {
+
+    counter++;
+    var selector = document.getElementById("easter-egg");
+
+    if (counter == 3) {
+
+
+        selector.style.zIndex = "1";
+        selector.style.display = "block"
+        selector.style.transform = "translateY(0)";
+        selector.style.animationName = "easterEgg";
+        selector.style.animationDuration = "4s";
+        selector.style.animationFillMode = "forwards";
+
+
+    }
+
+    if (counter > 3) {
+        selector.style.zIndex = "0";
+        selector.style.display = "none";
+
+        counter = 1;
+    }
+
+}
