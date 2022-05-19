@@ -370,7 +370,18 @@ app.get("/joinOurTeam", function(req, res) {
     res.send(profileDOM.serialize());
 });
 
+<<<<<<< HEAD
 app.get("/FAQ", function(req, res) {
+=======
+app.get("/Support", function (req, res) {
+    let profile = fs.readFileSync("./app/html/support.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
+app.get("/FAQ", function (req, res) {
+>>>>>>> Brandon_support
     let profile = fs.readFileSync("./app/html/faq.html", "utf8");
     let profileDOM = new JSDOM(profile);
 

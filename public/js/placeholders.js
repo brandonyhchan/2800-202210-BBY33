@@ -230,6 +230,10 @@ ready(() => {
         document.querySelector("#partnerships").addEventListener("click", () => {
             getPartnerships();
         })
+
+        document.querySelector("#support").addEventListener("click", ()=>{
+            getSupport();
+        })
     });
 
     async function getProfile() {
@@ -337,7 +341,20 @@ ready(() => {
         }
     }
 
-    async function getFAQ() {
+    async function getSupport(){
+        try {
+            let response = await fetch("/Support", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/Support");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getFAQ(){
         try {
             let response = await fetch("/FAQ", {
                 method: 'GET'

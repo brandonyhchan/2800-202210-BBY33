@@ -91,7 +91,7 @@ function editName(e) {
                             xhr.onload = function () {
                                 if (this.readyState == XMLHttpRequest.DONE) {
                                     if (xhr.status === 200) {
-                                        statusDiv.innerHTML = "Name updated.";
+                                        statusDiv.innerHTML = "Username updated.";
                                         getName();
                                         getEmail();
                                     }

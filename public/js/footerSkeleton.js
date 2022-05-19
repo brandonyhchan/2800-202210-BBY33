@@ -37,6 +37,10 @@ ready(() => {
         document.querySelector("#partnerships").addEventListener("click", () => {
             getPartnerships();
         })
+
+        document.querySelector("#support").addEventListener("click", ()=>{
+            getSupport();
+        })
     });
 
     async function getWhoWeAre() {
@@ -101,9 +105,20 @@ ready(() => {
 
         }
     }
+
+    async function getSupport(){
+        try {
+            let response = await fetch("/Support", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/Support");
+            }
+        } catch (err) {
+    
+        }
+    }
 })
-
-
 
 function ready(callback) {
     if (document.readyState != "loading") {
