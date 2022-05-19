@@ -233,29 +233,6 @@ displayPackage();
 
 addPackage();
 
-function checkout() {
-    var buttonId;
-    var queryString;
-    let onClick = (event) => {
-        if (event.target.className == "buy") {
-            buttonId = event.target.id;
-            queryString = "buttonID=" + buttonId;
-            ajaxPOST("/checkout", function (data) {
-
-                if (data) {
-                    let dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        console.log("fail");
-                    }
-                }
-            }, queryString);
-        }
-    };
-    window.addEventListener('click', onClick);
-}
-
-checkout();
-
 function remove() {
     var buttonId;
     var queryString;

@@ -1024,6 +1024,7 @@ app.post("/checkout", function (req, res) {
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
                 var userid = rows[0].USER_ID;
+                send.userId = req.session.user_name;
                 connection.execute("SELECT bby_33_cart.CART_ID FROM bby_33_cart WHERE user_id = ?", [userid],
                     function (err, cartid) {
                         var orderid = cartid[0].CART_ID;
@@ -1033,6 +1034,7 @@ app.post("/checkout", function (req, res) {
                         );
                     }
                 )
+                res.send(send);
             }
         )
     }
@@ -1128,7 +1130,7 @@ app.post("/create-checkout-session", async (req, res) => {
                             quantity: item.quantity,
                         }
                     }),
-                    success_url: `${link}`,
+                    success_url: `${link}/success`,
                     cancel_url: `${link}/map`,
                 })
                 res.json({
