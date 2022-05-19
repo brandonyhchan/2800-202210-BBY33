@@ -394,6 +394,18 @@ app.get("/map", function (req, res) {
     }
 });
 
+app.get("/success", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/success.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
 app.get("/getOrders", function (req, res) {
 
     if (req.session.loggedIn) {
@@ -997,18 +1009,20 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
 
 });
 
-app.post("/checkout", function (req, res) {
+app.get("/checkout", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
+        var send = {
+            userId: ""
+        }
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
-                let send = {
-                    rows: ""
-                }
                 var userid = rows[0].USER_ID;
+                send.userId = req.session.user_name;
                 connection.execute(
                     `UPDATE bby_33_cart SET package_purchased = ? WHERE user_id = ?`, ['y', userid]
                 );
+                res.send(send);
             }
         )
     }
@@ -1070,7 +1084,6 @@ app.post("/update-quantity", (req, res) => {
 });
 
 app.post("/create-checkout-session", async (req, res) => {
-    
     connection.query(
         `SELECT * FROM bby_33_package`,
         async function (error, results) {
@@ -1119,6 +1132,8 @@ app.post("/create-checkout-session", async (req, res) => {
     );
 
 })
+
+
 
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
