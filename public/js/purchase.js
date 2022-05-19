@@ -240,7 +240,7 @@ function checkout() {
         if (event.target.className == "buy") {
             buttonId = event.target.id;
             queryString = "buttonID=" + buttonId;
-            ajaxGET("/checkout", function (data) {
+            ajaxPOST("/checkout", function (data) {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);

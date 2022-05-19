@@ -1003,9 +1003,15 @@ app.post("/checkout", function (req, res) {
                     rows: ""
                 }
                 var userid = rows[0].USER_ID;
-                connection.execute(
-                    `UPDATE bby_33_cart SET package_purchased = ? WHERE user_id = ?`, ['y', userid]
-                );
+                connection.execute("SELECT bby_33_cart.CART_ID FROM bby_33_cart WHERE user_id = ?", [userid],
+                    function (err, cartid) {
+                        var orderid = cartid[0].CART_ID;
+                        connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [orderid, userid]);
+                        connection.execute(
+                            `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ?`, ['y', orderid, userid]
+                        );
+                    }
+                )
             }
         )
     }
@@ -1017,7 +1023,7 @@ app.get("/get-orders", function (req, res) {
             function (err, rows) {
                 var userid = rows[0].USER_ID;
                 connection.query(
-                    "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.user_id = ? AND bby_33_cart.package_purchased = ?", [userid, 'y'],
+                    "SELECT bby_33_order.ORDER_ID FROM bby_33_order WHERE bby_33_order.user_id = ? ", [userid],
                     function (error, results) {
                         if (error) {
                             console.log(error);
@@ -1030,7 +1036,7 @@ app.get("/get-orders", function (req, res) {
                 );
             }
         )
-        
+
     } else {
         res.redirect("/");
     }
@@ -1039,13 +1045,14 @@ app.get("/get-orders", function (req, res) {
 app.post("/removeAll", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
-        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']
-        );
+        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']);
     }
 });
 app.post("/delete-item", (req, res) => {
     if (req.session.loggedIn) {
-        let send = { status: "success" };
+        let send = {
+            status: "success"
+        };
         connection.execute(
             `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ? AND package_purchased = ?`, [req.session.user_id, req.body.packageID, 'n']
         );
@@ -1055,7 +1062,9 @@ app.post("/delete-item", (req, res) => {
 
 app.post("/update-quantity", (req, res) => {
     if (req.session.loggedIn) {
-        let send = { status: "success" };
+        let send = {
+            status: "success"
+        };
         connection.execute(
             `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
         );
@@ -1063,6 +1072,37 @@ app.post("/update-quantity", (req, res) => {
     }
 });
 
+app.get("/orderInfo", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/orderInfo.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.post("/display-order", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let order = req.body.orderId;
+    if (req.session.loggedIn) {
+        connection.query(
+            "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
+            function (error, results) {
+                if (error) {
+                    console.log(error);
+                }
+                res.send({
+                    status: "success",
+                    rows: results
+                });
+            }
+        );
+    }
+});
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
