@@ -67,7 +67,6 @@ app.use(session({
     secret: "eclipse is the worse IDE",
     name: "stanleySessionID",
     resave: false,
-
     saveUninitialized: true
 }));
 
@@ -1016,7 +1015,7 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
 
 });
 
-app.get("/checkout", function (req, res) {
+app.post("/checkout", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var send = {
@@ -1034,6 +1033,7 @@ app.get("/checkout", function (req, res) {
         )
     }
 });
+
 
 app.get("/get-orders", function (req, res) {
     if (req.session.loggedIn) {
@@ -1140,7 +1140,24 @@ app.post("/create-checkout-session", async (req, res) => {
 
 })
 
-
+app.get("/get-total-purchases", (req, res) => {
+    if (req.session.loggedIn) {
+        connection.execute(
+            `SELECT price, product_quantity FROM bby_33_cart WHERE user_id = ? AND package_purchased = ?`, [req.session.user_id, 'y'], 
+            (err, results) => {
+                let sum = 0;
+                let send = {total: 0};
+                for (let i = 0; i < results.length; i++) {
+                    console.log(parseInt(results[i].price));
+                    sum += (parseInt(results[i].price) * parseInt(results[i].product_quantity))
+                }
+                send.total = sum;
+                console.log(sum);
+                res.send(send);
+            }
+        )
+    }
+})
 
 var port = process.env.PORT || 8000;
 app.listen(port, function () {

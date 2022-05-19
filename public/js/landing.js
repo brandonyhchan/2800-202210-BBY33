@@ -19,3 +19,24 @@ function slider() {
 }
 
 window.onload = slider;
+
+async function motivation() {
+    try {
+        await fetch("/get-total-purchases", {
+            method: 'GET'
+        })
+        if (data) {
+            let parsedData = JSON.parse(data);
+            let msg;
+            // if (parseInt(parsedData.total) == 0) {
+            //     msg = `Thank you for your help`;
+            // } else if (parseInt(parsedData.total) > 0 && parseInt(parsedData.total) < 60) {
+            //     msg = `You have touched the lives of over 5 people`;
+            // }
+            document.querySelector("#motivation").innerHTML = `Thank you for your help`;
+        }
+    } catch (err) {
+
+    }
+}
+motivation();

@@ -230,6 +230,11 @@ td {
     top: 0;
 }
 /* Cart */
+
+#motivation {
+    color: aqua;
+    font-size: large;
+}
     
     @media only screen and (max-width: 720px) {
         .container {
