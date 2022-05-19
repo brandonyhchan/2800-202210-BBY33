@@ -15,6 +15,7 @@ function ajaxPOST(url, callback, data) {
     xhr.send(params);
 }
 
+
 function checkout() {
     var buttonId = "";
     var queryString = "buttonID=" + buttonId;
