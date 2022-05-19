@@ -1044,16 +1044,19 @@ app.post("/removeAll", function(req, res) {
 
 app.get("/howItWorks", function(req, res) {
 
-    if (req.session.loggedIn) {
-        let profile = fs.readFileSync("./app/html/howItWorks.html", "utf8");
-        let profileDOM = new JSDOM(profile);
+    let profile = fs.readFileSync("./app/html/howItWorks.html", "utf8");
+    let profileDOM = new JSDOM(profile);
 
-        res.send(profileDOM.serialize());
-    } else {
-        res.redirect("/");
-    }
+    res.send(profileDOM.serialize());
 });
 
+app.get("/partnerships", function(req, res) {
+
+    let profile = fs.readFileSync("./app/html/partnerships.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
 
 var port = process.env.PORT || 8000;
 app.listen(port, function() {

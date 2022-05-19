@@ -134,6 +134,10 @@ ready(() => {
         document.querySelector("#howItWorks").addEventListener("click", () => {
             getHowItWorks();
         })
+
+        document.querySelector("#partnerships").addEventListener("click", () => {
+            getPartnerships();
+        })
     });
 
     async function getProfile() {
@@ -248,6 +252,19 @@ ready(() => {
             })
             if (response.status === 200) {
                 window.location.replace("/howItWorks");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getPartnerships() {
+        try {
+            let response = await fetch("/partnerships", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/partnerships");
             }
         } catch (err) {
 
