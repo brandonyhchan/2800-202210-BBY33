@@ -63,7 +63,7 @@ function getPackage() {
                     document.querySelectorAll(".close-package").forEach(function (currentElement, currentIndex, listObj) {
                         currentElement.addEventListener("click", function (e) {
                             document.getElementById("cart").innerHTML = "";
-                
+
                         });
                     });
                 }
@@ -105,7 +105,7 @@ function getCart() {
         let rows = dataParsed.rows;
         for (let i = 0; i < dataParsed.rows.length; i++) {
             string += (
-                `<tr><td>${rows[i].package_id}</td>
+                `<tr><td class='packageIds'>${rows[i].package_id}</td>
                 <td>${rows[i].price}</td>
                 <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
                 <td><button class ='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
@@ -246,8 +246,6 @@ function checkout() {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
-                    } else {
-                        console.log("success")
                     }
                 }
             }, queryString);

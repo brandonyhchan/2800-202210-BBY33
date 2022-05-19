@@ -1,4 +1,6 @@
 'use strict';
+
+require('dotenv').config();
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
@@ -18,10 +20,10 @@ const localconfig = {
     database: "COMP2800",
 };
 const herokuconfig = {
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "baf45e51bb6699",
-    password: "96b73edd",
-    database: "heroku_ecb002aef4014be"
+    host: process.env.HEROKU_HOST,
+    user: process.env.HEROKU_USER,
+    password: process.env.HEROKU_PASSWORD,
+    database: process.env.HEROKU_DATABASE
 };
 var connection;
 if (is_heroku) {
@@ -41,11 +43,12 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage
 });
+// Stripe implementation adapted from https://www.geeksforgeeks.org/how-to-integrate-stripe-payment-gateway-in-node-js/ and https://www.stripe.com/
+
+const stripe = require('stripe')(process.env.YOUR_SECRET_KEY);
 
 var isAdmin = false;
 var packageN = "";
-
-
 
 //path mapping 
 app.use("/js", express.static("./public/js"));
@@ -390,6 +393,18 @@ app.get("/map", function (req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/map.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    } else {
+        res.redirect("/");
+    }
+});
+
+app.get("/success", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/success.html", "utf8");
         let profileDOM = new JSDOM(profile);
 
         res.send(profileDOM.serialize());
@@ -1001,18 +1016,20 @@ app.post('/upload-package-images', upload.array("files"), function (req, res) {
 
 });
 
-app.post("/checkout", function (req, res) {
+app.get("/checkout", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
+        var send = {
+            userId: ""
+        }
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
-                let send = {
-                    rows: ""
-                }
                 var userid = rows[0].USER_ID;
+                send.userId = req.session.user_name;
                 connection.execute(
                     `UPDATE bby_33_cart SET package_purchased = ? WHERE user_id = ?`, ['y', userid]
                 );
+                res.send(send);
             }
         )
     }
@@ -1037,7 +1054,7 @@ app.get("/get-orders", function (req, res) {
                 );
             }
         )
-        
+
     } else {
         res.redirect("/");
     }
@@ -1046,13 +1063,14 @@ app.get("/get-orders", function (req, res) {
 app.post("/removeAll", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
-        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']
-        );
+        connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']);
     }
 });
 app.post("/delete-item", (req, res) => {
     if (req.session.loggedIn) {
-        let send = { status: "success" };
+        let send = {
+            status: "success"
+        };
         connection.execute(
             `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ? AND package_purchased = ?`, [req.session.user_id, req.body.packageID, 'n']
         );
@@ -1062,13 +1080,67 @@ app.post("/delete-item", (req, res) => {
 
 app.post("/update-quantity", (req, res) => {
     if (req.session.loggedIn) {
-        let send = { status: "success" };
+        let send = {
+            status: "success"
+        };
         connection.execute(
             `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
         );
         res.send(send);
     }
 });
+
+app.post("/create-checkout-session", async (req, res) => {
+    connection.query(
+        `SELECT * FROM bby_33_package`,
+        async function (error, results) {
+            var myMap = new Map()
+            for (let i = 0; i < results.length; i++) {
+                myMap.set(results[i].PACKAGE_ID, {
+                    priceInCents: results[i].package_price * 100,
+                    name: results[i].package_name
+                })
+            }
+            try {
+                var link;
+                if (is_heroku) {
+                    link = process.env.CLIENT_URL;
+                } else {
+                    link = process.env.SERVER_URL
+                }
+                const checkout_session = await stripe.checkout.sessions.create({
+                    payment_method_types: ["card"],
+                    mode: "payment",
+                    line_items: req.body.items.map(item => {
+                        const storeItem = myMap.get(parseInt(item.id))
+                        return {
+                            price_data: {
+                                currency: "usd",
+                                product_data: {
+                                    name: storeItem.name,
+                                },
+                                unit_amount: storeItem.priceInCents,
+                            },
+                            quantity: item.quantity,
+                        }
+                    }),
+                    success_url: `${link}`,
+                    cancel_url: `${link}/map`,
+                })
+                res.json({
+                    url: checkout_session.url
+                })
+            } catch (e) {
+                res.status(500).json({
+                    error: e.message
+                })
+            }
+        }
+    );
+
+})
+
+
 
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
