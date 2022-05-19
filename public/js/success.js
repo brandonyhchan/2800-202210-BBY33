@@ -1,15 +1,12 @@
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
-        }
+        function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
     ).join('&');
+
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
-        } else {
-            console.log(this.status);
         }
     }
     xhr.open("POST", url);
@@ -20,8 +17,8 @@ function ajaxPOST(url, callback, data) {
 
 
 function checkout() {
-    buttonId = "";
-    queryString = "buttonID=" + buttonId;
+    var buttonId = "";
+    var queryString = "buttonID=" + buttonId;
     ajaxPOST("/checkout", function (data) {
 
         if (data) {

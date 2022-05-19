@@ -68,7 +68,6 @@ app.use(session({
     secret: "eclipse is the worse IDE",
     name: "stanleySessionID",
     resave: false,
-
     saveUninitialized: true
 }));
 
@@ -1027,13 +1026,10 @@ app.post("/checkout", function(req, res) {
             function(err, rows) {
                 var userid = rows[0].USER_ID;
                 send.userId = req.session.user_name;
-                var orderId = 1;
                 connection.execute("SELECT bby_33_order.ORDER_ID FROM bby_33_order",
                     async function(err, cartid) {
-                        var doesExist = false;
                         await new Promise(() => {
 
-                            // if (doesExist == true) {
                             var order;
                             if (cartid.length == 0) {
                                 order = 1;
@@ -1049,7 +1045,6 @@ app.post("/checkout", function(req, res) {
                                 );
                             }
                         })
-
                     }
                 )
                 res.send(send);
@@ -1163,7 +1158,24 @@ app.post("/create-checkout-session", async(req, res) => {
 
 })
 
-
+app.get("/get-total-purchases", (req, res) => {
+    if (req.session.loggedIn) {
+        connection.execute(
+            `SELECT price, product_quantity FROM bby_33_cart WHERE user_id = ? AND package_purchased = ?`, [req.session.user_id, 'y'],
+            (err, results) => {
+                let sum = 0;
+                let send = { total: 0 };
+                console.log(results)
+                for (let i = 0; i < results.length; i++) {
+                    sum += (parseInt(results[i].price) * parseInt(results[i].product_quantity))
+                }
+                send.total = sum;
+                console.log(sum);
+                res.send(send);
+            }
+        )
+    }
+})
 
 app.get("/orderInfo", function(req, res) {
 
