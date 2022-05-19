@@ -29,6 +29,7 @@ function getPackage() {
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
+                let total = 0;
                 let str = `        <tr>
                     <th class="firstName_header"><span>Package</span></th>
                     <th class="lastName_header"><span>Quantity</span></th>
@@ -39,11 +40,15 @@ function getPackage() {
                         str += ("<tr>" +
                             "<td class='packagedId'><span class='pId'>" + row.package_name +
                             "</span></td><td class='quantity'><span class='quant'>" + row.product_quantity +
-                            "</span></td><td class='price'><span class='priceP'>" + row.price+
+                            "</span></td><td class='price'><span class='priceP'>" + row.price + ".00" +
                             `</span>` +
                             "</td></tr>");
                     }
                     document.getElementById("orderTable").innerHTML = str;
+                    for(let i = 0; i < dataParsed.rows.length; i++) {
+                        total += (parseInt(dataParsed.rows[i].price) * parseInt(dataParsed.rows[i].product_quantity));
+                    }
+                    document.getElementById("total").innerHTML = "Total:    " + "$" + total + ".00";
             }
         }
     }, queryString);
