@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config()
+require('dotenv').config();
 const express = require("express");
 var session = require("express-session");
 const mysql = require("mysql2");
@@ -1077,35 +1077,38 @@ app.post("/create-checkout-session", async (req, res) => {
             var myMap = new Map()
             for (let i = 0; i < results.length; i++) {
                 myMap.set(results[i].PACKAGE_ID, {
-                    priceindollars: results[i].package_price * 100,
+                    priceInCents: results[i].package_price * 100,
                     name: results[i].package_name
                 })
             }
-            console.log(myMap)
-
             try {
-                const session = await stripe.checkout.sessions.create({
+                var link;
+                if (is_heroku) {
+                    link = process.env.CLIENT_URL;
+                } else {
+                    link = process.env.SERVER_URL
+                }
+                const checkout_session = await stripe.checkout.sessions.create({
                     payment_method_types: ["card"],
                     mode: "payment",
                     line_items: req.body.items.map(item => {
                         const storeItem = myMap.get(parseInt(item.id))
-                        console.log(storeItem);
                         return {
                             price_data: {
                                 currency: "usd",
                                 product_data: {
                                     name: storeItem.name,
                                 },
-                                unit_amount: storeItem.priceindollars,
+                                unit_amount: storeItem.priceInCents,
                             },
                             quantity: item.quantity,
                         }
                     }),
-                    success_url: `${process.env.SERVER_URL}`,
-                    cancel_url: `${process.env.SERVER_URL}/map`,
+                    success_url: `${link}`,
+                    cancel_url: `${link}/map`,
                 })
                 res.json({
-                    url: session.url
+                    url: checkout_session.url
                 })
             } catch (e) {
                 res.status(500).json({

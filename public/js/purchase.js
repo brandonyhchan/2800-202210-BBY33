@@ -63,7 +63,7 @@ function getPackage() {
                     document.querySelectorAll(".close-package").forEach(function (currentElement, currentIndex, listObj) {
                         currentElement.addEventListener("click", function (e) {
                             document.getElementById("cart").innerHTML = "";
-                
+
                         });
                     });
                 }
@@ -246,8 +246,6 @@ function checkout() {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
-                    } else {
-                        console.log("success")
                     }
                 }
             }, queryString);
@@ -282,33 +280,3 @@ function remove() {
 }
 
 remove();
-
-const button = document.querySelector("#purchase")
-button.addEventListener("click", () => {
-    let items = [];
-    let ids = document.querySelectorAll(".packageIds");
-    let quantities = document.querySelectorAll(".cart-quantity-input");
-    for(let i = 0; i < ids.length; i++) {
-        items.push({id: ids[i].innerHTML, quantity: quantities[i].value});
-    }
-    console.log(items);
-  fetch("/create-checkout-session", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      items
-    }),
-  })
-    .then(res => {
-      if (res.ok) return res.json()
-      return res.json().then(json => Promise.reject(json))
-    })
-    .then(({ url }) => {
-      window.location = url
-    })
-    .catch(e => {
-      console.error(e.error)
-    })
-})
