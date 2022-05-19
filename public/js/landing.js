@@ -19,3 +19,71 @@ function slider() {
 }
 
 window.onload = slider;
+
+function ajaxGET(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            callback(this.responseText);
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
+
+function motivation() {
+    ajaxGET("/get-total-purchases", (data) => {
+        console.log("hi")
+        let parsedData = JSON.parse(data);
+        let msg;
+        let total = parseInt(parsedData.total);
+        if (total == 0) {
+            msg = `Thank you for your help`;
+        } else if (total > 0 && total < 60) {
+            msg = `You have touched the lives of over 5 people`;
+        } else if (total > 60) {
+            msg = `You have touched the lives of over 10 people`;
+        } else if (total > 120) {
+            msg = `You have touched the lives of over 15 people`;
+        } else if (total > 250) {
+            msg = `You have touched the lives of over 25 people`
+        }
+        document.querySelector("#motivation").innerHTML = msg;
+    })
+
+}
+motivation();
+
+var counter = 0;
+
+/**
+ * Easter egg function that drops a care package down every 3 clicks on the landing page's main image.
+ */
+function easterEgg() {
+
+    counter++;
+    var selector = document.getElementById("easter-egg");
+
+    if (counter == 3) {
+
+
+        selector.style.zIndex = "1";
+        selector.style.display = "block"
+        selector.style.transform = "translateY(0)";
+        selector.style.animationName = "easterEgg";
+        selector.style.animationDuration = "4s";
+        selector.style.animationFillMode = "forwards";
+
+
+    }
+
+    if (counter > 3) {
+        selector.style.zIndex = "0";
+        selector.style.display = "none";
+
+        counter = 1;
+    }
+
+}

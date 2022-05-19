@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Charity Portal</title>
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/footer.css">
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/charityAccounts.css">
     <!-- Stylesheets and scripts for Jquery dialogue modal from  https://jqueryui.com/dialog/#modal-confirmation-->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 </head>
@@ -20,19 +20,23 @@
     <nav id="navbarPlaceholder"></nav>
 
     <div id="container">
-        <h1 class="page-header">Create Care Packages</h1>
+
 
         <div id="care-package">
 
+            <h1 class="page-header">Create a Care Package</h1>
+
+
+
             <form id="input-container">
 
-                <input type="text" id="country_id" required="required" placeholder="Country ID"/>
+                <input type="text" id="country_id" required="required" placeholder="Country ID" class="package-input" />
 
-                <input type="text" id="package_name" required="required" placeholder="Package Name"/>
+                <input type="text" id="package_name" required="required" placeholder="Package Name" class="package-input" />
 
-                <input id="package_price" required="required" type="text" placeholder="Package Price"/>
+                <input id="package_price" required="required" type="text" placeholder="Package Price" class="package-input" />
 
-                <input type="text" id="package_description" required="required" placeholder="Package Description"/>
+                <input type="text" id="package_description" required="required" placeholder="Package Description" class="package-input" />
 
                 <input type="submit" id="submit" value="Create Package">
 
@@ -47,15 +51,12 @@
                 <input class="showImage" id="submitImg" type="submit" value="Change photo" />
             </form>
 
+
+            <b id="info">Contact an admin for help. Misuse may result in account deactivation.</b>
+
         </div>
 
-        <!-- Snippet from https://jqueryui.com/dialog/#modal-confirmation for content inside pop up -->
-        <div id="dialog-confirm" title="Deactivate Account?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
-        </div>
-        <div id="update-confirm" title="Update Account Information?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
-        </div>
+
 
     </div>
 
