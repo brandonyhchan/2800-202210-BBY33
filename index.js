@@ -1223,6 +1223,17 @@ app.get("/partnerships", function(req, res) {
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
+
+});
+
+app.get("/order-confirmation", function(req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/orderConfirmation.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    }
 });
 
 var port = process.env.PORT || 8000;
