@@ -303,3 +303,20 @@ function getImage() {
 getImage();
 
 displayImage();
+
+document.querySelector("#getOrders").addEventListener("click", () => {
+    getOrders();
+})
+
+async function getOrders() {
+    try {
+        let response = await fetch("/getOrders", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/getOrders");
+        }
+    } catch (err) {
+
+    }
+}
