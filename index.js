@@ -17,12 +17,6 @@ const localconfig = {
     password: "",
     database: "COMP2800",
 };
-const herokuconfig = {
-    host: "us-cdbr-east-05.cleardb.net", 
-    user: "baf45e51bb6699",
-    password: "96b73edd",
-    database: "heroku_ecb002aef4014be"
-};
 var connection;
 if (is_heroku) {
     connection = mysql.createPool(herokuconfig);
