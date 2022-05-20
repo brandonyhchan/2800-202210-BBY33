@@ -5,7 +5,7 @@ var packagesDisplayed = false;
 
 function ajaxGET(url, callback) {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -18,12 +18,12 @@ function ajaxGET(url, callback) {
 
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) {
+        function(k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
     const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
+    xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -43,7 +43,7 @@ function getPackage() {
         countryId = event.target.id;
         countryId = countryId.slice(7);
         queryString = "countryID=" + countryId;
-        ajaxPOST("/get-packages", function (data) {
+        ajaxPOST("/get-packages", function(data) {
             if (data) {
                 let dataParsed = JSON.parse(data);
                 if (dataParsed.status == "fail") {
@@ -60,8 +60,8 @@ function getPackage() {
                             </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
                     }
                     document.getElementById("cart").innerHTML = str;
-                    document.querySelectorAll(".close-package").forEach(function (currentElement, currentIndex, listObj) {
-                        currentElement.addEventListener("click", function (e) {
+                    document.querySelectorAll(".close-package").forEach(function(currentElement, currentIndex, listObj) {
+                        currentElement.addEventListener("click", function(e) {
                             document.getElementById("cart").innerHTML = "";
 
                         });
@@ -134,11 +134,11 @@ function getCart() {
     })
 
     if (window.innerWidth > 720) {
-        document.querySelector("#close").addEventListener("click", function (e) {
+        document.querySelector("#close").addEventListener("click", function(e) {
             document.querySelector(".display-cart").style.opacity = 0;
         });
     } else {
-        document.querySelector("#close-m").addEventListener("click", function (e) {
+        document.querySelector("#close-m").addEventListener("click", function(e) {
             document.querySelector(".display-cart2").style.opacity = 0;
         });
     }
@@ -165,7 +165,7 @@ function addPackage() {
         if (event.target.className == "packages") {
             packageId = event.target.id;
             queryString = "packageID=" + packageId;
-            ajaxPOST("/add-packages", function (data) {
+            ajaxPOST("/add-packages", function(data) {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);
@@ -190,7 +190,7 @@ function updateQuantity(event) {
     var newQuantity = event.target.value;
     packageId = event.target.id;
     queryString = "packageID=" + packageId + "&quantity=" + newQuantity;
-    ajaxPOST("/update-quantity", function (data) {
+    ajaxPOST("/update-quantity", function(data) {
         if (data) {
             let dataParsed = JSON.parse(data);
             if (dataParsed.status == "fail") {
@@ -240,13 +240,11 @@ function remove() {
         if (event.target.className == "remove") {
             buttonId = event.target.id;
             queryString = "buttonID=" + buttonId;
-            ajaxPOST("/removeAll", function (data) {
+            ajaxPOST("/removeAll", function(data) {
                 if (data) {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
-                    } else {
-                        console.log("success")
                     }
                 }
             }, queryString);
