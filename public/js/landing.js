@@ -87,3 +87,11 @@ function easterEgg() {
     }
 
 }
+
+function learnMore() {
+    window.location.href = "/howItWorks";
+}
+
+function getStarted() {
+    window.location.href = "/map";
+}
