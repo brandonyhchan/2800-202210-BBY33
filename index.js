@@ -246,7 +246,7 @@ app.get("/logout", function (req, res) {
                 res.send(doc);
             }
         });
-    } 
+    }
 });
 
 app.post("/user-update", function (req, res) {
@@ -365,6 +365,13 @@ app.get("/whoWeAre", function (req, res) {
 
 app.get("/joinOurTeam", function (req, res) {
     let profile = fs.readFileSync("./app/html/joinOurTeam.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
+app.get("/Support", function (req, res) {
+    let profile = fs.readFileSync("./app/html/support.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
@@ -926,6 +933,9 @@ app.get("/packageInfo", function (req, res) {
 });
 
 app.post("/display-package", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let packageName = req.body.packageName;
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
 
@@ -1030,7 +1040,9 @@ app.post("/checkout", function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var send = {
-            userId: ""
+            userId: "",
+            total: 0,
+            order: 0
         }
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
@@ -1045,26 +1057,52 @@ app.post("/checkout", function (req, res) {
                                 order = 1;
                                 connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
                                 connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ?`, ['y', order, userid]
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n'],
+                                    () => {
+                                        connection.execute(
+                                            "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
+                                            function(error, orders) {
+                                                let total = 0;
+                                                for(let i = 0; i < orders.length; i++) {
+                                                    total += orders[i].price * orders[i].product_quantity;
+                                                }
+                                                send.total = total;
+                                                send.order = order;
+                                                res.send(send);
+                                            }
+                                        )
+                                    }
                                 );
                             } else {
                                 order = parseInt(cartid[cartid.length - 1].ORDER_ID) + 1;
                                 connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
                                 connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n']
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n'],
+                                    () => {
+                                        connection.execute(
+                                            "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
+                                            function(error, orders) {
+                                                let total = 0;
+                                                for(let i = 0; i < orders.length; i++) {
+                                                    total += orders[i].price * orders[i].product_quantity;
+                                                }
+                                                send.total = total;
+                                                send.order = order;
+                                                res.send(send);
+                                            }
+                                        )
+                                    }
                                 );
                             }
                         })
                     }
                 )
-                res.send(send);
             }
         )
     } else {
         res.redirect("/");
     }
 });
-
 
 app.get("/get-orders", function (req, res) {
     if (req.session.loggedIn) {
@@ -1213,7 +1251,10 @@ app.get("/orderInfo", function (req, res) {
     }
 });
 
-app.post("/display-order", function (req, res) {
+app.post("/display-order", function(req, res) {
+    res.setHeader("Content-Type", "application/json");
+
+    let order = req.body.orderId;
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         let order = req.body.orderId;
@@ -1233,6 +1274,34 @@ app.post("/display-order", function (req, res) {
         res.redirect("/");
     }
 });
+
+app.get("/howItWorks", function (req, res) {
+
+    let profile = fs.readFileSync("./app/html/howItWorks.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+});
+
+app.get("/partnerships", function (req, res) {
+
+    let profile = fs.readFileSync("./app/html/partnerships.html", "utf8");
+    let profileDOM = new JSDOM(profile);
+
+    res.send(profileDOM.serialize());
+
+});
+
+app.get("/order-confirmation", function (req, res) {
+
+    if (req.session.loggedIn) {
+        let profile = fs.readFileSync("./app/html/orderConfirmation.html", "utf8");
+        let profileDOM = new JSDOM(profile);
+
+        res.send(profileDOM.serialize());
+    }
+});
+
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");

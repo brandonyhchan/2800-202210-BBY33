@@ -1,0 +1,122 @@
+ @font-face {
+     font-family: Fonttype;
+     src: url("/fonts/static/Raleway-Regular.ttf");
+ }
+ 
+ * {
+     margin: 0;
+     padding: 0;
+     font-family: 'Fonttype';
+ }
+ 
+ body {
+     width: 100%;
+     overflow-x: hidden;
+ }
+ 
+ #container {
+     height: 100%;
+     display: grid;
+     place-items: center;
+     margin: 2%;
+ }
+ 
+ #care-package {
+     grid-column: 1 / 2;
+     width: 70%;
+     background-color: rgb(245, 245, 245);
+     padding: 1%;
+     border-radius: 7px;
+     text-align: center;
+ }
+ 
+ #input-container {
+     display: grid;
+     grid-template-columns: 100%;
+     text-align: center;
+ }
+ 
+ .page-header {
+     color: rgb(14, 76, 109);
+     margin: 2%;
+ }
+ 
+ .package-input {
+     width: 50%;
+     justify-self: center;
+ }
+ 
+ #submit,
+ #submitImg {
+     text-align: center;
+     white-space: nowrap;
+     font-size: 16px;
+     border-style: none;
+     background-color: rgb(14, 76, 109);
+     color: white;
+     border-radius: 7px;
+     cursor: pointer;
+     transition-duration: 0.7s;
+     padding-top: 0.75%;
+     padding-bottom: 0.75%;
+     padding-left: 1%;
+     padding-right: 1%;
+     justify-self: center;
+ }
+ 
+ #submit:hover,
+ #submitImg:hover {
+     background: rgb(114, 186, 213);
+ }
+ 
+ #submit:active,
+ #submitImg:active {
+     transform: translateY(4px);
+ }
+ 
+ #submit {
+     margin: 1%;
+ }
+ 
+ input {
+     margin: 1%;
+     padding: 1%;
+ }
+ 
+ #info {
+     color: rgb(14, 76, 109);
+ }
+ 
+ @media only screen and (max-width: 720px) {
+     #container {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-content: center;
+         max-height: calc(100vh - 20%);
+     }
+     #care-package {
+         margin-top: 5%;
+         margin-bottom: 20%;
+         padding-top: 5%;
+         padding-bottom: 5%;
+         justify-content: center;
+     }
+     .page-header {
+         font-size: 20px;
+     }
+     input {
+         margin: 5%;
+         padding: 2%;
+     }
+     #upload {
+         width: 100%;
+     }
+     #info {
+         font-size: 14px;
+     }
+     #submit,
+     #submitImg {
+         padding: 2%;
+     }
+ }

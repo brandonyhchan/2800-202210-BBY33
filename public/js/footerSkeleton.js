@@ -18,20 +18,32 @@ ready(() => {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
 
-        document.querySelector("#whoWeAre").addEventListener("click", () =>{
+        document.querySelector("#whoWeAre").addEventListener("click", () => {
             getWhoWeAre();
         })
 
-        document.querySelector("#faq").addEventListener("click", () =>{
+        document.querySelector("#faq").addEventListener("click", () => {
             getFAQ();
         })
 
-        document.querySelector("#joinOurTeam").addEventListener("click", () =>{
+        document.querySelector("#joinOurTeam").addEventListener("click", () => {
             getJoinOurTeam();
+        })
+
+        document.querySelector("#howItWorks").addEventListener("click", () => {
+            getHowItWorks();
+        })
+
+        document.querySelector("#partnerships").addEventListener("click", () => {
+            getPartnerships();
+        })
+
+        document.querySelector("#support").addEventListener("click", ()=>{
+            getSupport();
         })
     });
 
-    async function getWhoWeAre(){
+    async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
                 method: 'GET'
@@ -44,7 +56,7 @@ ready(() => {
         }
     }
 
-    async function getFAQ(){
+    async function getFAQ() {
         try {
             let response = await fetch("/FAQ", {
                 method: 'GET'
@@ -57,7 +69,7 @@ ready(() => {
         }
     }
 
-    async function getJoinOurTeam(){
+    async function getJoinOurTeam() {
         try {
             let response = await fetch("/joinOurTeam", {
                 method: 'GET'
@@ -65,13 +77,48 @@ ready(() => {
             if (response.status === 200) {
                 window.location.replace("/joinOurTeam");
             }
+        } catch (err) {}
+    }
+
+    async function getHowItWorks() {
+        try {
+            let response = await fetch("/howItWorks", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/howItWorks");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getPartnerships() {
+        try {
+            let response = await fetch("/partnerships", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/partnerships");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getSupport(){
+        try {
+            let response = await fetch("/Support", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/Support");
+            }
         } catch (err) {
     
         }
     }
 })
-
-
 
 function ready(callback) {
     if (document.readyState != "loading") {

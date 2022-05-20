@@ -3,7 +3,7 @@ var show;
 ready(() => {
     function ajaxGET(url, callback) {
         const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
+        xhr.onload = function() {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
             } else {
@@ -16,11 +16,11 @@ ready(() => {
 
     function ajaxPOST(url, callback, data) {
         let params = typeof data == 'string' ? data : Object.keys(data).map(
-            function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+            function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
         ).join('&');
 
         const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
+        xhr.onload = function() {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
                 callback(this.responseText);
             }
@@ -67,14 +67,16 @@ ready(() => {
             for (let j = 0; j < removeBtns.length; j++) {
                 removeBtns[j].addEventListener('click', deleteItem);
             }
+
+
         })
 
         if (window.innerWidth > 720) {
-            document.querySelector("#close").addEventListener("click", function (e) {
+            document.querySelector("#close").addEventListener("click", function(e) {
                 document.querySelector(".display-cart").style.opacity = 0;
             });
         } else {
-            document.querySelector("#close-m").addEventListener("click", function (e) {
+            document.querySelector("#close-m").addEventListener("click", function(e) {
                 document.querySelector(".display-cart2").style.opacity = 0;
             });
         }
@@ -89,7 +91,7 @@ ready(() => {
         var newQuantity = event.target.value;
         packageId = event.target.id;
         queryString = "packageID=" + packageId + "&quantity=" + newQuantity;
-        ajaxPOST("/update-quantity", function (data) {
+        ajaxPOST("/update-quantity", function(data) {
             if (data) {
                 let dataParsed = JSON.parse(data);
                 if (dataParsed.status == "fail") {
@@ -141,7 +143,7 @@ ready(() => {
         var queryString;
         buttonId = event.target.id;
         queryString = "buttonID=" + buttonId;
-        ajaxPOST("/removeAll", function (data) {
+        ajaxPOST("/removeAll", function(data) {
             if (data) {
                 let dataParsed = JSON.parse(data);
                 if (dataParsed.status == "fail") {
@@ -153,7 +155,7 @@ ready(() => {
         getCart();
     }
 
-    ajaxGET("/nav", function (data) {
+    ajaxGET("/nav", function(data) {
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
         document.querySelector("#profile").addEventListener("click", () => {
@@ -181,7 +183,7 @@ ready(() => {
 
     var path = window.location.pathname;
     if (path.startsWith("/admin")) {
-        ajaxGET("/admin-sideBar", function (data) {
+        ajaxGET("/admin-sideBar", function(data) {
 
             let navbar = document.querySelector("#control-panel-placeholder");
             navbar.innerHTML = data;
@@ -197,7 +199,7 @@ ready(() => {
 
     }
 
-    ajaxGET("/footer", function (data) {
+    ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
 
@@ -217,8 +219,20 @@ ready(() => {
             getFAQ();
         })
 
-        document.querySelector("#joinOurTeam").addEventListener("click", () =>{
+        document.querySelector("#joinOurTeam").addEventListener("click", () => {
             getJoinOurTeam();
+        })
+
+        document.querySelector("#howItWorks").addEventListener("click", () => {
+            getHowItWorks();
+        })
+
+        document.querySelector("#partnerships").addEventListener("click", () => {
+            getPartnerships();
+        })
+
+        document.querySelector("#support").addEventListener("click", ()=>{
+            getSupport();
         })
     });
 
@@ -314,13 +328,26 @@ ready(() => {
         }
     }
 
-    async function getJoinOurTeam(){
+    async function getJoinOurTeam() {
         try {
             let response = await fetch("/joinOurTeam", {
                 method: 'GET'
             })
             if (response.status === 200) {
                 window.location.replace("/joinOurTeam");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getSupport(){
+        try {
+            let response = await fetch("/Support", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/Support");
             }
         } catch (err) {
 
@@ -340,7 +367,7 @@ ready(() => {
         }
     }
 
-    document.querySelectorAll(".purchase").forEach(function (currentElement) {
+    document.querySelectorAll(".purchase").forEach(function(currentElement) {
         currentElement.addEventListener("click", () => {
             ajaxGET("/get-cart", (data) => {
                 var items = [];
@@ -353,14 +380,14 @@ ready(() => {
                         items.push({ id: dataParsed.rows[i].package_id, quantity: dataParsed.rows[i].product_quantity });
                     }
                     fetch("/create-checkout-session", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            items
-                        }),
-                    })
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                items
+                            }),
+                        })
                         .then(res => {
                             if (res.ok) return res.json()
                             return res.json().then(json => Promise.reject(json))
@@ -375,6 +402,32 @@ ready(() => {
             })
         })
     })
+    async function getHowItWorks() {
+        try {
+            let response = await fetch("/howItWorks", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/howItWorks");
+            }
+        } catch (err) {
+
+        }
+    }
+
+    async function getPartnerships() {
+        try {
+            let response = await fetch("/partnerships", {
+                method: 'GET'
+            })
+            if (response.status === 200) {
+                window.location.replace("/partnerships");
+            }
+        } catch (err) {
+
+        }
+    }
+
 
 })
 

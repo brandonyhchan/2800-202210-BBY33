@@ -8,8 +8,7 @@
     <title>Welcome</title>
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <link rel="stylesheet" href="/css/landing.css">
     <link rel="stylesheet" href="/css/nav.css">
@@ -27,7 +26,7 @@
             <table class="subtotal"></table>
             <div id="total1"></div>
             <button class="buy purchase" type="button">Checkout</button>
-            <button class="remove" id="removeallM" type="button">Clear</button>
+            <button class="remove" id="removeall" type="button">Clear</button>
         </div>
     </div>
 
@@ -43,7 +42,9 @@
             </div>
         </div>
 
-        <div id="image-gallery">
+
+        <img src="/img/easter-egg-image.png" id="easter-egg">
+        <div id="image-gallery" onclick="easterEgg()">
             <img src="/img/hero1.jpg" alt="gallery" id="image">
             <h1 id="header-text">Let's Make a Difference Together!</h1>
         </div>
@@ -61,7 +62,7 @@
             <h2 id="motivation"></h2>
 
             <div id="button-container">
-                
+
 
                 <div id="learn-more-container">
                     <button id="learn-more">Learn More</button>
