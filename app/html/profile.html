@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/profile.css" type="text/css" />
     <link rel="stylesheet" href="/css/nav.css" type="text/css" />
     <link rel="stylesheet" href="/css/footer.css" type="text/css" />
@@ -19,13 +18,28 @@
 
 <body>
     <nav id="navbarPlaceholder"></nav>
-    <div id="display-cart">
-        <input id="close" type="button" value="Close">
-        <h2>Your Cart</h2>
-        <table id="subtotal"></table>
+    <div class="display-cart" id="desktop">
+        <div id="desktop-cart-container">
+            <input id="close" type="button" value="Close">
+            <h1 class="cart-heading">Your Cart</h1>
+            <table class="subtotal"></table>
+            <div id="total1"></div>
+            <button class="buy purchase" type="button">Checkout</button>
+            <button class="remove" id="removeall" type="button">Clear</button>
+        </div>
     </div>
 
     <div id="container">
+        <div class="display-cart2">
+            <div id="mobile-cart-container">
+                <input id="close-m" type="button" value="Close">
+                <h2 id="heading2" class="cart-heading">Your Cart</h2>
+                <table class="subtotal2"></table>
+                <div id="total2"></div>
+                <button class="buy purchase" type="button">Checkout</button>
+                <button class="remove" id="removeallM" type="button">Clear</button>
+            </div>
+        </div>
         <div id="profile-container">
             <img id="profileImage" src="/img/stock-profile.png" alt="Profile Image" width="200" height="200">
 
@@ -63,6 +77,7 @@
             </div>
             <div id="status"></div>
 
+            <button type="submit" id="getOrders">View Orders</button>
             <form class="user-options" action="/logout" method="get">
                 <input id="logout" type="submit" value="Logout" />
             </form>
@@ -72,6 +87,7 @@
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure?</p>
         </div>
         <div class="order-history"></div>
+
 
     </div>
     <footer id="footerPlaceholder"></footer>

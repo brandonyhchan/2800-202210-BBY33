@@ -19,10 +19,32 @@
 
 <body>
     <nav id="navbarPlaceholder"></nav>
+    <div class="display-cart" id="desktop">
+        <div id="desktop-cart-container">
+            <input id="close" type="button" value="Close">
+            <h1 class="cart-heading">Your Cart</h1>
+            <table class="subtotal"></table>
+            <div id="total1"></div>
+            <button class="buy purchase" type="button">Checkout</button>
+            <button class="remove" id="removeall" type="button">Clear</button>
+        </div>
+    </div>
 
     <div class="container">
+        <div class="display-cart2">
+            <div id="mobile-cart-container">
+                <input id="close-m" type="button" value="Close">
+                <h2 id="heading2" class="cart-heading">Your Cart</h2>
+                <table class="subtotal2"></table>
+                <div id="total2"></div>
+                <button class="buy purchase" type="button">Checkout</button>
+                <button class="remove" id="removeallM" type="button">Clear</button>
+            </div>
+        </div>
 
-        <div id="image-gallery">
+
+        <img src="/img/easter-egg-image.png" alt="easter-egg" id="easter-egg">
+        <div id="image-gallery" onclick="easterEgg()">
             <img src="/img/hero1.jpg" alt="gallery" id="image">
             <h1 id="header-text">Let's Make a Difference Together!</h1>
         </div>
@@ -37,17 +59,19 @@
 
         <div id="menu-container">
             <h2 id="motto">Send Love. Send Joy. Send Hope in a Box.</h2>
-
-
+            <h2 id="motivation">Motivation</h2>
 
             <div id="button-container">
+
+
                 <div id="learn-more-container">
-                    <button id="learn-more">Learn More</button>
+                    <button id="learn-more" onclick="learnMore()">Learn More</button>
                 </div>
                 <div id="get-started-container">
-                    <button id="get-started">Get Started</button>
+                    <button id="get-started" onclick="getStarted()">Get Started</button>
                 </div>
             </div>
+
         </div>
     </div>
 

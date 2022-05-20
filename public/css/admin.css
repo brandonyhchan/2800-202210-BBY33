@@ -53,12 +53,12 @@
     #table-container {
         display: grid;
         margin: 3%;
+        overflow-y: scroll;
     }
     
     .page-header {
         text-align: center;
         padding: 3%;
-        color: #00394f;
     }
     
     tr:nth-child(odd) {
@@ -68,7 +68,7 @@
     th {
         background-color: #00394f;
         color: white;
-        height: 20px;
+        height: 40px;
     }
     
     .manage {
@@ -140,10 +140,57 @@
     
     #dropdown-items {
         display: grid;
+        justify-content: center;
     }
     
     #update-confirm {
         display: none;
+    }
+    
+    #close {
+        float: right;
+        top: 0;
+    }
+    
+    #ui-id-1 {
+        font-family: 'Fonttype';
+        color: black;
+    }
+    
+    .ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle {
+        color: rgb(245, 245, 245);
+    }
+    
+    #dialog-confirm.ui-dialog-content.ui-widget-content {
+        margin-top: 10% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .ui-icon.ui-icon-alert {
+        margin-top: 1% !important;
+    }
+    
+    .ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+        display: none;
+    }
+    
+    .ui-button.ui-corner-all.ui-widget {
+        font-family: 'Fonttype';
+        color: white;
+        background-color: rgb(14, 76, 109);
+        border-style: none;
+        border-radius: 7px;
+        transition-duration: 0.7s;
+    }
+    
+    .ui-button.ui-corner-all.ui-widget:hover {
+        background-color: rgb(114, 186, 213);
+    }
+    
+    .ui-button.ui-corner-all.ui-widget:active {
+        transform: translateY(4px);
     }
     
     @media only screen and (max-width: 720px) {
@@ -183,6 +230,7 @@
             grid-template-columns: 100%;
             grid-template-rows: auto;
             font-size: 14px;
+            overflow-y: visible;
         }
         .manage {
             display: flex;
@@ -228,7 +276,7 @@
         #dropdown-items {
             opacity: 0;
             height: 0px;
-            display: block;
+            display: none;
         }
         th {
             word-wrap: break-word;

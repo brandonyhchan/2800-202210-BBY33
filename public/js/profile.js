@@ -91,7 +91,7 @@ function editName(e) {
                             xhr.onload = function () {
                                 if (this.readyState == XMLHttpRequest.DONE) {
                                     if (xhr.status === 200) {
-                                        statusDiv.innerHTML = "Name updated.";
+                                        statusDiv.innerHTML = "Username updated.";
                                         getName();
                                         getEmail();
                                     }
@@ -303,3 +303,20 @@ function getImage() {
 getImage();
 
 displayImage();
+
+document.querySelector("#getOrders").addEventListener("click", () => {
+    getOrders();
+})
+
+async function getOrders() {
+    try {
+        let response = await fetch("/getOrders", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/getOrders");
+        }
+    } catch (err) {
+
+    }
+}

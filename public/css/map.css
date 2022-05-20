@@ -16,17 +16,6 @@ body {
     background-color: #01171b;
 }
 
-.display-cart {
-    z-index: 1;
-    right: 0;
-    height: 30%;
-    width: 30%;
-    float: right;
-    position: absolute;
-    background-color: aliceblue;
-    opacity: 0;
-}
-
 #mobile {
     display: none;
 }
@@ -147,7 +136,7 @@ button,
     transition-duration: 0.7s;
 }
 
-#close {
+#close, #purchase.buy, .btn-danger {
     background-color: rgb(14, 76, 109);
     color: white;
     border-style: none;
@@ -158,21 +147,34 @@ button,
     transition-duration: 0.7s;
 }
 
+#purchase.buy {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 4%;
+}
+
+#total1 {
+    margin: auto;
+}
+
 button:hover,
 .packagesDisplay:hover,
-#close:hover {
+#close:hover,
+#purchase.buy:hover {
     background-color: rgb(114, 186, 213);
 }
 
 button:active,
 .packagesDisplay:active,
-#close:active {
+#close:active,
+#purchase.buy:active {
     transform: translateY(4px);
 }
 
 #desktop-cart-container {
     height: 100%;
     margin: 4%;
+    padding-bottom: 5%;
 }
 
 .subtotal,
@@ -180,10 +182,11 @@ button:active,
     width: 100%;
 }
 
-#total1 {
-    position: absolute;
-    margin-top: 10%;
-    margin-left: 9%;
+#cart-layout {
+    position: relative;
+    top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 th,
@@ -197,8 +200,28 @@ td {
     margin-bottom: 1%;
 }
 
+.buy.purchase{
+    grid-row: 2/3;
+    grid-column: 2/3;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+
 #close-m {
     display: none;
+}
+
+#mobile-purchase.buy {
+    display: none;
+}
+
+#removeallM.remove{
+    grid-row: 2/3;
+    grid-column: 1/2;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
 }
 
 .packages {
@@ -211,6 +234,36 @@ td {
 
 #heading2 {
     display: none;
+}
+
+.display-cart2 {
+    display: none;
+}
+
+.cart-quantity-input {
+    width: 30%;
+    height: 20%;
+}
+.btn-danger:hover {
+    background-color: red;
+}
+
+.close-package{
+    margin-top: 2%;
+    margin-left: 2%;
+    display: flex;
+}
+
+.display-cart {
+    z-index: 1;
+    right: 0;
+    height: 40%;
+    width: 30%;
+    float: right;
+    position: absolute;
+    background-color: aliceblue;
+    opacity: 0;
+    border: solid black 2px;
 }
 
 @media only screen and (max-width: 720px) {
@@ -232,7 +285,7 @@ td {
             "cart"
             "map"
             "subtotal";
-            
+
     }
 
     .map {
@@ -257,11 +310,18 @@ td {
         display: none;
     }
 
+    #heading2 {
+        display: flex;
+        justify-content: center;
+        font-size: 25px;
+    }
+
     .display-cart2 {
+        display: block;
         grid-area: subtotal;
         z-index: 1;
         right: 0;
-        height: 25%;
+        height: 30%;
         width: 100%;
         float: right;
         position: absolute;
@@ -290,8 +350,8 @@ td {
     #mobile-cart-container {
         margin: 2%;
     }
-
-    #close-m {
+    
+    #close-m, #mobile-purchase.buy {
         display: flex;
         background-color: rgb(14, 76, 109);
         color: white;
@@ -301,13 +361,81 @@ td {
         cursor: pointer;
         font-family: 'Fonttype';
         transition-duration: 0.7s;
+        text-align: center;
     }
 
-    #close-m:hover{
+    #close-m:hover, #mobile-purchase.buy:hover {
         background-color: rgb(114, 186, 213);
     }
 
-    #close-m:active{
+    #close-m:active, #mobile-purchase.buy:active {
         transform: translateY(4px);
+    }
+
+    .card{
+        display: grid;
+        grid-template-rows: 15% 40% 20% 25%; 
+        grid-template-columns: 40% 60%;
+    }
+
+    #title{
+        grid-column: 1/3;
+        margin-bottom: 1%;
+    }
+
+    .pImage{
+        grid-column: 1/2;
+        grid-row: 2/5;
+        margin: auto;
+    }
+
+    .description{
+        grid-column: 2/3;
+        grid-row: 2/3;
+        margin-bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .price{
+        grid-column: 2/3;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .options{
+        grid-column: 2/3;
+        grid-row: 4/5;
+    }
+    .subtotal2 {
+        margin-top: 3%;
+    }
+
+    #cart-layout-mobile {
+        position: relative;
+        top: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #mobile-purchase.buy {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 4%;
+    }
+
+    #total2{
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+
+    .quantity {
+        width: 30%;
+    }
+
+    .close-package{
+        padding: 2%;
+        display: flex;
     }
 }

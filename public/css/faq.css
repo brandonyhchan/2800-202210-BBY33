@@ -12,8 +12,7 @@ body {
 
 #container {
     width: 100%;
-    max-height: calc(100vh - 20%);
-    overflow-x: hidden;
+    min-height: 100vh;
     align-items: center;
 }
 
@@ -36,15 +35,51 @@ body {
 }
 
 .question {
-    margin-top: 5%;
+    margin-top: 4%;
     margin-bottom: 0%;
+    font-size: 30px;
 }
 
 .answer {
-    font-size: 26px;
+    font-size: 24px;
+}
+
+.home{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3%;
+    font-size: 30px;
+    border-style: none;
+    border-radius: 5px;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    padding: 0.5%;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
+}
+
+.home:hover {
+    background-color: rgb(114, 186, 213);
+}
+
+.home:active {
+    transform: translateY(4px);
+}
+
+.link{
+    cursor: pointer;
+    color: rgb(14, 76, 109);
 }
 
 @media only screen and (max-width: 720px) {
+
+    body{
+        height: 100vh;
+    }
+
     #logo {
         max-width: 70%;
         margin-top: 12%;
@@ -65,6 +100,11 @@ body {
 
     .question{
         margin-top: 7%;
+    }
+
+    .home{
+        font-size: 20px; 
+        padding: 1.25%;
     }
 
 

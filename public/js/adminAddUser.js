@@ -52,12 +52,14 @@ document.querySelector("#submit").addEventListener("click", function(e) {
 function expandDropdown() {
     var expandables = document.getElementById("dropdown-items");
     if (expandables.style.height == "0px") {
+        expandables.style.display = "grid";
         expandables.style.height = "100px";
         expandables.style.opacity = "1";
-        expandables.style.transition = "0.3s";
+
     } else {
         expandables.style.height = "0px";
         expandables.style.opacity = "0";
+        expandables.style.display = "none";
     }
 }
 
@@ -71,6 +73,7 @@ function reDisplay() {
         var expandables = document.getElementById("dropdown-items");
         expandables.style.opacity = "1";
         expandables.style.height = "auto";
+        expandables.style.display = "grid";
 
     }
 }
