@@ -23,14 +23,11 @@ function checkout() {
     ajaxPOST("/checkout", function (data) {
 
         if (data) {
-            var price = 0;
-
             let dataParsed = JSON.parse(data);
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
                 let str = "Thank you for your purchase, " + dataParsed.userId + "!"; 
-                console.log(price)
                 document.getElementById("page-header").innerHTML= str;
                 document.getElementById("total-container").innerHTML= "Total: " + "$" + dataParsed.total + ".00";
                 document.getElementById("order-number-container").innerHTML= "Order Number: " + dataParsed.order;
