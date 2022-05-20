@@ -370,14 +370,14 @@ app.get("/joinOurTeam", function(req, res) {
     res.send(profileDOM.serialize());
 });
 
-app.get("/Support", function (req, res) {
+app.get("/Support", function(req, res) {
     let profile = fs.readFileSync("./app/html/support.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
     res.send(profileDOM.serialize());
 });
 
-app.get("/FAQ", function (req, res) {
+app.get("/FAQ", function(req, res) {
     let profile = fs.readFileSync("./app/html/faq.html", "utf8");
     let profileDOM = new JSDOM(profile);
 
@@ -1202,7 +1202,7 @@ app.post("/display-order", function(req, res) {
     let order = req.body.orderId;
     if (req.session.loggedIn) {
         connection.query(
-            "SELECT bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
+            "SELECT bby_33_cart.order_id, bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
             function(error, results) {
                 if (error) {
                     console.log(error);
