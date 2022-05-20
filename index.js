@@ -19,12 +19,6 @@ const localconfig = {
     password: "",
     database: "COMP2800",
 };
-const herokuconfig = {
-    host: process.env.HEROKU_HOST,
-    user: process.env.HEROKU_USER,
-    password: process.env.HEROKU_PASSWORD,
-    database: process.env.HEROKU_DATABASE
-};
 var connection;
 if (is_heroku) {
     connection = mysql.createPool(herokuconfig);
