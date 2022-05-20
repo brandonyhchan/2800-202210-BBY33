@@ -1069,7 +1069,6 @@ app.post("/checkout", function(req, res) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
                                                 send.date = orders[0].package_date;
-                                                console.log(orders[0].package_date);
                                                 send.total = total;
                                                 send.order = order;
                                                 res.send(send);
@@ -1230,12 +1229,10 @@ app.get("/get-total-purchases", (req, res) => {
             (err, results) => {
                 let sum = 0;
                 let send = { total: 0 };
-                console.log(results)
                 for (let i = 0; i < results.length; i++) {
                     sum += (parseInt(results[i].price) * parseInt(results[i].product_quantity))
                 }
                 send.total = sum;
-                console.log(sum);
                 res.send(send);
             }
         )

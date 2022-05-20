@@ -96,8 +96,13 @@ ready(() => {
             cart2.style.zIndex = -1;
         }
     }
+    var path = window.location.pathname;
 
-    window.addEventListener("load", isClosed);
+    if (path.startsWith("/admin") || path.startsWith("/getOrders")) {
+        window.removeEventListener("load", isClosed);
+    } else {
+        window.addEventListener("load", isClosed);
+    }
 
     function updateQuantity(event) {
         if (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) <= 0) {
@@ -198,7 +203,6 @@ ready(() => {
         }
     });
 
-    var path = window.location.pathname;
     if (path.startsWith("/admin")) {
         ajaxGET("/admin-sideBar", function(data) {
 
@@ -213,7 +217,6 @@ ready(() => {
             })
 
         });
-
     }
 
     ajaxGET("/footer", function(data) {
