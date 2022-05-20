@@ -79,4 +79,13 @@ function easterEgg() {
         selector.style.display = "none";
         counter = 1;
     }
+
+}
+
+function learnMore() {
+    window.location.href = "/howItWorks";
+}
+
+function getStarted() {
+    window.location.href = "/map";
 }
