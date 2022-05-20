@@ -51,10 +51,12 @@ ready(() => {
             if (window.innerWidth > 720) {
                 document.querySelector(".subtotal").innerHTML = string;
                 document.querySelector(".display-cart").style.opacity = 0.75;
+                document.querySelector(".display-cart").style.zIndex = 1;
                 updatePrice();
             } else {
                 document.querySelector(".subtotal2").innerHTML = string;
                 document.querySelector(".display-cart2").style.opacity = 0.75;
+                document.querySelector(".display-cart2").style.zIndex = 1;
                 updatePrice();
             }
 
@@ -74,12 +76,32 @@ ready(() => {
         if (window.innerWidth > 720) {
             document.querySelector("#close").addEventListener("click", function(e) {
                 document.querySelector(".display-cart").style.opacity = 0;
+                isClosed();
             });
         } else {
             document.querySelector("#close-m").addEventListener("click", function(e) {
                 document.querySelector(".display-cart2").style.opacity = 0;
+                isClosed();
             });
         }
+    }
+
+    function isClosed() {
+        let cart1 = document.querySelector(".display-cart");
+        let cart2 = document.querySelector(".display-cart2");
+        if (cart1.style.opacity == 0) {
+            cart1.style.zIndex = -1;
+        }
+        if (cart2.style.opacity == 0) {
+            cart2.style.zIndex = -1;
+        }
+    }
+    var path = window.location.pathname;
+
+    if (path.startsWith("/admin") || path.startsWith("/getOrders")) {
+        window.removeEventListener("load", isClosed);
+    } else {
+        window.addEventListener("load", isClosed);
     }
 
     function updateQuantity(event) {
@@ -181,7 +203,6 @@ ready(() => {
         }
     });
 
-    var path = window.location.pathname;
     if (path.startsWith("/admin")) {
         ajaxGET("/admin-sideBar", function(data) {
 
@@ -196,7 +217,6 @@ ready(() => {
             })
 
         });
-
     }
 
     ajaxGET("/footer", function(data) {
@@ -209,6 +229,10 @@ ready(() => {
 
         document.querySelector("#map-icon").addEventListener("click", () => {
             getMap();
+        })
+
+        document.querySelector("#help-icon").addEventListener("click", ()=>{
+            getSupport();
         })
 
         document.querySelector("#whoWeAre").addEventListener("click", () => {

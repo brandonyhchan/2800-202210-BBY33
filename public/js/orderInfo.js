@@ -1,3 +1,4 @@
+'use strict';
 var orderView = sessionStorage.getItem("order");
 
 function ajaxGET(url, callback, data) {

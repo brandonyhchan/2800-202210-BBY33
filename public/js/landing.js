@@ -35,7 +35,6 @@ function ajaxGET(url, callback) {
 
 function motivation() {
     ajaxGET("/get-total-purchases", (data) => {
-        console.log("hi")
         let parsedData = JSON.parse(data);
         let msg;
         let total = parseInt(parsedData.total);
@@ -67,22 +66,17 @@ function easterEgg() {
     var selector = document.getElementById("easter-egg");
 
     if (counter == 3) {
-
-
         selector.style.zIndex = "1";
         selector.style.display = "block"
         selector.style.transform = "translateY(0)";
         selector.style.animationName = "easterEgg";
         selector.style.animationDuration = "4s";
         selector.style.animationFillMode = "forwards";
-
-
     }
 
     if (counter > 3) {
         selector.style.zIndex = "0";
         selector.style.display = "none";
-
         counter = 1;
     }
 
