@@ -837,6 +837,8 @@ app.post("/undelete-users", function(req, res) {
                 }
             }
         );
+    } else {
+        res.redirect("/");
     }
 });
 
@@ -856,6 +858,8 @@ app.post("/get-packages", function(req, res) {
                 });
             }
         );
+    } else {
+        res.redirect("/");
     }
 });
 
@@ -933,6 +937,9 @@ app.post("/display-package", function(req, res) {
 
     let packageName = req.body.packageName;
     if (req.session.loggedIn) {
+        res.setHeader("Content-Type", "application/json");
+
+        let packageName = req.body.packageName;
         connection.query(
             "SELECT bby_33_package.PACKAGE_ID, bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE package_name = ?", [packageName],
             function(error, results) {
@@ -945,6 +952,8 @@ app.post("/display-package", function(req, res) {
                 });
             }
         );
+    } else {
+        res.redirect("/");
     }
 });
 
@@ -972,32 +981,36 @@ app.get("/get-cart", (req, res) => {
 })
 
 app.post("/charity-create", upload.array("files"), function(req, res) {
-    res.setHeader("Content-Type", "application/json");
+    if (req.session.loggedIn) {
+        res.setHeader("Content-Type", "application/json");
 
-    let country = req.body.country;
-    packageN = req.body.package;
-    let packagePrice = req.body.price;
-    let packageDesc = req.body.description;
-    var existingPackage = "";
-    connection.execute(
-        "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
-        function(error, results, fields) {
-            existingPackage = results;
-            let send = {
-                status: " ",
-                msg: " "
-            }
-            if (existingPackage.length == 0) {
-                connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [country, packageN, packagePrice, packageDesc]);
-                send.status = "success";
-            } else {
-                send.status = "fail";
-                send.msg = "Package Already Exists";
-            }
-            res.send(send);
+        let country = req.body.country;
+        packageN = req.body.package;
+        let packagePrice = req.body.price;
+        let packageDesc = req.body.description;
+        var existingPackage = "";
+        connection.execute(
+            "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
+            function(error, results, fields) {
+                existingPackage = results;
+                let send = {
+                    status: " ",
+                    msg: " "
+                }
+                if (existingPackage.length == 0) {
+                    connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [country, packageN, packagePrice, packageDesc]);
+                    send.status = "success";
+                } else {
+                    send.status = "fail";
+                    send.msg = "Package Already Exists";
+                }
+                res.send(send);
 
-        }
-    )
+            }
+        )
+    } else {
+        res.redirect("/");
+    }
 });
 
 app.post('/upload-package-images', upload.array("files"), function(req, res) {
@@ -1027,7 +1040,9 @@ app.post("/checkout", function(req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         var send = {
-            userId: ""
+            userId: "",
+            total: 0,
+            order: 0
         }
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function(err, rows) {
@@ -1042,21 +1057,50 @@ app.post("/checkout", function(req, res) {
                                 order = 1;
                                 connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
                                 connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ?`, ['y', order, userid]
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n'],
+                                    () => {
+                                        connection.execute(
+                                            "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
+                                            function(error, orders) {
+                                                let total = 0;
+                                                for (let i = 0; i < orders.length; i++) {
+                                                    total += orders[i].price * orders[i].product_quantity;
+                                                }
+                                                send.total = total;
+                                                send.order = order;
+                                                res.send(send);
+                                            }
+                                        )
+                                    }
                                 );
                             } else {
                                 order = parseInt(cartid[cartid.length - 1].ORDER_ID) + 1;
                                 connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
                                 connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n']
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n'],
+                                    () => {
+                                        connection.execute(
+                                            "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
+                                            function(error, orders) {
+                                                let total = 0;
+                                                for (let i = 0; i < orders.length; i++) {
+                                                    total += orders[i].price * orders[i].product_quantity;
+                                                }
+                                                send.total = total;
+                                                send.order = order;
+                                                res.send(send);
+                                            }
+                                        )
+                                    }
                                 );
                             }
                         })
                     }
                 )
-                res.send(send);
             }
         )
+    } else {
+        res.redirect("/");
     }
 });
 
@@ -1089,6 +1133,8 @@ app.post("/removeAll", function(req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         connection.execute("DELETE FROM bby_33_cart WHERE package_purchased = ?", ['n']);
+    } else {
+        res.redirect("/");
     }
 });
 app.post("/delete-item", (req, res) => {
@@ -1100,6 +1146,8 @@ app.post("/delete-item", (req, res) => {
             `DELETE FROM bby_33_cart WHERE user_id = ? AND package_id = ? AND package_purchased = ?`, [req.session.user_id, req.body.packageID, 'n']
         );
         res.send(send);
+    } else {
+        res.redirect("/");
     }
 });
 
@@ -1112,57 +1160,62 @@ app.post("/update-quantity", (req, res) => {
             `UPDATE bby_33_cart SET product_quantity = ? WHERE user_id = ? AND package_id = ?`, [req.body.quantity, req.session.user_id, req.body.packageID]
         );
         res.send(send);
+    } else {
+        res.redirect("/");
     }
 });
 
 app.post("/create-checkout-session", async(req, res) => {
-    connection.query(
-        `SELECT * FROM bby_33_package`,
-        async function(error, results) {
-            var myMap = new Map()
-            for (let i = 0; i < results.length; i++) {
-                myMap.set(results[i].PACKAGE_ID, {
-                    priceInCents: results[i].package_price * 100,
-                    name: results[i].package_name
-                })
-            }
-            try {
-                var link;
-                if (is_heroku) {
-                    link = process.env.CLIENT_URL;
-                } else {
-                    link = process.env.SERVER_URL
+    if (req.session.loggedIn) {
+        connection.query(
+            `SELECT * FROM bby_33_package`,
+            async function(error, results) {
+                var myMap = new Map()
+                for (let i = 0; i < results.length; i++) {
+                    myMap.set(results[i].PACKAGE_ID, {
+                        priceInCents: results[i].package_price * 100,
+                        name: results[i].package_name
+                    })
                 }
-                const checkout_session = await stripe.checkout.sessions.create({
-                    payment_method_types: ["card"],
-                    mode: "payment",
-                    line_items: req.body.items.map(item => {
-                        const storeItem = myMap.get(parseInt(item.id))
-                        return {
-                            price_data: {
-                                currency: "usd",
-                                product_data: {
-                                    name: storeItem.name,
+                try {
+                    var link;
+                    if (is_heroku) {
+                        link = process.env.CLIENT_URL;
+                    } else {
+                        link = process.env.SERVER_URL
+                    }
+                    const checkout_session = await stripe.checkout.sessions.create({
+                        payment_method_types: ["card"],
+                        mode: "payment",
+                        line_items: req.body.items.map(item => {
+                            const storeItem = myMap.get(parseInt(item.id))
+                            return {
+                                price_data: {
+                                    currency: "usd",
+                                    product_data: {
+                                        name: storeItem.name,
+                                    },
+                                    unit_amount: storeItem.priceInCents,
                                 },
-                                unit_amount: storeItem.priceInCents,
-                            },
-                            quantity: item.quantity,
-                        }
-                    }),
-                    success_url: `${link}/success`,
-                    cancel_url: `${link}/map`,
-                })
-                res.json({
-                    url: checkout_session.url
-                })
-            } catch (e) {
-                res.status(500).json({
-                    error: e.message
-                })
+                                quantity: item.quantity,
+                            }
+                        }),
+                        success_url: `${link}/success`,
+                        cancel_url: `${link}/map`,
+                    })
+                    res.json({
+                        url: checkout_session.url
+                    })
+                } catch (e) {
+                    res.status(500).json({
+                        error: e.message
+                    })
+                }
             }
-        }
-    );
-
+        );
+    } else {
+        res.redirect("/");
+    }
 })
 
 app.get("/get-total-purchases", (req, res) => {
@@ -1181,6 +1234,8 @@ app.get("/get-total-purchases", (req, res) => {
                 res.send(send);
             }
         )
+    } else {
+        res.redirect("/");
     }
 })
 
@@ -1201,6 +1256,8 @@ app.post("/display-order", function(req, res) {
 
     let order = req.body.orderId;
     if (req.session.loggedIn) {
+        res.setHeader("Content-Type", "application/json");
+        let order = req.body.orderId;
         connection.query(
             "SELECT bby_33_cart.order_id, bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
             function(error, results) {
@@ -1213,6 +1270,8 @@ app.post("/display-order", function(req, res) {
                 });
             }
         );
+    } else {
+        res.redirect("/");
     }
 });
 
