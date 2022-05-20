@@ -9,23 +9,45 @@
 * [Acknowledgements](#acknowledgements)
 
 ## Team members
-Artem Khan (SET 1C)
-Brandon Chan (SET 1B)
-Ryan Lee (SET 1C)
-Stanley Chow (SET 1B)
+- Artem Khan (SET 1C)
+- Brandon Chan (SET 1B)
+- Ryan Lee (SET 1C)
+- Stanley Chow (SET 1B)
 
 ## Application Info
 
 ## Contents
+Content of the project folder:
+
+```
+ Top level of project folder: 
+├── node_modules             # folder for node modules
+├── .gitignore               # env file
+├── .gitignore               # Git ignore file              
+├── index.js                 # Server side JavaScript
+├── package.json             # package.json file 
+├── Procfile                 # Procfile for Heroku
+└── readme.md                # You are reading this right now
+
+It has the following subfolders:
+├── app                      # 
+    /html                    # Folder for all html files
+├── public                   # 
+    /css                     # Folder for all css files
+    /fonts                   # Folder for al fonts
+    /img                     # Forlder for our images 
+    /js                      # Folder for all js files
+    /sql                     # Folder for all sql files
+    /userImg                 # Folder for images uploaded by the users
 
 ## Technologies
-* JavaScript
-* MySQL
-* HTML 
-* CSS
-* npm
-* Heroku
-* clearDB
+- JavaScript
+- MySQL
+- HTML 
+- CSS
+- npm
+- Heroku
+- clearDB
 
 ## Resources 
 - Our logo was generated with keywords through looka.com and edited to match our brand's theme.
