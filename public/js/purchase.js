@@ -171,9 +171,7 @@ function addPackage() {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
-                    } else {
-                        console.log("success")
-                    }
+                    } 
                 }
             }, queryString);
             updateQuantity(event);
