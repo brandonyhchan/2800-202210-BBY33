@@ -46,6 +46,7 @@ CREATE TABLE BBY_33_cart (
   price int,
   package_purchased VARCHAR(1),
   order_id int,
+  package_date DATE,
   PRIMARY KEY (CART_ID),
   FOREIGN KEY (user_id) REFERENCES BBY_33_user(USER_ID) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (package_id) REFERENCES BBY_33_package(PACKAGE_ID) ON UPDATE CASCADE ON DELETE CASCADE

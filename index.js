@@ -1029,7 +1029,8 @@ app.post("/checkout", function(req, res) {
         var send = {
             userId: "",
             total: 0,
-            order: 0
+            order: 0,
+            date: ""
         }
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function(err, rows) {
@@ -1040,11 +1041,12 @@ app.post("/checkout", function(req, res) {
                         await new Promise(() => {
 
                             var order;
+                            var date = new Date();
                             if (cartid.length == 0) {
                                 order = 1;
                                 connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
                                 connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n'],
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ?, package_date = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, date, userid, 'n'],
                                     () => {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
@@ -1053,6 +1055,8 @@ app.post("/checkout", function(req, res) {
                                                 for(let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
+                                                send.date = orders[0].package_date;
+                                                console.log(orders[0].package_date);
                                                 send.total = total;
                                                 send.order = order;
                                                 res.send(send);
@@ -1064,7 +1068,7 @@ app.post("/checkout", function(req, res) {
                                 order = parseInt(cartid[cartid.length - 1].ORDER_ID) + 1;
                                 connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
                                 connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, userid, 'n'],
+                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ?, package_date = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, date, userid, 'n'],
                                     () => {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
@@ -1073,6 +1077,7 @@ app.post("/checkout", function(req, res) {
                                                 for(let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
+                                                send.date = orders[0].package_date;
                                                 send.total = total;
                                                 send.order = order;
                                                 res.send(send);

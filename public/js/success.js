@@ -28,12 +28,12 @@ function checkout() {
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
-                console.log("success")
                 let str = "Thank you for your purchase, " + dataParsed.userId + "!"; 
                 console.log(price)
                 document.getElementById("page-header").innerHTML= str;
                 document.getElementById("total-container").innerHTML= "Total: " + "$" + dataParsed.total + ".00";
                 document.getElementById("order-number-container").innerHTML= "Order Number: " + dataParsed.order;
+                document.getElementById("order-date-container").innerHTML= "Date: " + dataParsed.date.slice(0, 10);
             }
         }
     }, queryString);
