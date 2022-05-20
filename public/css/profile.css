@@ -167,7 +167,9 @@ body {
     font-family: 'Fonttype';
 }
 
+
 /* Cart */
+
 .display-cart2 {
     display: none;
 }
@@ -218,7 +220,6 @@ td {
     text-align: center;
 }
 
-
 #close {
     background-color: rgb(14, 76, 109);
     color: white;
@@ -235,6 +236,7 @@ td {
     float: right;
     top: 0;
 }
+
 
 /* Cart */
 
@@ -283,7 +285,6 @@ td {
     display: none;
 }
 
-
 @media only screen and (max-width: 720px) {
     #profile-container {
         width: 90%;
@@ -293,35 +294,31 @@ td {
         margin-left: auto;
         margin-right: auto;
         grid-template-columns: 25% 75%;
+        margin-bottom: 15%;
+        padding-bottom: 10%;
     }
-
     #user-info {
         width: 100%;
     }
-
     #submit {
         margin-top: 2%;
         border-radius: 5px;
         padding: 2%;
     }
-
     #logout {
         border-radius: 5px;
         padding: 2%;
     }
-
     #submitImg {
         margin-top: 3%;
         margin-bottom: 3%;
         font-size: 15px;
         padding: 2%;
     }
-
     /* Cart */
     .display-cart {
         display: none;
     }
-
     .display-cart2 {
         display: block;
         grid-area: subtotal;
@@ -336,7 +333,6 @@ td {
         bottom: 0;
         margin-bottom: 15%;
     }
-
     #close-m {
         display: flex;
         background-color: rgb(14, 76, 109);
@@ -348,20 +344,15 @@ td {
         font-family: 'Fonttype';
         transition-duration: 0.7s;
     }
-
     #close-m:hover {
         background-color: rgb(114, 186, 213);
     }
-
     #close-m:active {
         transform: translateY(4px);
     }
-
     .quantity {
         width: 30%;
     }
-
-
     #getOrders {
         display: flex;
         background-color: rgb(14, 76, 109);
@@ -377,12 +368,10 @@ td {
         margin-bottom: 4%;
         transition-duration: 0.7s;
     }
-
-    #getOrders:hover{
-        background-color:rgb(114, 186, 213);
+    #getOrders:hover {
+        background-color: rgb(114, 186, 213);
     }
-
-    #getOrders:active{
+    #getOrders:active {
         transform: translateY(4px);
     }
 }
