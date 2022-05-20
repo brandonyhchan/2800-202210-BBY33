@@ -990,22 +990,30 @@ app.post("/charity-create", upload.array("files"), function (req, res) {
         let packageDesc = req.body.description;
         var existingPackage = "";
         connection.execute(
-            "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
-            function (error, results, fields) {
-                existingPackage = results;
-                let send = {
-                    status: " ",
-                    msg: " "
-                }
-                if (existingPackage.length == 0) {
-                    connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [country, packageN, packagePrice, packageDesc]);
-                    send.status = "success";
-                } else {
-                    send.status = "fail";
-                    send.msg = "Package Already Exists";
-                }
-                res.send(send);
+            `SELECT COUNTRY_ID FROM bby_33_country WHERE country = ?`, [country], (err, results) => {
+                var countryID = "";
+                countryID = results[0].COUNTRY_ID;
+                console.log(countryID);
+                connection.execute(
+                    "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
+                    function (error, results, fields) {
+                        existingPackage = results;
+                        let send = {
+                            status: " ",
+                            msg: " "
+                        }
+                        if (existingPackage.length == 0) {
+                            connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)",
+                                [countryID, packageN, packagePrice, packageDesc]);
+                            send.status = "success";
+                        } else {
+                            send.status = "fail";
+                            send.msg = "Package Already Exists";
+                        }
+                        res.send(send);
 
+                    }
+                )
             }
         )
     } else {
@@ -1061,9 +1069,9 @@ app.post("/checkout", function (req, res) {
                                     () => {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
-                                            function(error, orders) {
+                                            function (error, orders) {
                                                 let total = 0;
-                                                for(let i = 0; i < orders.length; i++) {
+                                                for (let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
                                                 send.total = total;
@@ -1081,9 +1089,9 @@ app.post("/checkout", function (req, res) {
                                     () => {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
-                                            function(error, orders) {
+                                            function (error, orders) {
                                                 let total = 0;
-                                                for(let i = 0; i < orders.length; i++) {
+                                                for (let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
                                                 send.total = total;
@@ -1251,7 +1259,7 @@ app.get("/orderInfo", function (req, res) {
     }
 });
 
-app.post("/display-order", function(req, res) {
+app.post("/display-order", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let order = req.body.orderId;

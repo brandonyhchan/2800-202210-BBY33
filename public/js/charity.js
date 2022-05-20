@@ -26,7 +26,7 @@ function ajaxPOST(url, callback, data) {
 document.querySelector("#submit").addEventListener("click", function (e) {
     e.preventDefault();
 
-    let country = document.getElementById("country_id");
+    let country = document.querySelector("#country_id");
     let package_name = document.getElementById("package_name");
     let package_price = document.getElementById("package_price");
     let package_description = document.getElementById("package_description");
