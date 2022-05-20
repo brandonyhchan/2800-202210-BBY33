@@ -8,6 +8,7 @@
 * [Photo Resources](#photo-resources)
 * [Acknowledgements](#acknowledgements)
 
+
 ## Team members
 - Artem Khan (SET 1C)
 - Brandon Chan (SET 1B)
