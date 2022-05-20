@@ -98,7 +98,7 @@ ready(() => {
     }
     var path = window.location.pathname;
 
-    if (path.startsWith("/admin") || path.startsWith("/getOrders")) {
+    if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo" ) || path.startsWith("/success")) {
         window.removeEventListener("load", isClosed);
     } else {
         window.addEventListener("load", isClosed);
