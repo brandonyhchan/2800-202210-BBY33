@@ -49,10 +49,10 @@ function getPackage() {
                 if (dataParsed.status == "fail") {
                     console.log("fail");
                 } else {
-                    let str = ""
+                    let str = "<button class='close-package'>Close</button>"
                     for (let i = 0; i < dataParsed.rows.length; i++) {
                         let row = dataParsed.rows[i];
-                        str += (`<button class='close-package'>Close</button><div class='card'>
+                        str += (`<div class='card'>
                             <div id='title'>${row.package_name} 
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
                             </div><div class='price'> $${row.package_price} 
