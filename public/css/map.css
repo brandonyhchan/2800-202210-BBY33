@@ -248,6 +248,12 @@ td {
     background-color: red;
 }
 
+.close-package{
+    margin-top: 2%;
+    margin-left: 2%;
+    display: flex;
+}
+
 .display-cart {
     z-index: 1;
     right: 0;
@@ -426,5 +432,10 @@ td {
 
     .quantity {
         width: 30%;
+    }
+
+    .close-package{
+        padding: 2%;
+        display: flex;
     }
 }

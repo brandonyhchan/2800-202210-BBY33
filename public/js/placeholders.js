@@ -231,6 +231,10 @@ ready(() => {
             getMap();
         })
 
+        document.querySelector("#help-icon").addEventListener("click", ()=>{
+            getSupport();
+        })
+
         document.querySelector("#whoWeAre").addEventListener("click", () => {
             getWhoWeAre();
         })
