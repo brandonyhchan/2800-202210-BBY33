@@ -114,10 +114,12 @@ function getCart() {
         if (window.innerWidth > 720) {
             document.querySelector(".subtotal").innerHTML = string;
             document.querySelector(".display-cart").style.opacity = 0.75;
+            document.querySelector(".display-cart").style.zIndex = 1;
             updatePrice();
         } else {
             document.querySelector(".subtotal2").innerHTML = string;
             document.querySelector(".display-cart2").style.opacity = 0.75;
+            document.querySelector(".display-cart2").style.zIndex = 1;
             updatePrice();
         }
         let quantities = document.querySelectorAll(".cart-quantity-input");
