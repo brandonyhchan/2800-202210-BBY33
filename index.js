@@ -920,7 +920,7 @@ app.post("/add-packages", function(req, res) {
     }
 });
 
-app.get("/packageInfo", function(req, res) {
+app.get("/packageInfo", function (req, res) {
 
     if (req.session.loggedIn) {
         let profile = fs.readFileSync("./app/html/packageInfo.html", "utf8");
