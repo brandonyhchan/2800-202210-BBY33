@@ -1084,9 +1084,10 @@ app.post("/checkout", function (req, res) {
                                                 for (let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
-                                                for (let i = 0; i < orders.length; i++) {
+                                                for (let i = 0; i < orders.length - 1; i++) {
                                                     destination += orders[i].cart_destination + ", "
                                                 }
+                                                destination += orders[orders.length - 1].cart_destination;
                                                 send.destination = destination;
                                                 send.total = total;
                                                 send.order = order;
@@ -1112,7 +1113,7 @@ app.post("/checkout", function (req, res) {
                                                 for (let i = 0; i < orders.length - 1; i++) {
                                                     destination += orders[i].cart_destination + ", "
                                                 }
-                                                destination += orders[orders.length - 1].cart_destination
+                                                destination += orders[orders.length - 1].cart_destination;
                                                 
                                                 send.destination = destination;
                                                 send.total = total;
