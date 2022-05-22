@@ -27,7 +27,7 @@ CREATE TABLE BBY_33_package (
   package_price int NOT NULL,
   description_of_package VARCHAR(500),
   package_image VARCHAR(50),
-   package_destination VARCHAR(50),
+  package_destination VARCHAR(50),
   PRIMARY KEY (PACKAGE_ID),
   FOREIGN KEY (country_id) REFERENCES BBY_33_country(COUNTRY_ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
