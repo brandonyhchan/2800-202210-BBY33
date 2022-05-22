@@ -20,10 +20,10 @@
 ## Contents
 Content of the project folder:
 
-```
+
  Top level of project folder: 
 ├── node_modules             # folder for node modules
-├── .gitignore               # env file
+├── .env                     # env file
 ├── .gitignore               # Git ignore file              
 ├── index.js                 # Server side JavaScript
 ├── package.json             # package.json file 
