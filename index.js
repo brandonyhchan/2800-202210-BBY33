@@ -847,6 +847,15 @@ app.post("/get-packages", function (req, res) {
         res.setHeader("Content-Type", "application/json");
         let countryID = req.body.countryID;
         connection.query(
+            "SELECT bby_33_country.country FROM bby_33_country WHERE COUNTRY_ID = ?", [countryID],
+            function (error, results) {
+                let countryName = results[0].country;
+                connection.execute(
+                    `UPDATE bby_33_package SET package_destination = ? WHERE country_id = ?`, [countryName, countryID]
+                )
+            }
+        );
+        connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
             function (error, results) {
                 if (error) {
@@ -897,10 +906,10 @@ app.post("/add-packages", function (req, res) {
                                     send.msg = "Package Added To Cart";
                                     res.send(send);
                                 } else {
-                                    connection.query("SELECT bby_33_package.package_price FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
+                                    connection.query("SELECT bby_33_package.package_price, bby_33_package.package_destination FROM bby_33_package WHERE PACKAGE_ID = ?", [packageID],
                                         function (err, pricePackage) {
                                             connection.execute(
-                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased) VALUES(?, ?, ?, ?, ?)", [packageID, 1, userid, pricePackage[0].package_price, 'n']
+                                                "INSERT INTO BBY_33_cart(package_id, product_quantity, user_id, price, package_purchased, cart_destination) VALUES(?, ?, ?, ?, ?, ?)", [packageID, 1, userid, pricePackage[0].package_price, 'n', pricePackage[0].package_destination]
                                             )
                                         });
                                     send.status = "success";
@@ -1050,7 +1059,8 @@ app.post("/checkout", function (req, res) {
         var send = {
             userId: "",
             total: 0,
-            order: 0
+            order: 0,
+            destination: " "
         }
         connection.execute("SELECT bby_33_user.USER_ID FROM bby_33_user WHERE user_name = ?", [req.session.user_name],
             function (err, rows) {
@@ -1074,6 +1084,10 @@ app.post("/checkout", function (req, res) {
                                                 for (let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
+                                                for (let i = 0; i < orders.length; i++) {
+                                                    destination += orders[i].cart_destination + ", "
+                                                }
+                                                send.destination = destination;
                                                 send.total = total;
                                                 send.order = order;
                                                 res.send(send);
@@ -1090,10 +1104,15 @@ app.post("/checkout", function (req, res) {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
                                             function (error, orders) {
+                                                let destination = ""
                                                 let total = 0;
                                                 for (let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
                                                 }
+                                                for (let i = 0; i < orders.length; i++) {
+                                                    destination += orders[i].cart_destination + ", "
+                                                }
+                                                send.destination = destination;
                                                 send.total = total;
                                                 send.order = order;
                                                 res.send(send);
