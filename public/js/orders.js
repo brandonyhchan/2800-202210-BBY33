@@ -9,13 +9,16 @@ function getUsers() {
                 if (data.status == "success") {
                     let str = `        <tr>
                     <th class="firstName_header"><span>Order Number</span></th>
+                    <th class="firstName_header"><span>Order Date</span></th>
                     <th class="firstName_header"><span>View Order</span></th>
                     </tr>`;
                     for (let i = 0; i < data.rows.length; i++) {
                         let row = data.rows[i];
+                        let date = data.rows[i].order_date;
                         str += ("<tr>" +
                             "<td class='packagedId'>" + row.ORDER_ID +
-                            "</td>" + "<td>" + `<button class="orderDisplay" type="submit" id="${row.ORDER_ID}">View</button>` + "</td>" +
+                            "</td>" + "<td class='packagedId'>" + date.slice(0, 10) + "</td>" 
+                            + "<td>" + `<button class="orderDisplay" type="submit" id="${row.ORDER_ID}">View</button>` + "</td>" +
                             "</tr>");
                     }
                     document.getElementById("orderTable").innerHTML = str;

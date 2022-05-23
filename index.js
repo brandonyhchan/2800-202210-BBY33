@@ -1082,6 +1082,7 @@ app.post("/checkout", function(req, res) {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
                                             function (error, orders) {
+                                                connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]);
                                                 let destination = ""
                                                 let total = 0;
                                                 for (let i = 0; i < orders.length; i++) {
@@ -1109,6 +1110,7 @@ app.post("/checkout", function(req, res) {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
                                             function (error, orders) {
+                                                connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]);
                                                 let destination = ""
                                                 let total = 0;
                                                 for (let i = 0; i < orders.length; i++) {
@@ -1145,7 +1147,7 @@ app.get("/get-orders", function(req, res) {
             function(err, rows) {
                 var userid = rows[0].USER_ID;
                 connection.query(
-                    "SELECT bby_33_order.ORDER_ID FROM bby_33_order WHERE bby_33_order.user_id = ? ", [userid],
+                    "SELECT bby_33_order.ORDER_ID, bby_33_order.order_date FROM bby_33_order WHERE bby_33_order.user_id = ? ", [userid],
                     function(error, results) {
                         if (error) {
                             console.log(error);
@@ -1290,7 +1292,7 @@ app.post("/display-order", function (req, res) {
         res.setHeader("Content-Type", "application/json");
         let order = req.body.orderId;
         connection.query(
-            "SELECT bby_33_cart.order_id, bby_33_cart.product_quantity, bby_33_cart.price, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
+            "SELECT bby_33_cart.order_id, bby_33_cart.product_quantity, bby_33_cart.price, bby_33_cart.cart_destination, bby_33_package.package_name FROM bby_33_cart INNER JOIN bby_33_package ON bby_33_cart.PACKAGE_ID=bby_33_package.package_id WHERE bby_33_cart.order_id = ?", [order],
             function(error, results) {
                 if (error) {
                     console.log(error);

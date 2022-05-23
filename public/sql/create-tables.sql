@@ -33,6 +33,7 @@ CREATE TABLE BBY_33_package (
 
 CREATE TABLE BBY_33_order (
   ORDER_ID int,
+  order_date VARCHAR(50),
   user_id int,
   PRIMARY KEY (ORDER_ID)
 );
