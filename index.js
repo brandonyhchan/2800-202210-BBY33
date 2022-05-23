@@ -1080,6 +1080,7 @@ app.post("/checkout", function (req, res) {
                                         connection.execute(
                                             "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
                                             function (error, orders) {
+                                                let destination = ""
                                                 let total = 0;
                                                 for (let i = 0; i < orders.length; i++) {
                                                     total += orders[i].price * orders[i].product_quantity;
@@ -1142,6 +1143,7 @@ app.get("/get-orders", function (req, res) {
                 connection.query(
                     "SELECT bby_33_order.ORDER_ID FROM bby_33_order WHERE bby_33_order.user_id = ? ", [userid],
                     function (error, results) {
+
                         if (error) {
                             console.log(error);
                         }
@@ -1283,8 +1285,6 @@ app.get("/orderInfo", function (req, res) {
 
 app.post("/display-order", function (req, res) {
     res.setHeader("Content-Type", "application/json");
-
-    let order = req.body.orderId;
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
         let order = req.body.orderId;
