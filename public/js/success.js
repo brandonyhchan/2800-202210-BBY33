@@ -32,6 +32,7 @@ function checkout() {
                 document.getElementById("total-container").innerHTML= "Total: " + "$" + dataParsed.total + ".00";
                 document.getElementById("order-number-container").innerHTML= "Order Number: " + dataParsed.order;
                 document.getElementById("order-date-container").innerHTML= "Date: " + dataParsed.date.slice(0, 10);
+                document.getElementById("order-destination-container").innerHTML = "Destination: " + dataParsed.destination;
             }
         }
     }, queryString);

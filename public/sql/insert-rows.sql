@@ -8,6 +8,7 @@ INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES 
 INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES (2, 'Afghanistan', 'Ongoing war');
 INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES (3, 'Yemen', 'Food Shortage');
 INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES (4, 'Ethiopia', 'Heavy flooding');
+INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES (5, 'Democratic Republic of Congo', 'Civil unrest');
 
 INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image) VALUES (1, 1, 'Package 1', 20, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
 INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image) VALUES (2, 2, 'Package 2', 30, 'Contains Water, Canned food and Medicine', '/img/landing1.jpg');
