@@ -40,3 +40,20 @@ function checkout() {
 }
 
 checkout();
+
+document.querySelector("#homeButton").addEventListener("click", () => {
+    getLanding();
+});
+
+async function getLanding() {
+    try {
+        let response = await fetch("/landing", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/landing");
+        }
+    } catch (err) {
+
+    }
+}
