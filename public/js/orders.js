@@ -40,13 +40,13 @@ function displayPackage() {
             showOrder();
         }
     };
-    window.addEventListener('click', onClick);
+    window.addEventListener("click", onClick);
 }
 
 async function showOrder() {
     try {
         let response = await fetch("/orderInfo", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/orderInfo");

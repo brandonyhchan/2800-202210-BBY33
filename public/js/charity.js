@@ -1,11 +1,11 @@
 "use strict";
 
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -17,8 +17,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -31,7 +31,9 @@ document.querySelector("#submit").addEventListener("click", function (e) {
     let package_price = document.getElementById("package_price");
     let package_description = document.getElementById("package_description");
 
-    let queryString = "country=" + country.value + "&package=" + package_name.value + "&price=" + package_price.value + "&description=" + package_description.value;
+    let queryString = "country=" + country.value + "&package=" +
+        package_name.value + "&price=" + package_price.value +
+        "&description=" + package_description.value;
 
     ajaxPOST("/charity-create", function (data) {
 
@@ -52,7 +54,7 @@ upLoadPackage.addEventListener("submit", uploadImages);
 function uploadImages(e) {
     e.preventDefault();
 
-    const profileLoad = document.querySelector('#upload');
+    const profileLoad = document.querySelector("#upload");
     const imageData = new FormData();
 
     for (let i = 0; i < profileLoad.files.length; i++) {
@@ -60,7 +62,7 @@ function uploadImages(e) {
     }
 
     const options = {
-        method: 'POST',
+        method: "POST",
         body: imageData,
     };
 

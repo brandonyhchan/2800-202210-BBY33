@@ -1,11 +1,11 @@
 "use strict";
 
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -17,8 +17,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -31,7 +31,10 @@ document.querySelector("#submit").addEventListener("click", function(e) {
     let password = document.getElementById("password");
     let email = document.getElementById("email");
     let password2 = document.getElementById("confirm_password");
-    let queryString = "user_name=" + user_name.value + "&password=" + password.value + "&firstName=" + first_name.value + "&lastName=" + last_name.value + "&userEmail=" + email.value + "&passwordConfirm=" + password2.value;
+    let queryString = "user_name=" + user_name.value + "&password=" +
+        password.value + "&firstName=" + first_name.value + "&lastName=" +
+        last_name.value + "&userEmail=" + email.value + "&passwordConfirm=" +
+        password2.value;
     ajaxPOST("/register", function(data) {
 
         if (data) {
@@ -65,7 +68,8 @@ function expandDropdown() {
 
 
 /**
- * Ensures that the admin dashboard items are always visible when resizing from mobile to desktop viewports.
+ * Ensures that the admin dashboard items are
+ * always visible when resizing from mobile to desktop viewports.
  */
 function reDisplay() {
 
@@ -77,4 +81,4 @@ function reDisplay() {
 
     }
 }
-window.addEventListener('resize', reDisplay);
+window.addEventListener("resize", reDisplay);

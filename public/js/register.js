@@ -1,10 +1,10 @@
 "use strict";
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -16,8 +16,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -46,7 +46,7 @@ document.querySelector("#submit").addEventListener("click", function (e) {
 async function getLogin() {
     try {
         let response = await fetch("/", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/");
@@ -62,4 +62,4 @@ function clear() {
     document.getElementById("input_container").reset();
 }
 
-document.getElementById("clear").addEventListener('click', clear);
+document.getElementById("clear").addEventListener("click", clear);

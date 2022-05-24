@@ -46,7 +46,7 @@ ready(() => {
     async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/whoWeAre");
@@ -59,7 +59,7 @@ ready(() => {
     async function getFAQ() {
         try {
             let response = await fetch("/FAQ", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/FAQ");
@@ -72,7 +72,7 @@ ready(() => {
     async function getJoinOurTeam() {
         try {
             let response = await fetch("/joinOurTeam", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/joinOurTeam");
@@ -83,7 +83,7 @@ ready(() => {
     async function getHowItWorks() {
         try {
             let response = await fetch("/howItWorks", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/howItWorks");
@@ -96,7 +96,7 @@ ready(() => {
     async function getPartnerships() {
         try {
             let response = await fetch("/partnerships", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/partnerships");
@@ -109,7 +109,7 @@ ready(() => {
     async function getSupport(){
         try {
             let response = await fetch("/Support", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/Support");

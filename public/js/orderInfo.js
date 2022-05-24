@@ -2,11 +2,11 @@
 var orderView = sessionStorage.getItem("order");
 
 function ajaxGET(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -16,8 +16,8 @@ function ajaxGET(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -49,7 +49,6 @@ function getPackage() {
                         "$" + row.price + ".00" +
                         `</span>` +
                         "</td></tr>");
-                        console.log(row.cart_destination);
                 }
                 document.getElementById("orderTable").innerHTML = str;
                 for (let i = 0; i < dataParsed.rows.length; i++) {

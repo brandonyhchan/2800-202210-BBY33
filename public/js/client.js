@@ -1,8 +1,8 @@
 "use strict";
     function ajaxPOST(url, callback, data) {
-        let params = typeof data == 'string' ? data : Object.keys(data).map(
-            function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
-        ).join('&');
+        let params = typeof data == "string" ? data : Object.keys(data).map(
+            function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]) }
+        ).join("&");
 
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -14,8 +14,8 @@
             }
         }
         xhr.open("POST", url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(params);
     }
 
@@ -23,7 +23,8 @@
         e.preventDefault();
         let user_name = document.getElementById("user_name");
         let password = document.getElementById("password");
-        let queryString = "user_name=" + user_name.value + "&password=" + password.value;
+        let queryString = "user_name=" + user_name.value +
+            "&password=" + password.value;
         ajaxPOST("/login", function (data) {
 
             if (data) {
@@ -40,7 +41,7 @@
     async function getCreateAccount() {
         try {
             let response = await fetch("/createAccount", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/createAccount");
