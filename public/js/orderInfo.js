@@ -1,6 +1,11 @@
 "use strict";
 var orderView = sessionStorage.getItem("order");
 
+/*
+This function makes a get request to the server and takes 2 inputs.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+*/
 function ajaxGET(url, callback, data) {
     let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
@@ -21,6 +26,10 @@ function ajaxGET(url, callback, data) {
     xhr.send(params);
 }
 
+/*
+Function that uses get request to server to display all packages in all orders.
+Displays the results as a table.
+*/
 function getPackage() {
     var order = orderView;
     var queryString;
@@ -64,10 +73,14 @@ function getPackage() {
 
 getPackage();
 
+// Adds event listener for getOrders() to html element with id="goBack".
 document.querySelector("#goBack").addEventListener("click", () => {
     getOrders();
 })
 
+/*
+Function that uses fetch get request to redirect to "Get Orders" page.
+*/
 async function getOrders() {
     try {
         let response = await fetch("/getOrders", {

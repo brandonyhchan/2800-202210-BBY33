@@ -1,5 +1,9 @@
 "use strict";
 
+/*
+Function getUsers() uses get request to server to display all orders made by logged in user.
+Displays the orders as a table with a button to view the contents of the order selected.
+*/
 function getUsers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -31,6 +35,7 @@ function getUsers() {
 }
 getUsers();
 
+// Add event listener for redirecting to the "Order Info" page.
 function displayPackage() {
     var orderId;
     let onClick = (event) => {
@@ -43,6 +48,7 @@ function displayPackage() {
     window.addEventListener("click", onClick);
 }
 
+// Uses fetch get request to redirect to "Order Info" page.
 async function showOrder() {
     try {
         let response = await fetch("/orderInfo", {

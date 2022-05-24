@@ -1,4 +1,11 @@
 "use strict";
+
+/**
+This function makes a post request to the server and takes 3 input.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+@param {string} data - data sent to the server side.
+*/
 function ajaxPOST(url, callback, data) {
     let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]) }
@@ -16,7 +23,10 @@ function ajaxPOST(url, callback, data) {
     xhr.send(params);
 }
 
-
+/**
+ * Displays the information of the Order purchased
+ * Total, Destination, Order Number, Dates
+ */
 function checkout() {
     var buttonId = "";
     var queryString = "buttonID=" + buttonId;
@@ -41,10 +51,16 @@ function checkout() {
 
 checkout();
 
+/**
+ * Adds function to return to landing page.
+ */
 document.querySelector("#homeButton").addEventListener("click", () => {
     getLanding();
 });
 
+/**
+ * Async function to redirect to landing page using fetch request
+ */
 async function getLanding() {
     try {
         let response = await fetch("/landing", {
