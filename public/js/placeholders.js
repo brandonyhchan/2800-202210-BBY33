@@ -241,7 +241,12 @@ ready(() => {
         for (let i = 0; i < carts.length; i++) {
             carts[i].addEventListener("click", getCart);
         }
-    });
+
+        if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo")) {
+            document.querySelector("#mobile-nav3").style.display = "none";
+            document.getElementById("mobile-nav2").style.margin = "auto";
+        }
+    })
 
     // Only show the admin control panel on admin page.
     if (path.startsWith("/admin")) {
