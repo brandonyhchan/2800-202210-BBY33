@@ -19,7 +19,7 @@
 ## Contents
 Content of the project folder:
 
-
+```
  Top level of project folder: 
 ├── node_modules             # folder for node modules
 ├── .env                     # env file
@@ -27,7 +27,7 @@ Content of the project folder:
 ├── index.js                 # Server side JavaScript
 ├── package.json             # package.json file 
 ├── Procfile                 # Procfile for Heroku
-└── readme.md                # You are reading this right now
+└── README.md                # You are reading this right now
 
 It has the following subfolders:
 ├── app                      # 
@@ -35,7 +35,7 @@ It has the following subfolders:
 ├── public                   # 
     /css                     # Folder for all css files
     /fonts                   # Folder for al fonts
-    /img                     # Forlder for our images 
+    /img                     # Folder for our images 
     /js                      # Folder for all js files
     /sql                     # Folder for all sql files
     /userImg                 # Folder for images uploaded by the users
