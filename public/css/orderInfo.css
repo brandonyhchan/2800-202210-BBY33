@@ -58,6 +58,29 @@ td {
     margin-bottom: 0;
 }
 
+#goBack{
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: none;
+    border-radius: 5px;
+    background-color: rgb(14, 76, 109);
+    color: white;
+    padding: 0.5%;
+    cursor: pointer;
+    transition-duration: 0.7s;
+    font-family: 'Fonttype';
+}
+
+#goBack:hover{
+    background-color: rgb(114, 186, 213);
+}
+
+#goBack:active{
+    transform: translateY(4px);
+}
+
+
 @media only screen and (max-width: 720px) {
     #page-header {
         font-size: 30px;
