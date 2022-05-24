@@ -58,9 +58,28 @@ It has the following subfolders:
 - npm stripe was used to implement payment gateway
 
 ## Photo Resources  
-- The instagram icon used in our mobile footer was obtained from pngEgg.com online.
-- The twitter icon used in our mobile footer was obtained from toppng.com online.    
-- The facebook icon used in our mobile footer was obtained from pngitem.com online.
-- The quality clipart used on joinOurTeam.html was obtained from kissclipart.com online.
-- The teamwork clipart used on joinOurTeam.html was obtained from kindpng.com online.
-- The passion clipart used on joinOurTeam.html was obtained from clipart-library.com online.
+- instagram.png used in our mobile footer was obtained from pngEgg.com online.
+- twitter.png used in our mobile footer was obtained from toppng.com online.    
+- facebook.png used in our mobile footer was obtained from pngitem.com online.
+- quality.png used on joinOurTeam.html was obtained from kissclipart.com online.
+- teamwork.png used on joinOurTeam.html was obtained from kindpng.com online.
+- passion.png used on joinOurTeam.html was obtained from clipart-library.com online.
+- hero1.jpg was obtained online from https://www.futuresforkids.org/our-impact-overview
+- hero2.jpg was obtained online from https://unsplash.com/photos/AEaTUnvneik
+- hero3.jpg was obtained online from https://www.moneysense.ca/spend/best-charities-for-charitable-impact/
+- hero4.jpg was obtained online from https://www.unhcr.org/qatar-charity.html
+- landing1.jpg was obtained online from https://www.hellocarepackage.com/
+- carepackage1.jpg was obtained online from https://www.quickanddirtytips.com/health-fitness/healthy-eating/how-to-stock-emergency-food-supply
+- carepackage2.jpg was obtained online from  https://urbantastebud.com/mens-clothing-subscription-boxes/
+- easter-egg-image.png was obtained online from https://www.humblebundle.com/care-package
+- flowchart1.jpg was obtained online from http://clipart-library.com/clip-art/338-3380261_globe-clip-art.htm
+- flowchart2.jpg was obtained online from http://clipart-library.com/clipart/694849.htm
+- flowchart3.jpg was obtained online from http://clipart-library.com/clipart/payment-cliparts_15.htm
+- flowchart4.jpg was obtained online from http://clipart-library.com/clipart/1888587.htm
+- rightarrow.png was obtained online from http://clipart-library.com/clip-art/transparent-arrow-png-22.htm
+- partnerships.jpg was obtained online from https://bcan.org/get-involved/ways-to-give/partners-sponsors/partnership-banner/
+- partner1.jpg was obtained online from https://yemenfoundation.org/
+- partner2.png was obtained online from https://redcross.org.ua/en/
+- partner3.jpg was obtained online from https://www.afghancharityorganisation.com/
+- partner4.png was obtained online from https://imagine1day.org/
+- stock-profile.png was obtained online from https://www.shutterstock.com/search/profile
