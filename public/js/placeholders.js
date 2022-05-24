@@ -244,6 +244,7 @@ ready(() => {
 
         if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo")) {
             document.querySelector("#mobile-nav3").style.display = "none";
+            document.querySelector(".cart-holder").style.display = "none";
             document.getElementById("mobile-nav2").style.margin = "auto";
         }
     })
