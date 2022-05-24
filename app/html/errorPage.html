@@ -7,13 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="img/x-icon" href="/img/favicon.ico">
     <title>404 Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/errorPage.css">
 
 </head>
 
 <body>
+    <nav id="navbarPlaceholder"></nav>
     <div id="container">
-        <h3>Page Not found</h3>
+
+        <div id="error-container">
+            <img id="error-image" src="/img/404image.jpg">
+            <h3 id="error-message">This page does not exist!</h3>
+
+            <form action="/landing" method="get">
+                <input class="home" type="submit" value="Home">
+            </form>
+        </div>
     </div>
+
+    <footer id="footerPlaceholder"></footer>
+    <script src="/js/placeholders.js"></script>
+
 </body>
 
 </html>
