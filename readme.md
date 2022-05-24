@@ -1,21 +1,20 @@
 ## Hope in a Box
 
-* [Team members](#team-info)
-* [Application Info](#info)
-* [Contents](#content)
+* [Team members](#team-members)
+* [Application Info](#Application-Info)
+* [Contents](#Contents)
 * [Technologies](#technologies)
-* [Resources](#resources)
-* [Photo Resources](#photo-resources)
 * [Acknowledgements](#acknowledgements)
-
+* [Photo Resources](#photo-resources)
 
 ## Team members
 - Artem Khan (SET 1C)
-- Brandon Chan (SET 1B)
 - Ryan Lee (SET 1C)
 - Stanley Chow (SET 1B)
+- Brandon Chan (SET 1B)
 
 ## Application Info
+- Hope in a Box will help disadvantaged people across the world meet their basic needs by allowing users to purchase and send care packages to a location of their choosing.
 
 ## Contents
 Content of the project folder:
@@ -50,12 +49,14 @@ It has the following subfolders:
 - Heroku
 - clearDB
 
-## Resources 
+## Acknowledgements
 - Our logo was generated with keywords through looka.com and edited to match our brand's theme.
 - npm multer was used to enable users to upload images.
 - npm bcrypt was used to hash account passwords before sending them to the database, to avoid storing passwords as plaintext.
 - Heroku and clearDB were used to host the website
 - npm stripe was used to implement payment gateway
+- dialog pop up windows were generated with the help of (https://jqueryui.com/dialog/#modal-confirmation)
+- svg map was generated with (https://simplemaps.com/resources/svg-maps)
 
 ## Photo Resources  
 - instagram.png used in our mobile footer was obtained from pngEgg.com online.
