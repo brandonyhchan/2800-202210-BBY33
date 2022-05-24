@@ -2,7 +2,7 @@
 
 function getUsers() {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = JSON.parse(this.responseText);
@@ -60,12 +60,12 @@ getUsers();
 
 function ajaxGET(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function(k) {
+        function (k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }
     ).join('&');
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -83,22 +83,36 @@ function deleteUser() {
     let queryString;
     const onClick = (event) => {
         if (event.target.className === "remove") {
-            userId = event.target.id;
-            queryString = "userID=" + userId;
-            ajaxGET("/delete-users", function(data) {
-
-                if (data) {
-                    let dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        console.log("fail");
-                    } else {
-                        event.target.classList.add('undelete');
-                        event.target.classList.remove('remove');
-                        event.target.innerHTML = "Undelete";
-
+            $(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 300,
+                    modal: true,
+                    buttons: {
+                        "Update account": function () {
+                            userId = event.target.id;
+                            queryString = "userID=" + userId;
+                            ajaxGET("/delete-users", function (data) {
+                                if (data) {
+                                    let dataParsed = JSON.parse(data);
+                                    if (dataParsed.status == "fail") {
+                                        console.log("fail");
+                                    } else {
+                                        event.target.classList.add('undelete');
+                                        event.target.classList.remove('remove');
+                                        event.target.innerHTML = "Undelete";
+                                    }
+                                }
+                            }, queryString);
+                            $(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
-            }, queryString);
+                });
+            });
         }
     };
     window.addEventListener('click', onClick);
@@ -111,21 +125,37 @@ function undeleteUser() {
     let queryString;
     const onClick = (event) => {
         if (event.target.className === "undelete") {
-            userId = event.target.id;
-            queryString = "userID=" + userId;
-            ajaxGET("/undelete-users", function(data) {
+            $(function () {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 300,
+                    modal: true,
+                    buttons: {
+                        "Update account": function () {
+                            userId = event.target.id;
+                            queryString = "userID=" + userId;
+                            ajaxGET("/undelete-users", function (data) {
 
-                if (data) {
-                    let dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        console.log("fail");
-                    } else {
-                        event.target.classList.add('remove');
-                        event.target.classList.remove('undelete');
-                        event.target.innerHTML = "Delete";
+                                if (data) {
+                                    let dataParsed = JSON.parse(data);
+                                    if (dataParsed.status == "fail") {
+                                        console.log("fail");
+                                    } else {
+                                        event.target.classList.add('remove');
+                                        event.target.classList.remove('undelete');
+                                        event.target.innerHTML = "Delete";
+                                    }
+                                }
+                            }, queryString);
+                            $(this).dialog("close");
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
-            }, queryString);
+                });
+            });
         }
     };
     window.addEventListener('click', onClick);
@@ -149,7 +179,7 @@ function updateInfo(e, p, newClass) {
     let input = document.createElement("input");
     let emailID = parent.parentNode.querySelector(".email").innerText
     input.value = currentValue;
-    input.addEventListener("keyup", function(e) {
+    input.addEventListener("keyup", function (e) {
         let newInput = null;
         if (e.which == 13) {
             newInput = input.value;
@@ -164,16 +194,16 @@ function updateInfo(e, p, newClass) {
                 email: emailID
             };
 
-            $(function() {
+            $(function () {
                 $("#update-confirm").dialog({
                     resizable: false,
                     height: "auto",
                     width: 300,
                     modal: true,
                     buttons: {
-                        "Update account": function() {
+                        "Update account": function () {
                             const xhr = new XMLHttpRequest();
-                            xhr.onload = function() {
+                            xhr.onload = function () {
                                 if (this.readyState == XMLHttpRequest.DONE) {
                                     if (xhr.status === 200) {
                                         getUsers();
@@ -208,7 +238,7 @@ function updateInfo(e, p, newClass) {
                             }
                             $(this).dialog("close");
                         },
-                        Cancel: function() {
+                        Cancel: function () {
                             $(this).dialog("close");
                         }
                     }
