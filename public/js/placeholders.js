@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var show;
 ready(() => {
     function ajaxGET(url, callback) {
@@ -15,9 +15,9 @@ ready(() => {
     }
 
     function ajaxPOST(url, callback, data) {
-        let params = typeof data == 'string' ? data : Object.keys(data).map(
-            function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
-        ).join('&');
+        let params = typeof data == "string" ? data : Object.keys(data).map(
+            function(k) { return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]) }
+        ).join("&");
 
         const xhr = new XMLHttpRequest();
         xhr.onload = function() {
@@ -26,8 +26,8 @@ ready(() => {
             }
         }
         xhr.open("POST", url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(params);
     }
 
@@ -263,7 +263,7 @@ ready(() => {
     async function getProfile() {
         try {
             let response = await fetch("/profile", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/profile");
@@ -276,7 +276,7 @@ ready(() => {
     async function getMap() {
         try {
             let response = await fetch("/map", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/map");
@@ -289,7 +289,7 @@ ready(() => {
     async function getOrders() {
         try {
             let response = await fetch("/getOrders", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/getOrders");
@@ -303,7 +303,7 @@ ready(() => {
     async function getLanding() {
         try {
             let response = await fetch("/landing", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/landing");
@@ -316,7 +316,7 @@ ready(() => {
     async function getAddUsers() {
         try {
             let response = await fetch("/admin-add-users", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/admin-add-users");
@@ -329,7 +329,7 @@ ready(() => {
     async function getManageUsers() {
         try {
             let response = await fetch("/admin", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/admin");
@@ -342,7 +342,7 @@ ready(() => {
     async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/whoWeAre");
@@ -355,7 +355,7 @@ ready(() => {
     async function getJoinOurTeam() {
         try {
             let response = await fetch("/joinOurTeam", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/joinOurTeam");
@@ -368,7 +368,7 @@ ready(() => {
     async function getSupport(){
         try {
             let response = await fetch("/Support", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/Support");
@@ -381,7 +381,7 @@ ready(() => {
     async function getFAQ(){
         try {
             let response = await fetch("/FAQ", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/FAQ");
@@ -429,7 +429,7 @@ ready(() => {
     async function getHowItWorks() {
         try {
             let response = await fetch("/howItWorks", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/howItWorks");
@@ -442,7 +442,7 @@ ready(() => {
     async function getPartnerships() {
         try {
             let response = await fetch("/partnerships", {
-                method: 'GET'
+                method: "GET"
             })
             if (response.status === 200) {
                 window.location.replace("/partnerships");

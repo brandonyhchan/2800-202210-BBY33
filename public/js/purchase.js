@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var buttons;
 var packagesDisplayed = false;
@@ -17,11 +17,11 @@ function ajaxGET(url, callback) {
 }
 
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -31,8 +31,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -212,14 +212,14 @@ function displayPackage() {
             showPackage();
         }
     };
-    window.addEventListener('click', onClick);
+    window.addEventListener("click", onClick);
 }
 
 
 async function showPackage() {
     try {
         let response = await fetch("/packageInfo", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/packageInfo");
@@ -251,7 +251,7 @@ function remove() {
             getCart();
         }
     };
-    window.addEventListener('click', onClick);
+    window.addEventListener("click", onClick);
 }
 
 remove();

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
-        function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
-    ).join('&');
+    let params = typeof data == "string" ? data : Object.keys(data).map(
+        function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]) }
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -11,8 +11,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -48,7 +48,7 @@ document.querySelector("#homeButton").addEventListener("click", () => {
 async function getLanding() {
     try {
         let response = await fetch("/landing", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/landing");

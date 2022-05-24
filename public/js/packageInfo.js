@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Controls the tabbed image gallery in desktop view.
@@ -43,11 +43,11 @@ function showImage(n) {
 
 
 function ajaxGET(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -57,8 +57,8 @@ function ajaxGET(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -109,7 +109,7 @@ function addPackage() {
             }, queryString);
         }
     };
-    window.addEventListener('click', onClick);
+    window.addEventListener("click", onClick);
 };
 
 addPackage();

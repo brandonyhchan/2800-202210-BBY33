@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 async function getFirstName() {
     try {
         let resOBJ = await fetch("/first-name", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -16,7 +16,7 @@ getFirstName();
 async function getLastName() {
     try {
         let resOBJ = await fetch("/last-name", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -30,7 +30,7 @@ getLastName();
 async function getName() {
     try {
         let resOBJ = await fetch("/user-name", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -45,7 +45,7 @@ document.querySelector("#user-name").addEventListener("click", editName);
 async function getEmail() {
     try {
         let resOBJ = await fetch("/email", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -98,8 +98,8 @@ function editName(e) {
                                 }
                             }
                             xhr.open("POST", "/update-user-name");
-                            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                             xhr.send("name=" + sentName.name);
                             $(this).dialog("close");
                         },
@@ -156,8 +156,8 @@ function editEmail(e) {
                                 }
                             }
                             xhr.open("POST", "/update-email");
-                            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                             xhr.send("email=" + sentEmail.email);
                             $(this).dialog("close");
                         },
@@ -174,11 +174,11 @@ function editEmail(e) {
 }
 
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -190,8 +190,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -253,7 +253,7 @@ function uploadImages(e) {
     }
 
     const options = {
-        method: 'POST',
+        method: "POST",
         body: imageData,
     };
 
@@ -269,7 +269,7 @@ function uploadImages(e) {
 async function displayImage() {
     try {
         let responseObj = await fetch("/get-user-images", {
-            method: 'GET',
+            method: "GET",
         });
         if (responseObj.status === 200) {
             let data = await responseObj.json();
@@ -311,7 +311,7 @@ document.querySelector("#getOrders").addEventListener("click", () => {
 async function getOrders() {
     try {
         let response = await fetch("/getOrders", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/getOrders");
