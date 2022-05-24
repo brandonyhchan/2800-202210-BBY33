@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function (k) {
@@ -57,3 +57,9 @@ async function getLogin() {
 }
 
 document.getElementById("redirect").addEventListener("click", getLogin);
+
+function clear() {
+    document.getElementById("input_container").reset();
+}
+
+document.getElementById("clear").addEventListener('click', clear);

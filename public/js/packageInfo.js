@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Controls the tabbed image gallery in desktop view.

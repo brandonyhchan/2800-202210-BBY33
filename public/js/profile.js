@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 async function getFirstName() {
     try {
         let resOBJ = await fetch("/first-name", {

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 ready(() => {
     function ajaxGET(url, callback) {
 
