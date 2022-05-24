@@ -40,6 +40,8 @@ It has the following subfolders:
     /sql                     # Folder for all sql files
     /userImg                 # Folder for images uploaded by the users
 
+```
+
 ## Technologies
 - JavaScript
 - MySQL
