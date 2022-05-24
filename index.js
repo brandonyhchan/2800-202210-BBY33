@@ -1088,8 +1088,7 @@ app.post("/checkout", function (req, res) {
                                             connection.execute(
                                                 "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
                                                 function (error, orders) {
-                                                    connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]),
-                                                        function (error, details) {
+                                                    connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]);
                                                             let destination = ""
                                                             let total = 0;
                                                             for (let i = 0; i < orders.length; i++) {
@@ -1104,8 +1103,6 @@ app.post("/checkout", function (req, res) {
                                                             send.total = total;
                                                             send.order = order;
                                                             res.send(send);
-    
-                                                        }
                                                 }
                                             )
                                         }
