@@ -1340,6 +1340,13 @@ app.get("/order-confirmation", function (req, res) {
     }
 });
 
+app.get("*",(req,res) => {
+    let error = fs.readFileSync("./app/html/errorPage.html", "utf8");
+    let profileDOM = new JSDOM(error);
+
+    res.send(profileDOM.serialize());
+});
+
 var port = process.env.PORT || 8000;
 app.listen(port, function () {
     console.log("Server started on " + port + "!");
