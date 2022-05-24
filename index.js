@@ -287,10 +287,14 @@ app.post("/register", function (req, res) {
     res.setHeader("Content-Type", "application/json");
 
     let usr = req.body.user_name;
+    usr = usr.replace(/\s+/g, '');
     let pwd = req.body.password;
     let firstName = req.body.firstName;
+    firstName = firstName.replace(/\s+/g, '');
     let lastName = req.body.lastName;
+    lastName = lastName.replace(/\s+/g, '')
     let email = req.body.userEmail;
+    email = email.replace(/\s+/g, '');
     let confirmPassword = req.body.passwordConfirm;
     var existingUsers;
     let alreadyExists = false;
@@ -558,12 +562,13 @@ app.post("/update-email", (req, res) => {
 
 app.post("/admin-update-firstName", (req, res) => {
     if (req.session.loggedIn) {
+        let firstName = req.body.firstName.replace(/\s+/g, '');
         let send = {
             status: "fail",
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET first_name = ? WHERE email_address = ?`, [req.body.firstName, req.body.email], (err) => {
+            `UPDATE bby_33_user SET first_name = ? WHERE email_address = ?`, [firstName, req.body.email], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -586,7 +591,7 @@ app.post("/admin-update-lastName", (req, res) => {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET last_name = ? WHERE email_address = ?`, [req.body.lastName, req.body.email], (err) => {
+            `UPDATE bby_33_user SET last_name = ? WHERE email_address = ?`, [req.body.lastName.replace(/\s+/g, ''), req.body.email], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -609,7 +614,7 @@ app.post("/admin-update-admin", (req, res) => {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET admin_user = ? WHERE email_address = ?`, [req.body.admin, req.body.email], (err) => {
+            `UPDATE bby_33_user SET admin_user = ? WHERE email_address = ?`, [req.body.admin.replace(/\s+/g, ''), req.body.email], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -632,7 +637,7 @@ app.post("/admin-update-email", (req, res) => {
             msg: "Record not updated."
         };
         connection.execute(
-            `UPDATE bby_33_user SET email_address = ? WHERE email_address = ?`, [req.body.email_address, req.body.email], (err) => {
+            `UPDATE bby_33_user SET email_address = ? WHERE email_address = ?`, [req.body.email_address.replace(/\s+/g, ''), req.body.email], (err) => {
                 if (err) {
                     console.log(err);
                 } else {

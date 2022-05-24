@@ -23,7 +23,6 @@ function ajaxPOST(url, callback, data) {
 
 document.querySelector("#submit").addEventListener("click", function (e) {
     e.preventDefault();
-
     let first_name = document.getElementById("first_name");
     let last_name = document.getElementById("last_name");
     let user_name = document.getElementById("username");
