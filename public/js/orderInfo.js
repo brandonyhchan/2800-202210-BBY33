@@ -36,6 +36,7 @@ function getPackage() {
                 let str = `        <tr>
                     <th class="firstName_header"><span>Package</span></th>
                     <th class="lastName_header"><span>Quantity</span></th>
+                    <th class="email_header"><span>Destination</span></th>
                     <th class="email_header"><span>Price</span></th>
                     </tr>`;
                 for (let i = 0; i < dataParsed.rows.length; i++) {
@@ -43,10 +44,12 @@ function getPackage() {
                     str += ("<tr>" +
                         "<td class='packagedId'><span class='pId'>" + row.package_name +
                         "</span></td><td class='quantity'><span class='quant'>" + row.product_quantity +
+                        "</span></td><td class='quantity'><span class='quant'>" + row.cart_destination +
                         "</span></td><td class='price'><span class='priceP'>" +
                         "$" + row.price + ".00" +
                         `</span>` +
                         "</td></tr>");
+                        console.log(row.cart_destination);
                 }
                 document.getElementById("orderTable").innerHTML = str;
                 for (let i = 0; i < dataParsed.rows.length; i++) {
@@ -61,3 +64,20 @@ function getPackage() {
 };
 
 getPackage();
+
+document.querySelector("#goBack").addEventListener("click", () => {
+    getOrders();
+})
+
+async function getOrders() {
+    try {
+        let response = await fetch("/getOrders", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/getOrders");
+        }
+    } catch (err) {
+
+    }
+}

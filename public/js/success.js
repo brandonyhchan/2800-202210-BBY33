@@ -32,6 +32,7 @@ function checkout() {
                 document.getElementById("total-container").innerHTML= "Total: " + "$" + dataParsed.total + ".00";
                 document.getElementById("order-number-container").innerHTML= "Order Number: " + dataParsed.order;
                 document.getElementById("order-date-container").innerHTML= "Date: " + dataParsed.date.slice(0, 10);
+                document.getElementById("order-destination-container").innerHTML = "Destination: " + dataParsed.destination;
             }
         }
     }, queryString);
@@ -39,3 +40,20 @@ function checkout() {
 }
 
 checkout();
+
+document.querySelector("#homeButton").addEventListener("click", () => {
+    getLanding();
+});
+
+async function getLanding() {
+    try {
+        let response = await fetch("/landing", {
+            method: 'GET'
+        })
+        if (response.status === 200) {
+            window.location.replace("/landing");
+        }
+    } catch (err) {
+
+    }
+}
