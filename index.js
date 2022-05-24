@@ -304,6 +304,7 @@ app.post("/register", function (req, res) {
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
+            var validChars = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             existingUsers = results;
             let send = {
                 status: " ",
@@ -312,7 +313,10 @@ app.post("/register", function (req, res) {
             if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
                 send.status = "fail";
                 send.msg = "Please fill out all fields";
-            } else {
+            } else if (!email.match(validChars)){
+                send.status = "fail";
+                send.msg = "Improper Email Format";
+            }else {
                 if (pwd == confirmPassword) {
                     let i = 0;
                     while (!alreadyExists && i < existingUsers.length) {
