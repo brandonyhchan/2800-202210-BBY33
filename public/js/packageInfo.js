@@ -40,8 +40,11 @@ function showImage(n) {
 
 }
 
-
-
+/**
+This function makes a get request to the server and takes 2 inputs.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+*/
 function ajaxGET(url, callback, data) {
     let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
@@ -62,6 +65,9 @@ function ajaxGET(url, callback, data) {
     xhr.send(params);
 }
 
+/**
+ * Function that gets the description of the target package.
+ */
 function getPackage() {
     var packageName = packageView;
     var queryString;
@@ -85,10 +91,13 @@ function getPackage() {
             }
         }
     }, queryString);
-};
+}
 
 getPackage();
 
+/**
+ * Function to add selected package to shopping cart.
+ */
 function addPackage() {
     var packageId;
     var queryString;
@@ -100,17 +109,13 @@ function addPackage() {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        document.getElementById("msg").innerHTML = dataParsed.msg;
-                    } else {
-                        document.getElementById("msg").innerHTML = dataParsed.msg;
-                    }
+                    document.getElementById("msg").innerHTML = dataParsed.msg;
                 }
             }, queryString);
         }
     };
     window.addEventListener("click", onClick);
-};
+}
 
 addPackage();
 

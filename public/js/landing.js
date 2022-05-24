@@ -20,9 +20,14 @@ function slider() {
 
 window.onload = slider;
 
+/**
+This function makes a get request to the server and takes 2 inputs.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+*/
 function ajaxGET(url, callback) {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
             callback(this.responseText);
         } else {
@@ -33,6 +38,9 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
+/**
+Function that displays a motivational message to users based on how much they've donated previously.
+*/
 function motivation() {
     ajaxGET("/get-total-purchases", (data) => {
         let parsedData = JSON.parse(data);
@@ -82,10 +90,12 @@ function easterEgg() {
 
 }
 
+// Function to redirect to "How it Works" page.
 function learnMore() {
     window.location.href = "/howItWorks";
 }
 
+// Function to redirect to "Map" page.
 function getStarted() {
     window.location.href = "/map";
 }

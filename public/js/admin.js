@@ -1,5 +1,7 @@
 "use strict";
 
+// This function is used to get all registered users from our database
+// and displays them as a table
 function getUsers() {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -61,7 +63,8 @@ function getUsers() {
 }
 getUsers();
 
-function ajaxGET(url, callback, data) {
+// This function makes changes to the server side and updates the database.
+function ajaxPOST(url, callback, data) {
     let params = typeof data == 'string' ? data : Object.keys(data).map(
         function (k) {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
@@ -80,6 +83,9 @@ function ajaxGET(url, callback, data) {
     xhr.send(params);
 }
 
+/*
+This function deletes a user and requests updates to the database.
+*/
 function deleteUser() {
     let userId;
     let queryString;
@@ -95,7 +101,7 @@ function deleteUser() {
                         "Update account": function () {
                             userId = event.target.id;
                             queryString = "userID=" + userId;
-                            ajaxGET("/delete-users", function (data) {
+                            ajaxPOST("/delete-users", function (data) {
                                 if (data) {
                                     let dataParsed = JSON.parse(data);
                                     if (dataParsed.status == "fail") {
@@ -122,6 +128,9 @@ function deleteUser() {
 
 };
 
+/*
+This function reactivates a previously deleted user
+*/
 function undeleteUser() {
     let userId;
     let queryString;
@@ -137,7 +146,7 @@ function undeleteUser() {
                         "Update account": function () {
                             userId = event.target.id;
                             queryString = "userID=" + userId;
-                            ajaxGET("/undelete-users", function (data) {
+                            ajaxPOST("/undelete-users", function (data) {
 
                                 if (data) {
                                     let dataParsed = JSON.parse(data);
@@ -167,7 +176,10 @@ function undeleteUser() {
 deleteUser();
 undeleteUser();
 
-
+/** 
+This function gets the attributes of the target element and passes them to updateInfo().
+@param {event} event - click event
+*/
 function editInfo(event) {
     var row = event.target.parentNode.innerText;
     var parentNode = event.target.parentNode;
@@ -175,6 +187,12 @@ function editInfo(event) {
     updateInfo(row, parentNode, eventClass);
 }
 
+/** 
+This function gets takes 3 inputs and requests updates to the database.
+@param {string} e - The current value of the input element
+@param {object} p - The parent node of the row
+@param {string} newClass - The new class name assigned to dynamically created html element.
+*/
 function updateInfo(e, p, newClass) {
     var currentValue = e;
     var parent = p;

@@ -1,6 +1,11 @@
 "use strict";
 var show;
 ready(() => {
+    /**
+    This function makes a get request to the server and takes 2 inputs.
+    @param {string} url - the path on the server side that is requested.
+    @param {callback} callback - some function that is executed after posting.
+    */
     function ajaxGET(url, callback) {
         const xhr = new XMLHttpRequest();
         xhr.onload = function() {
@@ -14,6 +19,12 @@ ready(() => {
         xhr.send();
     }
 
+    /**
+    This function makes a post request to the server and takes 3 input.
+    @param {string} url - the path on the server side that is requested.
+    @param {callback} callback - some function that is executed after posting.
+    @param {string} data - data sent to the server side.
+    */
     function ajaxPOST(url, callback, data) {
         let params = typeof data == "string" ? data : Object.keys(data).map(
             function(k) { return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]) }
@@ -31,6 +42,11 @@ ready(() => {
         xhr.send(params);
     }
 
+    /**
+     * Function that uses get request to server to display the contents of user's shopping cart
+     * Displays as a table and adds buttons/event listeners for changing quantities and 
+     * removing items as well as checkout button.
+     */
     function getCart() {
         ajaxGET("/get-cart", (data) => {
             let dataParsed = JSON.parse(data);
@@ -86,6 +102,9 @@ ready(() => {
         }
     }
 
+    /**
+     * Function to hide unused cart (desktop or mobile) depending on what resolution is used.
+     */
     function isClosed() {
         let cart1 = document.querySelector(".display-cart");
         let cart2 = document.querySelector(".display-cart2");
@@ -104,6 +123,10 @@ ready(() => {
         window.addEventListener("load", isClosed);
     }
 
+    /**
+     * Function uses post request to update the quantity of a selected item in shopping cart.
+     * @param {event} event - is the target element to update.
+     */
     function updateQuantity(event) {
         if (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) <= 0) {
             event.target.value = 1
@@ -125,6 +148,11 @@ ready(() => {
 
     }
 
+    /**
+     * Function that deletes a specific item from the shopping cart.
+     * Uses post request to update database.
+     * @param {event} event - specific item to remove.
+     */
     function deleteItem(event) {
         let packID = event.target.id;
         let queryString = "packageID=" + packID;
@@ -139,6 +167,10 @@ ready(() => {
         }, queryString);
     }
 
+    /**
+     * Function to update the total price of the shopping cart.
+     * Uses a get request to get item prices from database.
+     */
     function updatePrice() {
         var total = 0;
         ajaxGET("/get-cart", (data) => {
@@ -160,6 +192,11 @@ ready(() => {
         removeAlls[i].addEventListener("click", remove);
     }
 
+    /**
+     * Function that removes all items from the shopping cart.
+     * Uses post request to update the database.
+     * @param {event} event - clear all button
+     */
     function remove(event) {
         var buttonId;
         var queryString;
@@ -177,6 +214,9 @@ ready(() => {
         getCart();
     }
 
+    /**
+     * Gets the navbar and inserts it into placeholder using get request.
+     */
     ajaxGET("/nav", function(data) {
         let navbar = document.querySelector("#navbarPlaceholder");
         navbar.innerHTML = data;
@@ -201,8 +241,14 @@ ready(() => {
         for (let i = 0; i < carts.length; i++) {
             carts[i].addEventListener("click", getCart);
         }
-    });
 
+        if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo")) {
+            document.querySelector("#mobile-nav3").style.display = "none";
+            document.getElementById("mobile-nav2").style.margin = "auto";
+        }
+    })
+
+    // Only show the admin control panel on admin page.
     if (path.startsWith("/admin")) {
         ajaxGET("/admin-sideBar", function(data) {
 
@@ -219,6 +265,9 @@ ready(() => {
         });
     }
 
+    /**
+     * Get the footer and insert in to placeholder using get request.
+     */
     ajaxGET("/footer", function(data) {
         let footer = document.querySelector("#footerPlaceholder");
         footer.innerHTML = data;
@@ -260,6 +309,9 @@ ready(() => {
         })
     });
 
+    /**
+    Async function that uses fetch get request to redirect to "Profile" page. 
+    */
     async function getProfile() {
         try {
             let response = await fetch("/profile", {
@@ -273,6 +325,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Map" page. 
+    */
     async function getMap() {
         try {
             let response = await fetch("/map", {
@@ -286,6 +341,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Orders" page. 
+    */
     async function getOrders() {
         try {
             let response = await fetch("/getOrders", {
@@ -299,7 +357,9 @@ ready(() => {
         }
     }
 
-
+    /**
+    Async function that uses fetch get request to redirect to "Landing" page. 
+    */
     async function getLanding() {
         try {
             let response = await fetch("/landing", {
@@ -313,6 +373,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Add users" page. 
+    */
     async function getAddUsers() {
         try {
             let response = await fetch("/admin-add-users", {
@@ -326,6 +389,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Admin Dashboard" page. 
+    */
     async function getManageUsers() {
         try {
             let response = await fetch("/admin", {
@@ -339,6 +405,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Who We Are" page. 
+    */
     async function getWhoWeAre() {
         try {
             let response = await fetch("/whoWeAre", {
@@ -352,6 +421,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Join Our Team" page. 
+    */
     async function getJoinOurTeam() {
         try {
             let response = await fetch("/joinOurTeam", {
@@ -365,6 +437,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Support" page. 
+    */
     async function getSupport(){
         try {
             let response = await fetch("/Support", {
@@ -378,6 +453,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "FAQ" page. 
+    */
     async function getFAQ(){
         try {
             let response = await fetch("/FAQ", {
@@ -391,6 +469,9 @@ ready(() => {
         }
     }
 
+    /**
+     * adds event listener to the purchase button that redirects to stripe payment page.
+     */
     document.querySelectorAll(".purchase").forEach(function(currentElement) {
         currentElement.addEventListener("click", () => {
             ajaxGET("/get-cart", (data) => {
@@ -426,6 +507,10 @@ ready(() => {
             })
         })
     })
+
+    /**
+    Async function that uses fetch get request to redirect to "How it works" page. 
+    */
     async function getHowItWorks() {
         try {
             let response = await fetch("/howItWorks", {
@@ -439,6 +524,9 @@ ready(() => {
         }
     }
 
+    /**
+    Async function that uses fetch get request to redirect to "Partnerships" page. 
+    */
     async function getPartnerships() {
         try {
             let response = await fetch("/partnerships", {
@@ -455,6 +543,9 @@ ready(() => {
 
 })
 
+/** 
+Ready function called when page is loaded
+*/
 function ready(callback) {
     if (document.readyState != "loading") {
         callback();
