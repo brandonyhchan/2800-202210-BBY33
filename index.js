@@ -1080,64 +1080,68 @@ app.post("/checkout", function (req, res) {
                             var date = new Date();
                             if (cartid.length == 0) {
                                 order = 1;
-                                connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
-                                connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ?, package_date = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, date, userid, 'n'],
-                                    () => {
-                                        connection.execute(
-                                            "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
-                                            function (error, orders) {
-                                                connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]),
-                                                    function (error, details) {
-                                                        let destination = ""
-                                                        let total = 0;
-                                                        for (let i = 0; i < orders.length; i++) {
-                                                            total += orders[i].price * orders[i].product_quantity;
+                                connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid],
+                                () => {
+                                    connection.execute(
+                                        `UPDATE bby_33_cart SET package_purchased = ?, order_id = ?, package_date = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, date, userid, 'n'],
+                                        () => {
+                                            connection.execute(
+                                                "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
+                                                function (error, orders) {
+                                                    connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]),
+                                                        function (error, details) {
+                                                            let destination = ""
+                                                            let total = 0;
+                                                            for (let i = 0; i < orders.length; i++) {
+                                                                total += orders[i].price * orders[i].product_quantity;
+                                                            }
+                                                            send.date = orders[0].package_date;
+                                                            for (let i = 0; i < orders.length - 1; i++) {
+                                                                destination += orders[i].cart_destination + ", "
+                                                            }
+                                                            destination += orders[orders.length - 1].cart_destination;
+                                                            send.destination = destination;
+                                                            send.total = total;
+                                                            send.order = order;
+                                                            res.send(send);
+    
                                                         }
-                                                        send.date = orders[0].package_date;
-                                                        for (let i = 0; i < orders.length - 1; i++) {
-                                                            destination += orders[i].cart_destination + ", "
-                                                        }
-                                                        destination += orders[orders.length - 1].cart_destination;
-                                                        send.destination = destination;
-                                                        send.total = total;
-                                                        send.order = order;
-                                                        res.send(send);
-
-                                                    }
-                                            }
-                                        )
-                                    }
-                                );
+                                                }
+                                            )
+                                        }
+                                    );
+                                });
                             } else {
                                 order = parseInt(cartid[cartid.length - 1].ORDER_ID) + 1;
-                                connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid]);
-                                connection.execute(
-                                    `UPDATE bby_33_cart SET package_purchased = ?, order_id = ?, package_date = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, date, userid, 'n'],
-                                    () => {
-                                        connection.execute(
-                                            "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
-                                            function (error, orders) {
-                                                connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]);
-                                                let destination = ""
-                                                let total = 0;
-                                                for (let i = 0; i < orders.length; i++) {
-                                                    total += orders[i].price * orders[i].product_quantity;
+                                connection.execute("INSERT INTO BBY_33_order(order_id, user_id) VALUES(?, ?)", [order, userid],
+                                () => {
+                                    connection.execute(
+                                        `UPDATE bby_33_cart SET package_purchased = ?, order_id = ?, package_date = ? WHERE user_id = ? AND package_purchased = ?`, ['y', order, date, userid, 'n'],
+                                        () => {
+                                            connection.execute(
+                                                "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
+                                                function (error, orders) {
+                                                    connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]);
+                                                    let destination = ""
+                                                    let total = 0;
+                                                    for (let i = 0; i < orders.length; i++) {
+                                                        total += orders[i].price * orders[i].product_quantity;
+                                                    }
+                                                    send.date = orders[0].package_date;
+                                                    for (let i = 0; i < orders.length - 1; i++) {
+                                                        destination += orders[i].cart_destination + ", "
+                                                    }
+                                                    destination += orders[orders.length - 1].cart_destination;
+    
+                                                    send.destination = destination;
+                                                    send.total = total;
+                                                    send.order = order;
+                                                    res.send(send);
                                                 }
-                                                send.date = orders[0].package_date;
-                                                for (let i = 0; i < orders.length - 1; i++) {
-                                                    destination += orders[i].cart_destination + ", "
-                                                }
-                                                destination += orders[orders.length - 1].cart_destination;
-
-                                                send.destination = destination;
-                                                send.total = total;
-                                                send.order = order;
-                                                res.send(send);
-                                            }
-                                        )
-                                    }
-                                );
+                                            )
+                                        }
+                                    );
+                                });
                             }
                         })
                     }
