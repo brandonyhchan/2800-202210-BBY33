@@ -171,7 +171,7 @@ function undeleteUser() {
     };
     window.addEventListener("click", onClick);
 
-};
+}
 
 deleteUser();
 undeleteUser();
@@ -270,8 +270,6 @@ function updateInfo(e, p, newClass) {
     parent.appendChild(input);
 }
 
-
-
 /**
  * Expands the admin dashboard menu onclick in a mobile viewport.
  */
@@ -289,9 +287,6 @@ function expandDropdown() {
         expandables.style.display = "none";
     }
 }
-
-
-
 
 /**
  * Ensures that the admin dashboard items are always visible when resizing from mobile to desktop viewports.
