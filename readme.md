@@ -86,3 +86,4 @@ It has the following subfolders:
 - partner3.jpg was obtained online from https://www.afghancharityorganisation.com/
 - partner4.png was obtained online from https://imagine1day.org/
 - stock-profile.png was obtained online from https://www.shutterstock.com/search/profile
+- 404image.jpg was obtained online from https://www.istockphoto.com/illustrations/lost-package
