@@ -39,10 +39,12 @@ document.querySelector("#submit").addEventListener("click", function (e) {
     let package_name = document.getElementById("package_name");
     let package_price = document.getElementById("package_price");
     let package_description = document.getElementById("package_description");
+    let long_package_description = document.getElementById("long_description");
 
     let queryString = "country=" + country.value + "&package=" +
         package_name.value + "&price=" + package_price.value +
-        "&description=" + package_description.value;
+        "&description=" + package_description.value +
+        "&longdescription=" + long_package_description.value;
 
     ajaxPOST("/charity-create", function (data) {
 
