@@ -145,19 +145,18 @@ body {
         font-size: 20px;
         margin-top: 3%;
         margin-bottom: 3%;
+        text-align: justify;
     }
 
     .bullet{
         margin-top: 4%;
         margin-bottom: 4%;
-        font-size: 20px;
     }
 
     .heading{
         text-align: center;
         margin-top: 6%;
         margin-bottom: 4%;
-        font-size: 23px;
     }
     
     .home{
@@ -175,7 +174,6 @@ body {
     }
 
     .core-value-title, .core-value-writing{
-        font-size: 20px;
         text-align: center;
     }
 
