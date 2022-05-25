@@ -78,7 +78,7 @@
         grid-column: 2 / 3;
     }
     
-    button {
+    #learn-more, #get-started {
         text-align: center;
         white-space: nowrap;
         height: 40px;

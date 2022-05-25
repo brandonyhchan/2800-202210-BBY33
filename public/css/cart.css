@@ -14,6 +14,11 @@
     opacity: 0;
 }
 
+#removeall.remove{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .display-cart2 {
     display: none;
 }

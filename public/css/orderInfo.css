@@ -59,14 +59,13 @@ td {
 }
 
 #goBack{
-    margin-top: 3%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     border-style: none;
     border-radius: 5px;
     background-color: rgb(14, 76, 109);
     color: white;
     padding: 0.5%;
+    font-size: 16px;
     cursor: pointer;
     transition-duration: 0.7s;
     font-family: 'Fonttype';
@@ -79,7 +78,6 @@ td {
 #goBack:active{
     transform: translateY(4px);
 }
-
 
 @media only screen and (max-width: 720px) {
     #page-header {
