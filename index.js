@@ -1198,12 +1198,12 @@ app.post("/charity-create", upload.array("files"), function (req, res) {
         packageN = req.body.package;
         let packagePrice = req.body.price;
         let packageDesc = req.body.description;
+        let longDesc = req.body.longdescription;
         var existingPackage = "";
         connection.execute(
             `SELECT COUNTRY_ID FROM bby_33_country WHERE country = ?`, [country], (err, results) => {
                 var countryID = "";
                 countryID = results[0].COUNTRY_ID;
-                console.log(countryID);
                 connection.execute(
                     "SELECT * FROM BBY_33_package WHERE package_name = ?", [packageN],
                     function(error, results, fields) {
@@ -1213,8 +1213,9 @@ app.post("/charity-create", upload.array("files"), function (req, res) {
                             msg: " "
                         }
                         if (existingPackage.length == 0) {
-                            connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package) VALUES(?, ?, ?, ?)", [countryID, packageN, packagePrice, packageDesc]);
+                            connection.execute("INSERT INTO BBY_33_package(country_id, package_name, package_price, description_of_package, package_info) VALUES(?, ?, ?, ?, ?)", [countryID, packageN, packagePrice, packageDesc, longDesc]);
                             send.status = "success";
+                            send.msg = "Package Successfuly Created";
                         } else {
                             send.status = "fail";
                             send.msg = "Package Already Exists";
