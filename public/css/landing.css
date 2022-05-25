@@ -96,11 +96,11 @@
         font-family: 'Fonttype';
     }
     
-    button:active {
+    #learn-more:active,#get-started:active {
         transform: translateY(4px);
     }
     
-    button:hover {
+    #learn-more:hover, #get-started:hover {
         background-color: rgb(114, 186, 213);
     }
     
