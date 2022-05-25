@@ -80,7 +80,7 @@ function getPackage() {
             } else {
 
                 let string = "";
-                string += `<h2 id="package-name">${dataParsed.rows[0].package_name}</h2>
+                string += `<h3 id="package-name">${dataParsed.rows[0].package_name}</h3>
                 <br>
                 <h3 id="price">Price: $${dataParsed.rows[0].package_price}</h3>
                 <br>
