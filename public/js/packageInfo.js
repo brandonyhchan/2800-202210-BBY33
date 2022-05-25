@@ -78,13 +78,13 @@ function getPackage() {
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
-                
+
                 let string = "";
                 string += `<h2 id="package-name">${dataParsed.rows[0].package_name}</h2>
                 <br>
                 <p id="price">Price: $${dataParsed.rows[0].package_price}</p>
                 <br>
-                <p id="description">${dataParsed.rows[0].description_of_package}</p>
+                <p id="description">${dataParsed.rows[0].package_info}</p>
                 <br><button class="add-to-cart" id="${dataParsed.rows[0].PACKAGE_ID}">Add to Cart</button><p id="msg"></p>`
                 document.getElementById("image").setAttribute("src", dataParsed.rows[0].package_image);
                 document.getElementById("package-description").innerHTML = string;
@@ -105,7 +105,7 @@ function addPackage() {
         if (event.target.className == "add-to-cart") {
             packageId = event.target.id;
             queryString = "packageID=" + packageId;
-            ajaxGET("/add-packages", function (data) {
+            ajaxGET("/add-packages", function(data) {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);
@@ -118,5 +118,3 @@ function addPackage() {
 }
 
 addPackage();
-
-
