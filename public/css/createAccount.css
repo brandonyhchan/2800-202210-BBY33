@@ -15,7 +15,7 @@ body {
 #container {
     max-width: 100%;
     text-align: center;
-    padding-top: 7%;
+    padding-top: 3%;
 }
 
 #logo {
@@ -27,6 +27,7 @@ body {
 }
 
 #input_container {
+    width: 30%;
     display: inline-block;
     background-color: white;
     margin: auto;
@@ -58,7 +59,7 @@ body {
     font-family: 'Fonttype';
 }
 
-#submit {
+#submit, #clear {
     background-color: rgb(14, 76, 109);
     border-style: none;
     color: white;
@@ -126,6 +127,7 @@ body {
         padding-top: 3%;
         padding-left: 4%;
         padding-right: 4%;
+        width: 80%;
     }
 
 }
