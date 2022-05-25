@@ -340,6 +340,10 @@ td {
     cursor: pointer;
 }
 
+#legend {
+    transform: translateY(-10rem);
+}
+
 @media only screen and (max-width: 720px) {
     body {
         margin-right: 0;
@@ -509,5 +513,9 @@ td {
     .close-package {
         padding: 2%;
         display: flex;
+    }
+
+    #legend {
+        transform: translateY(5rem);
     }
 }

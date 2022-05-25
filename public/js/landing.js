@@ -50,9 +50,9 @@ function motivation() {
             msg = `Thank you for your help`;
         } else if (total > 0 && total < 60) {
             msg = `You have touched the lives of over 5 people`;
-        } else if (total > 60) {
+        } else if (total > 60 && total < 120) {
             msg = `You have touched the lives of over 10 people`;
-        } else if (total > 120) {
+        } else if (total > 120 && total < 250) {
             msg = `You have touched the lives of over 15 people`;
         } else if (total > 250) {
             msg = `You have touched the lives of over 25 people`

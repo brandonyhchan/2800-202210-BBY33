@@ -63,7 +63,7 @@ body {
     transition-duration: 0.5s;
 }
 
-.material-symbols-outlined.md-24.cart{
+.material-symbols-outlined.md-24.cart {
     margin-right: 5%;
     margin-bottom: 10%;
     cursor: pointer;
@@ -112,20 +112,18 @@ body {
         padding-top: 1%;
         padding-bottom: 1%;
     }
-
-
+    #mobile-nav1 {
+        margin-left: 2.5%;
+        visibility: hidden;
+    }
     #mobile-logo {
         max-height: 140px;
         justify-content: center;
     }
-    #mobile-nav1 {
-        grid-column: 1 / 2;
-        margin-left: 2%;
-        font-size: 36px;
-    }
     #mobile-nav2 {
-        grid-column: 2 / 3;
+        grid-column: 2 / 4;
         text-align: center;
+        margin: auto;
     }
     #mobile-nav3 {
         grid-column: 3 / 4;
