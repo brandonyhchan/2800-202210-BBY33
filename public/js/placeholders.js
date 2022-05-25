@@ -117,7 +117,8 @@ ready(() => {
     }
     var path = window.location.pathname;
 
-    if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo" ) || path.startsWith("/success")) {
+    if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo" ) || path.startsWith("/success") 
+    || path.startsWith("/charity") || path.startsWith("/*") || path.startsWith("/packageInfo")) {
         window.removeEventListener("load", isClosed);
     } else {
         window.addEventListener("load", isClosed);
@@ -242,7 +243,8 @@ ready(() => {
             carts[i].addEventListener("click", getCart);
         }
 
-        if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo")) {
+        if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo") || path.startsWith("/charity")
+        || path.startsWith("/*") || path.startsWith("/packageInfo")) {
             document.querySelector("#mobile-nav3").style.display = "none";
             document.querySelector(".cart-holder").style.display = "none";
             document.getElementById("mobile-nav2").style.margin = "auto";

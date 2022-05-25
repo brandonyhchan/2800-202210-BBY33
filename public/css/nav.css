@@ -122,7 +122,6 @@ body {
         grid-column: 2 / 4;
         text-align: center;
         margin: auto;
-        padding-left: 4rem;
     }
     #mobile-nav3 {
         grid-column: 3 / 4;
