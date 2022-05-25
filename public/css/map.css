@@ -427,7 +427,7 @@ td {
     #mobile-purchase.buy:hover {
         background-color: rgb(114, 186, 213);
     }
-    
+
     .card {
         display: grid;
         grid-template-rows: 15% 40% 20% 25%;
