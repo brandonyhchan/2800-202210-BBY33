@@ -102,6 +102,10 @@ body {
 }
 
 @media only screen and (max-width: 720px) {
+    body{
+        height: 100vh;
+    }
+
     #logo{
         max-width: 70%;
         margin-top: 12%;
@@ -130,5 +134,11 @@ body {
 
     .profile-text{
         margin-bottom: 5%;
+    }
+
+    .home {
+        margin-top: 10%;
+        margin-bottom: 6%;
+        padding: 2%;
     }
 }
