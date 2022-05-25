@@ -10,7 +10,17 @@ INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES 
 INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES (4, 'Ethiopia', 'Heavy flooding');
 INSERT INTO BBY_33_country (COUNTRY_ID, country, description_of_country) VALUES (5, 'Democratic Republic of Congo', 'Civil unrest');
 
-INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image) VALUES (1, 1, 'Package 1', 20, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
-INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image) VALUES (2, 2, 'Package 2', 30, 'Contains Water, Canned food and Medicine', '/img/landing1.jpg');
-INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image) VALUES (3, 3, 'Package 3', 35, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg');
-INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image) VALUES (4, 4, 'Package 4', 30, 'Contains Water, and Water', '/img/landing1.jpg');
+INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image, package_info, package_destination) VALUES (1, 1, 'Package 1', 20, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg', 'Package 1 was curated by the Ukrainian Red Cross Society, containing non-perishable food, clothing, and a first aid kit.
+This care package will be distributed to a family that has been impacted by the invasion of Ukraine.', 'Ukraine');
+
+INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image, package_info, package_destination) VALUES (2, 2, 'Package 2', 30, 'Contains Water, Canned food and Medicine', '/img/landing1.jpg', 'Package 2 was curated by Afghan Charity Organisation, containing non-perishable food, children''s clothing, and medicine. This care package
+will be distributed to a family that has been displaced by due to war.', 'Afghanistan');
+
+INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image, package_info, package_destination) VALUES (3, 3, 'Package 3', 35, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg', 'Package 3 was curated by the Yemen Relief and Reconstruction Foundation, containing non-perishable food and water. This care package
+will be distributed to an individual in Yemen, which has been facing a prolonged famine.', 'Yemen');
+
+INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image, package_info), package_destination VALUES (4, 4, 'Package 4', 30, 'Contains Water, and Water', '/img/landing1.jpg', 'Package 4 was curated by imagine1day, a non-profit organization working in Ethiopia. This care package contains drinking water,
+and will be distributed to individuals in Ethiopia. Ethiopia is currently experiencing heaving flooding, which has contaminated the water supply.', 'Ethiopia');
+
+INSERT INTO BBY_33_package (PACKAGE_ID, country_id, package_name, package_price, description_of_package, package_image, package_info, package_destination) VALUES (5, 5, 'Package 5', 40, 'Contains Water, Canned food and Clothing', '/img/landing1.jpg', 'Package 5 was curated by Save the Children, containing non-perishable food, medicine and children''s clothing. This care package will be distributed to families in the
+Democratic Republic of Congo, which is currently facing civil unrest.', 'Democratic Republic of Congo');

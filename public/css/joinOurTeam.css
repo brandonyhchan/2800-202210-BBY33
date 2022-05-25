@@ -31,20 +31,22 @@ body {
 }
 
 #information{
-    margin: 2%;
+    margin-top: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
 }
 
 #prompt{
-    font-size: 26px;
+    font-size: 20px;
 }
 
 .heading{
     margin-top: 4%;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .bullet{
-    font-size: 24px;
+    font-size: 16px;
     margin-top: 2%;
 }
 
@@ -59,9 +61,9 @@ body {
     margin-right: auto;
     margin-top: 2%;
     margin-bottom: 1%;
-    font-size: 30px;
+    font-size: 20px;
     border-style: none;
-    border-radius: 5px;
+    border-radius: 7px;
     background-color: rgb(14, 76, 109);
     color: white;
     padding: 0.5%;
@@ -92,7 +94,6 @@ body {
     margin-right: 5%;
 }
 
-
 .core-value-title{
     font-size: 30px;
     margin: auto;
@@ -118,7 +119,8 @@ body {
     margin-top: 2%;
     margin-left: 5%;
     margin-right: 5%;
-    font-size: 24px;
+    font-size: 16px;
+    text-align: center;
 }
 
 @media only screen and (max-width: 720px) {
@@ -127,8 +129,7 @@ body {
     }
 
     #information{
-        margin-left:5%;
-        margin-right:5%;
+        margin: 9%;
     }
 
     #logo {
@@ -161,8 +162,8 @@ body {
     
     .home{
         font-size: 20px; 
-        padding: 1.25%;
-        margin-bottom: 4%;
+        padding: 2%;
+        margin-bottom: 6%;
     }
 
     .core-value{
