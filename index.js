@@ -304,6 +304,7 @@ app.post("/register", function (req, res) {
     connection.execute(
         "SELECT * FROM BBY_33_user WHERE user_removed = 'n'",
         function (error, results, fields) {
+            var validChars = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             existingUsers = results;
             let send = {
                 status: " ",
@@ -312,7 +313,10 @@ app.post("/register", function (req, res) {
             if (usr == "" || pwd == "" || firstName == "" || lastName == "" || email == "" || confirmPassword == "") {
                 send.status = "fail";
                 send.msg = "Please fill out all fields";
-            } else {
+            } else if (!email.match(validChars)){
+                send.status = "fail";
+                send.msg = "Improper Email Format";
+            }else {
                 if (pwd == confirmPassword) {
                     let i = 0;
                     while (!alreadyExists && i < existingUsers.length) {
@@ -1088,8 +1092,7 @@ app.post("/checkout", function (req, res) {
                                             connection.execute(
                                                 "SELECT * FROM BBY_33_cart WHERE order_id = ?", [order],
                                                 function (error, orders) {
-                                                    connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]),
-                                                        function (error, details) {
+                                                    connection.execute("UPDATE BBY_33_order SET order_date = ? WHERE ORDER_ID = ?", [orders[0].package_date, order]);
                                                             let destination = ""
                                                             let total = 0;
                                                             for (let i = 0; i < orders.length; i++) {
@@ -1104,8 +1107,6 @@ app.post("/checkout", function (req, res) {
                                                             send.total = total;
                                                             send.order = order;
                                                             res.send(send);
-    
-                                                        }
                                                 }
                                             )
                                         }
