@@ -55,7 +55,7 @@ function getPackage() {
                         str += (`<div class='card'>
                             <div id='title'>${row.package_name} 
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
-                            </div><div class='price'> $${row.package_price} 
+                            </div><div class='price'> $${row.package_price}.00 
                             </div><div class='description'>${row.description_of_package}
                             </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
                     }
@@ -106,7 +106,7 @@ function getCart() {
         for (let i = 0; i < dataParsed.rows.length; i++) {
             string += (
                 `<tr><td class='packageIds'>${rows[i].package_id}</td>
-                <td>${rows[i].price}</td>
+                <td>$${rows[i].price}.00</td>
                 <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
                 <td><button class ='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
             )

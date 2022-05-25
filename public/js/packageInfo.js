@@ -82,7 +82,7 @@ function getPackage() {
                 let string = "";
                 string += `<h2 id="package-name">${dataParsed.rows[0].package_name}</h2>
                 <br>
-                <h3 id="price">Price: $${dataParsed.rows[0].package_price}</h3>
+                <h3 id="price">Price: $${dataParsed.rows[0].package_price}.00</h3>
                 <br>
                 <p id="description">${dataParsed.rows[0].package_info}</p>
                 <br><button class="add-to-cart" id="${dataParsed.rows[0].PACKAGE_ID}">Add to Cart</button><p id="msg"></p>`

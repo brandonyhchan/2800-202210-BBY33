@@ -59,7 +59,7 @@ ready(() => {
             for (let i = 0; i < dataParsed.rows.length; i++) {
                 string += (
                     `<tr><td>${rows[i].package_id}</td>
-                    <td>${rows[i].price}</td>
+                    <td>$${rows[i].price}.00</td>
                     <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
                     <td><button class='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
                 )
