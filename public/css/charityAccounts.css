@@ -21,6 +21,8 @@
      place-items: center;
      margin: 2%;
      overflow-x: hidden;
+     margin-left: 0;
+     margin-right: 0;
  }
  
  #care-package {
