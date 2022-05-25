@@ -33,6 +33,8 @@
      border-radius: 7px;
      text-align: center;
      padding-top: 5%;
+     margin-top:0;
+     margin-bottom: 0;
  }
  
  #input-container {
@@ -49,6 +51,7 @@
  .package-input {
      width: 50%;
      justify-self: center;
+     border-radius: 5px;
  }
  
  #submit,
