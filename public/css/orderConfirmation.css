@@ -64,7 +64,7 @@
     animation: fade-logo 4s;
 }
 
-#homeButton{
+#homeButton {
     margin-top: 3%;
     margin-left: auto;
     margin-right: auto;
@@ -76,14 +76,14 @@
     cursor: pointer;
     transition-duration: 0.7s;
     font-family: 'Fonttype';
-    
+    font-size: 20px;
 }
 
-#homeButton:hover{
+#homeButton:hover {
     background-color: rgb(114, 186, 213);
 }
 
-#homeButton:active{
+#homeButton:active {
     transform: translateY(4px);
 }
 
@@ -106,5 +106,8 @@ a {
     }
     #order-help {
         font-size: 14px;
+    }
+    #homeButton {
+        padding: 1.5%;
     }
 }

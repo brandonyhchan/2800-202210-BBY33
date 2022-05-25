@@ -27,13 +27,13 @@
  
  #care-package {
      grid-column: 1 / 2;
-     width: 70%;
+     width: 80%;
      background-color: rgb(245, 245, 245);
      padding: 1%;
      border-radius: 7px;
      text-align: center;
      padding-top: 5%;
-     margin-top:0;
+     margin-top: 0;
      margin-bottom: 0;
  }
  

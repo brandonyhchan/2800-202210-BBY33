@@ -11,6 +11,7 @@
 
 #container {
     height: 100vh;
+    width: 100%;
     background-color: white;
     display: flex;
     align-content: center;
@@ -58,7 +59,7 @@ td {
     margin-bottom: 0;
 }
 
-#goBack{
+#goBack {
     margin: auto;
     border-style: none;
     border-radius: 5px;
@@ -71,11 +72,11 @@ td {
     font-family: 'Fonttype';
 }
 
-#goBack:hover{
+#goBack:hover {
     background-color: rgb(114, 186, 213);
 }
 
-#goBack:active{
+#goBack:active {
     transform: translateY(4px);
 }
 
@@ -89,5 +90,12 @@ td {
     }
     #order-container {
         height: 75vh;
+    }
+    #goBack {
+        padding: 1.5%;
+    }
+    td,
+    th {
+        font-size: 16px;
     }
 }
