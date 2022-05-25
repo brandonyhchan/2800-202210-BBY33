@@ -117,8 +117,8 @@ ready(() => {
     }
     var path = window.location.pathname;
 
-    if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo" ) || path.startsWith("/success") 
-    || path.startsWith("/charity") || path.startsWith("/*") || path.startsWith("/packageInfo")) {
+    if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo") || path.startsWith("/success") ||
+        path.startsWith("/charity") || path.startsWith("/*") || path.startsWith("/packageInfo")) {
         window.removeEventListener("load", isClosed);
     } else {
         window.addEventListener("load", isClosed);
@@ -243,10 +243,10 @@ ready(() => {
             carts[i].addEventListener("click", getCart);
         }
 
-        if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo") || path.startsWith("/charity")
-        || path.startsWith("/*") || path.startsWith("/packageInfo")) {
-            document.querySelector("#mobile-nav3").style.display = "none";
-            document.querySelector(".cart-holder").style.display = "none";
+        if (path.startsWith("/admin") || path.startsWith("/getOrders") || path.startsWith("/orderInfo") || path.startsWith("/charity") ||
+            path.startsWith("/*") || path.startsWith("/packageInfo")) {
+            document.querySelector("#mobile-nav3").style.visibility = "hidden";
+            document.querySelector(".cart-holder").style.visibility = "hidden";
             document.getElementById("mobile-nav2").style.margin = "auto";
         }
     })
@@ -283,7 +283,7 @@ ready(() => {
             getMap();
         })
 
-        document.querySelector("#help-icon").addEventListener("click", ()=>{
+        document.querySelector("#help-icon").addEventListener("click", () => {
             getSupport();
         })
 
@@ -307,7 +307,7 @@ ready(() => {
             getPartnerships();
         })
 
-        document.querySelector("#support").addEventListener("click", ()=>{
+        document.querySelector("#support").addEventListener("click", () => {
             getSupport();
         })
     });
@@ -443,7 +443,7 @@ ready(() => {
     /**
     Async function that uses fetch get request to redirect to "Support" page. 
     */
-    async function getSupport(){
+    async function getSupport() {
         try {
             let response = await fetch("/Support", {
                 method: "GET"
@@ -459,7 +459,7 @@ ready(() => {
     /**
     Async function that uses fetch get request to redirect to "FAQ" page. 
     */
-    async function getFAQ(){
+    async function getFAQ() {
         try {
             let response = await fetch("/FAQ", {
                 method: "GET"
