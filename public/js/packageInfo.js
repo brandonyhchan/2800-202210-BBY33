@@ -84,7 +84,7 @@ function getPackage() {
                 <br>
                 <h3 id="price">Price: $${dataParsed.rows[0].package_price}</h3>
                 <br>
-                <p id="description">${dataParsed.rows[0].description_of_package}</p>
+                <p id="description">${dataParsed.rows[0].package_info}</p>
                 <br><button class="add-to-cart" id="${dataParsed.rows[0].PACKAGE_ID}">Add to Cart</button><p id="msg"></p>`
                 document.getElementById("image").setAttribute("src", dataParsed.rows[0].package_image);
                 document.getElementById("package-description").innerHTML = string;

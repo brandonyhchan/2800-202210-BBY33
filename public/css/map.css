@@ -138,7 +138,6 @@ button,
     padding: 2%;
     cursor: pointer;
     font-family: 'Fonttype';
-    transition-duration: 0.7s;
 }
 
 .btn-danger{
@@ -167,13 +166,6 @@ button:hover,
 #close:hover,
 #purchase.buy:hover {
     background-color: rgb(114, 186, 213);
-}
-
-button:active,
-.packagesDisplay:active,
-#close:active,
-#purchase.buy:active {
-    transform: translateY(4px);
 }
 
 #desktop-cart-container {
@@ -279,6 +271,7 @@ td {
 
 #legend-contents, .label {
     color: white;
+    font-size: 16px;
 }
 
 .label {
@@ -292,6 +285,7 @@ td {
 
 #legend-title {
     text-align: left;
+    font-size: 20px;
 }
 
 #help {
@@ -441,18 +435,12 @@ td {
         padding: 2%;
         cursor: pointer;
         font-family: 'Fonttype';
-        transition-duration: 0.7s;
         text-align: center;
     }
 
     #close-m:hover,
     #mobile-purchase.buy:hover {
         background-color: rgb(114, 186, 213);
-    }
-
-    #close-m:active,
-    #mobile-purchase.buy:active {
-        transform: translateY(4px);
     }
 
     .card {

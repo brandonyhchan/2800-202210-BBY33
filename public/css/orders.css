@@ -28,9 +28,9 @@ footer{
 #order-container{
     background-color: rgb(245, 245, 245);
     border-radius: 8px;
-    margin-top: 1%;
+    margin-top: 3%;
     margin-bottom: 1%;
-    width: 60%;
+    width: 65%;
     margin-left: auto;
     margin-right: auto;
     padding-top: 1%;    
@@ -64,6 +64,14 @@ td {
     cursor: pointer;
     font-family: 'Fonttype';
     transition-duration: 0.7s;
+    font-size: 16px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+tr{
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .orderDisplay:hover{

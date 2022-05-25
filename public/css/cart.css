@@ -1,0 +1,262 @@
+@font-face {
+    font-family: Fonttype;
+    src: url("/fonts/static/Raleway-Regular.ttf");
+}
+
+.display-cart {
+    z-index: 1;
+    right: 0;
+    height: 40%;
+    width: 30%;
+    float: right;
+    position: absolute;
+    background-color: aliceblue;
+    opacity: 0;
+}
+
+.display-cart2 {
+    display: none;
+}
+
+.cart-quantity-input {
+    width: 30%;
+    height: 20%;
+}
+
+.mobile-cart-container {
+    margin-left: 5%;
+    max-width: 100%;
+}
+
+#cart {
+    grid-area: cart;
+    max-height: 100%;
+    width: 10%;
+    overflow-y: scroll;
+    left: 0;
+    position: absolute;
+    scrollbar-width: none;
+    z-index: 1;
+}
+
+#cart::-webkit-scrollbar {
+    display: none;
+}
+
+button{
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    padding: 3%;
+    cursor: pointer;
+    font-family: 'Fonttype';
+    transition-duration: 0.7s;
+}
+
+#close,
+#purchase.buy,
+.btn-danger {
+    background-color: rgb(14, 76, 109);
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    padding: 2%;
+    cursor: pointer;
+    font-family: 'Fonttype';
+}
+
+#close,
+#close-m {
+    float: right;
+    top: 0;
+}
+
+#purchase.buy {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 4%;
+}
+
+#total1 {
+    margin: auto;
+}
+
+button:hover,
+.packagesDisplay:hover,
+#close:hover,
+#purchase.buy:hover {
+    background-color: rgb(114, 186, 213);
+}
+
+#desktop-cart-container {
+    height: 100%;
+    margin: 4%;
+    padding-bottom: 5%;
+}
+
+.subtotal,
+.subtotal2 {
+    width: 100%;
+}
+
+#cart-layout {
+    position: relative;
+    top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+th,
+td {
+    text-align: center;
+}
+
+.cart-heading {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 1%;
+}
+
+.buy.purchase {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+
+#close-m {
+    display: none;
+}
+
+#mobile-purchase.buy {
+    display: none;
+}
+
+#removeallM.remove {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+
+.packages {
+    margin-right: 2%;
+}
+
+.packagesDisplay {
+    margin-left: 2%;
+}
+
+#heading2 {
+    display: none;
+}
+
+.cart-quantity-input {
+    width: 30%;
+    height: 20%;
+}
+
+.btn-danger:hover {
+    background-color: red;
+}
+
+
+@media only screen and (max-width: 720px) {
+    .cart-container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 20% 50% 30%;
+        grid-template-areas:
+            "cart"
+            "map"
+            "subtotal";
+
+    }
+    .display-cart {
+        display: none;
+    }
+
+    #heading2 {
+        display: flex;
+        justify-content: center;
+        font-size: 25px;
+    }
+
+    .display-cart2 {
+        display: block;
+        grid-area: subtotal;
+        z-index: 1;
+        right: 0;
+        height: 30%;
+        width: 100%;
+        float: right;
+        position: absolute;
+        background-color: aliceblue;
+        opacity: 0;
+        bottom: 0;
+        margin-bottom: 15%;
+    }
+
+    #mobile {
+        display: inline-block;
+    }
+
+    #desktop {
+        display: none;
+    }
+
+    #mobile-cart-container {
+        margin: 2%;
+    }
+
+    #close-m,
+    #mobile-purchase.buy {
+        display: flex;
+        background-color: rgb(14, 76, 109);
+        color: white;
+        border-style: none;
+        border-radius: 5px;
+        padding: 2%;
+        cursor: pointer;
+        font-family: 'Fonttype';
+        text-align: center;
+    }
+
+    #close-m:hover,
+    #mobile-purchase.buy:hover {
+        background-color: rgb(114, 186, 213);
+    }
+
+    #title {
+        grid-column: 1/3;
+        margin-bottom: 1%;
+    }
+    .subtotal2 {
+        margin-top: 3%;
+    }
+
+    #cart-layout-mobile {
+        position: relative;
+        top: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #mobile-purchase.buy {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 4%;
+    }
+
+    #total2 {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    .quantity {
+        width: 30%;
+    }
+}
