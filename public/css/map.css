@@ -30,9 +30,7 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: 15% 85%;
-    grid-template-areas:
-        "cart" "map"
-        "cart" "map";
+    grid-template-areas: "cart" "map" "cart" "map";
     height: 100vh;
 }
 
@@ -47,7 +45,6 @@ svg path:hover {
     transition: 0.6s;
     cursor: pointer;
 }
-
 
 .mobile-cart-container {
     margin-left: 5%;
@@ -76,6 +73,7 @@ svg path:hover {
     right: 0;
     position: absolute;
     float: right;
+    height: 100%;
 }
 
 svg path {
@@ -138,10 +136,9 @@ button,
     padding: 2%;
     cursor: pointer;
     font-family: 'Fonttype';
-    transition-duration: 0.7s;
 }
 
-.btn-danger{
+.btn-danger {
     background-color: rgb(14, 76, 109);
     color: white;
     border-style: none;
@@ -167,13 +164,6 @@ button:hover,
 #close:hover,
 #purchase.buy:hover {
     background-color: rgb(114, 186, 213);
-}
-
-button:active,
-.packagesDisplay:active,
-#close:active,
-#purchase.buy:active {
-    transform: translateY(4px);
 }
 
 #desktop-cart-container {
@@ -221,7 +211,7 @@ td {
     display: none;
 }
 
-#removeall.remove{
+#removeall.remove {
     margin-left: auto;
     margin-right: auto;
 }
@@ -277,8 +267,10 @@ td {
     border: solid black 2px;
 }
 
-#legend-contents, .label {
+#legend-contents,
+.label {
     color: white;
+    font-size: 16px;
 }
 
 .label {
@@ -292,6 +284,7 @@ td {
 
 #legend-title {
     text-align: left;
+    font-size: 20px;
 }
 
 #help {
@@ -299,48 +292,57 @@ td {
     width: 10px;
     background-color: red;
 }
+
 #food-shortage {
     height: 10px;
     width: 10px;
     background-color: orange;
 }
+
 #flood {
     height: 10px;
     width: 10px;
     background-color: skyblue;
 }
+
 #war {
     height: 10px;
     width: 10px;
     background-color: #8900f2;
 }
+
 #not-available {
     height: 10px;
     width: 10px;
     background-color: darkgreen;
 }
+
 #unrest {
     height: 10px;
     width: 10px;
     background-color: #e2b4bd;
 }
 
-#country1:hover, #country2:hover {
+#country1:hover,
+#country2:hover {
     fill: #8900f2;
     transition: 0.4s;
     cursor: pointer;
 }
-#country3:hover{
+
+#country3:hover {
     fill: #f26419;
     transition: 0.4s;
     cursor: pointer;
 }
-#country4:hover{
+
+#country4:hover {
     fill: skyblue;
     transition: 0.4s;
     cursor: pointer;
 }
-#country5:hover{
+
+#country5:hover {
     fill: #e2b4bd;
     transition: 0.4s;
     cursor: pointer;
@@ -354,24 +356,17 @@ td {
     body {
         margin-right: 0;
     }
-
     #container {
         display: grid;
         grid-template-columns: 100%;
         max-height: 85.5%;
     }
-
     .cart-container {
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: 20% 50% 30%;
-        grid-template-areas:
-            "cart"
-            "map"
-            "subtotal";
-
+        grid-template-areas: "cart" "map" "subtotal";
     }
-
     .map {
         grid-area: map;
         height: 100%;
@@ -379,7 +374,6 @@ td {
         margin-top: 15%;
         position: relative;
     }
-
     #cart {
         grid-area: cart;
         max-height: 20%;
@@ -389,17 +383,14 @@ td {
         position: absolute;
         scrollbar-width: none;
     }
-
     .display-cart {
         display: none;
     }
-
     #heading2 {
         display: flex;
         justify-content: center;
         font-size: 25px;
     }
-
     .display-cart2 {
         display: block;
         grid-area: subtotal;
@@ -414,7 +405,6 @@ td {
         bottom: 0;
         margin-bottom: 15%;
     }
-
     .card {
         margin-left: 0;
         margin-top: 2%;
@@ -422,19 +412,15 @@ td {
         margin-left: 6%;
         margin-right: 6%;
     }
-
     #mobile {
         display: inline-block;
     }
-
     #desktop {
         display: none;
     }
-
     #mobile-cart-container {
         margin: 2%;
     }
-
     #close-m,
     #mobile-purchase.buy {
         display: flex;
@@ -445,37 +431,26 @@ td {
         padding: 2%;
         cursor: pointer;
         font-family: 'Fonttype';
-        transition-duration: 0.7s;
         text-align: center;
     }
-
     #close-m:hover,
     #mobile-purchase.buy:hover {
         background-color: rgb(114, 186, 213);
     }
-
-    #close-m:active,
-    #mobile-purchase.buy:active {
-        transform: translateY(4px);
-    }
-
     .card {
         display: grid;
         grid-template-rows: 15% 40% 20% 25%;
         grid-template-columns: 40% 60%;
     }
-
     #title {
         grid-column: 1/3;
         margin-bottom: 1%;
     }
-
     .pImage {
         grid-column: 1/2;
         grid-row: 2/5;
         margin: auto;
     }
-
     .description {
         grid-column: 2/3;
         grid-row: 2/3;
@@ -483,50 +458,40 @@ td {
         margin-top: auto;
         margin-bottom: auto;
     }
-
     .price {
         grid-column: 2/3;
         margin-top: auto;
         margin-bottom: auto;
     }
-
     .options {
         grid-column: 2/3;
         grid-row: 4/5;
     }
-
     .subtotal2 {
         margin-top: 3%;
     }
-
     #cart-layout-mobile {
         position: relative;
         top: 40px;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-
     #mobile-purchase.buy {
         margin-left: auto;
         margin-right: auto;
         padding: 4%;
     }
-
     #total2 {
         margin-top: 0;
         padding-top: 0;
     }
-
-
     .quantity {
         width: 30%;
     }
-
     .close-package {
         padding: 2%;
         display: flex;
     }
-
     #legend {
         transform: translateY(5rem);
     }

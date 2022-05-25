@@ -118,7 +118,7 @@ function getCart() {
             updatePrice();
         } else {
             document.querySelector(".subtotal2").innerHTML = string;
-            document.querySelector(".display-cart2").style.opacity = 0.75;
+            document.querySelector(".display-cart2").style.opacity = 1;
             document.querySelector(".display-cart2").style.zIndex = 1;
             updatePrice();
         }

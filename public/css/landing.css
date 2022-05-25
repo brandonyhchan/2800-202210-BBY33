@@ -78,7 +78,7 @@
         grid-column: 2 / 3;
     }
     
-    button {
+    #learn-more, #get-started {
         text-align: center;
         white-space: nowrap;
         height: 40px;
@@ -96,11 +96,11 @@
         font-family: 'Fonttype';
     }
     
-    button:active {
+    #learn-more:active,#get-started:active {
         transform: translateY(4px);
     }
     
-    button:hover {
+    #learn-more:hover, #get-started:hover {
         background-color: rgb(114, 186, 213);
     }
     
@@ -149,90 +149,7 @@
         height: 100%;
         clip-path: circle(95% at right);
     }
-    /* Cart */
-    
-    .display-cart2 {
-        display: none;
-    }
-    
-    .cart-quantity-input {
-        width: 30%;
-        height: 20%;
-    }
-    
-    .btn-danger:hover {
-        background-color: red;
-    }
-    
-    .btn-danger {
-        background-color: rgb(14, 76, 109);
-        color: white;
-        border-style: none;
-        border-radius: 5px;
-        padding: 2%;
-        cursor: pointer;
-        font-family: 'Fonttype';
-        transition-duration: 0.7s;
-        font-size: small;
-        height: 50%;
-    }
-    
-    .display-cart {
-        z-index: 1;
-        right: 0;
-        height: 40%;
-        width: 30%;
-        float: right;
-        position: absolute;
-        background-color: aliceblue;
-        opacity: 0;
-        border: solid black 2px;
-    }
-    
-    .cart-heading {
-        text-align: center;
-        font-size: 36px;
-        margin-bottom: 1%;
-    }
-    
-    #close-m {
-        display: none;
-    }
-    
-    .subtotal,
-    .subtotal2 {
-        width: 100%;
-    }
-    
-    #total1 {
-        position: absolute;
-        margin-top: 10%;
-        margin-left: 9%;
-    }
-    
-    th,
-    td {
-        text-align: center;
-    }
-    
-    #close {
-        background-color: rgb(14, 76, 109);
-        color: white;
-        border-style: none;
-        border-radius: 5px;
-        padding: 2%;
-        cursor: pointer;
-        font-family: 'Fonttype';
-        transition-duration: 0.7s;
-    }
-    
-    #close,
-    #close-m {
-        float: right;
-        top: 0;
-    }
-    /* Cart */
-    
+
     #motivation {
         color: #00394f;
         font-size: large;
