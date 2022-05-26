@@ -3,9 +3,12 @@
 * [Team members](#team-members)
 * [Application Info](#Application-Info)
 * [Contents](#Contents)
+* [How to Install](#installation)
+* [How to Use The Product](#how-to-use-the-product)
 * [Technologies](#technologies)
 * [Acknowledgements](#acknowledgements)
 * [Photo Resources](#photo-resources)
+* [Contact Information](#contact-us)
 
 ## Team members
 - Artem Khan (SET 1C)
@@ -41,6 +44,20 @@ It has the following subfolders:
     /userImg                 # Folder for images uploaded by the users
 
 ```
+## Installation
+ - 1) Create a new folder for the project 
+ - 2) Clone the repo into the folder by using (git clone "URL")
+ - 3) cd into the new folder with the repo by using (cd "name of the repo")
+ - 3) Install bcrypt, stripe, dotenv, multer, express, express-session, json, multer
+ - 4) Message us for the confidential information such as stripe secret key
+ - 4) Run the application through to the command line by typing ("node index.js")
+
+## How to use the product
+- 1) Either login or create a new account
+- 2) Select the country in need on the map
+- 3) View and add packages of interest to the cart 
+- 4) Checkout from the cart 
+- 5) Care packages will be delivered to the people in need  
 
 ## Technologies
 - JavaScript
@@ -88,3 +105,9 @@ It has the following subfolders:
 - stock-profile.png was obtained online from https://www.shutterstock.com/search/profile
 - 404image.jpg was obtained online from https://www.istockphoto.com/illustrations/lost-package
 - headshot.png was obtained online from https://www.oakdenehollins.com/our-team
+
+## Contact Us
+- Artem Khan (akhan195@my.bcit.ca)
+- Ryan Lee (rlee345@my.bcit.ca)
+- Stanley Chow (schow151@my.bcit.ca)
+- Brandon Chan (bchan145@my.bcit.ca)
