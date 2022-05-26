@@ -100,6 +100,8 @@ ready(() => {
                 isClosed();
             });
         }
+        document.querySelector("#desk-status").innerText = "";
+                document.querySelector("#mobile-status").innerText = "";
     }
 
     /**
@@ -477,37 +479,42 @@ ready(() => {
      */
     document.querySelectorAll(".purchase").forEach(function(currentElement) {
         currentElement.addEventListener("click", () => {
-            ajaxGET("/get-cart", (data) => {
-                var items = [];
-                if (data) {
-                    let dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        console.log("fail");
+            if ((document.querySelector(".subtotal2").innerText) === 'Package\tPrice\tQuantity') {
+                document.querySelector("#desk-status").innerText = "Cannot Checkout Empty Cart";
+                document.querySelector("#mobile-status").innerText = "Cannot Checkout Empty Cart";
+            } else {
+                ajaxGET("/get-cart", (data) => {
+                    var items = [];
+                    if (data) {
+                        let dataParsed = JSON.parse(data);
+                        if (dataParsed.status == "fail") {
+                            console.log("fail");
+                        }
+                        for (let i = 0; i < dataParsed.rows.length; i++) {
+                            items.push({ id: dataParsed.rows[i].package_id, quantity: dataParsed.rows[i].product_quantity });
+                        }
+                        fetch("/create-checkout-session", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    items
+                                }),
+                            })
+                            .then(res => {
+                                if (res.ok) return res.json()
+                                return res.json().then(json => Promise.reject(json))
+                            })
+                            .then(({ url }) => {
+                                window.location = url
+                            })
+                            .catch(e => {
+                                console.error(e.error)
+                            })
                     }
-                    for (let i = 0; i < dataParsed.rows.length; i++) {
-                        items.push({ id: dataParsed.rows[i].package_id, quantity: dataParsed.rows[i].product_quantity });
-                    }
-                    fetch("/create-checkout-session", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                items
-                            }),
-                        })
-                        .then(res => {
-                            if (res.ok) return res.json()
-                            return res.json().then(json => Promise.reject(json))
-                        })
-                        .then(({ url }) => {
-                            window.location = url
-                        })
-                        .catch(e => {
-                            console.error(e.error)
-                        })
-                }
-            })
+                })
+            }
         })
     })
 

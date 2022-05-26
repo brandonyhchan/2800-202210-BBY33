@@ -131,6 +131,8 @@ function getCart() {
         for (let j = 0; j < removeBtns.length; j++) {
             removeBtns[j].addEventListener('click', deleteItem);
         }
+        document.querySelector("#desk-status").innerText = "";
+        document.querySelector("#mobile-status").innerText = "";
     })
 
     if (window.innerWidth > 720) {
