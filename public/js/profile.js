@@ -1,8 +1,12 @@
-'use strict';
+"use strict";
+
+/**
+Async function that uses fetch get request to redirect to "first name" of the user. 
+*/
 async function getFirstName() {
     try {
         let resOBJ = await fetch("/first-name", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -13,10 +17,13 @@ async function getFirstName() {
 }
 getFirstName();
 
+/**
+Async function that uses fetch get request to redirect to "last name" of the user. 
+*/
 async function getLastName() {
     try {
         let resOBJ = await fetch("/last-name", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -27,10 +34,13 @@ async function getLastName() {
 }
 getLastName();
 
+/**
+Async function that uses fetch get request to redirect to "user name" of the user. 
+*/
 async function getName() {
     try {
         let resOBJ = await fetch("/user-name", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -42,10 +52,13 @@ async function getName() {
 getName();
 document.querySelector("#user-name").addEventListener("click", editName);
 
+/**
+Async function that uses fetch get request to redirect to "email" of the user. 
+*/
 async function getEmail() {
     try {
         let resOBJ = await fetch("/email", {
-            method: 'GET',
+            method: "GET",
         });
         if (resOBJ.status === 200) {
             let data = await resOBJ.json();
@@ -58,7 +71,10 @@ document.querySelector("#email").addEventListener("click", editEmail);
 getEmail();
 
 // Jquery snippet from https://jqueryui.com/dialog/#modal-confirmation for the Jquery UI
-
+/**
+ * Function to edit the username of the logged in user.
+ * @param {element} e - current element
+ */
 function editName(e) {
     let currentName = e.target.innerHTML;
     let parent = e.target.parentNode;
@@ -98,8 +114,8 @@ function editName(e) {
                                 }
                             }
                             xhr.open("POST", "/update-user-name");
-                            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                             xhr.send("name=" + sentName.name);
                             $(this).dialog("close");
                         },
@@ -116,6 +132,10 @@ function editName(e) {
 }
 
 // Jquery snippet from https://jqueryui.com/dialog/#modal-confirmation for the Jquery UI
+/**
+ * Function to edit the email of the logged in user.
+ * @param {element} e - current element
+ */
 function editEmail(e) {
     let currentEmail = e.target.innerHTML;
     let parent = e.target.parentNode;
@@ -156,8 +176,8 @@ function editEmail(e) {
                                 }
                             }
                             xhr.open("POST", "/update-email");
-                            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                             xhr.send("email=" + sentEmail.email);
                             $(this).dialog("close");
                         },
@@ -173,12 +193,18 @@ function editEmail(e) {
     parent.appendChild(input);
 }
 
+/**
+This function makes a post request to the server and takes 3 input.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+@param {string} data - data sent to the server side.
+*/
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -190,11 +216,16 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
+/**
+    This function makes a get request to the server and takes 2 inputs.
+    @param {string} url - the path on the server side that is requested.
+    @param {callback} callback - some function that is executed after posting.
+*/
 function ajaxGET(url, callback) {
 
     const xhr = new XMLHttpRequest();
@@ -209,7 +240,9 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
-
+/**
+ * Adds event Listener anonymous function for changing the password of the current user.
+ */
 document.querySelector("#submit").addEventListener("click", function (e) {
     e.preventDefault();
     let currentPassword = document.getElementById("currentPass");
@@ -242,6 +275,10 @@ document.querySelector("#submit").addEventListener("click", function (e) {
 const uploadImage = document.getElementById("upload-image");
 uploadImage.addEventListener("submit", uploadImages);
 
+/**
+Function used to upload profile picture.
+Uses fetch post request to update database.
+*/
 function uploadImages(e) {
     e.preventDefault();
 
@@ -253,7 +290,7 @@ function uploadImages(e) {
     }
 
     const options = {
-        method: 'POST',
+        method: "POST",
         body: imageData,
     };
 
@@ -264,12 +301,13 @@ function uploadImages(e) {
     });
 }
 
-
-
+/**
+Async function that uses fetch get request to display profile picture. 
+*/
 async function displayImage() {
     try {
         let responseObj = await fetch("/get-user-images", {
-            method: 'GET',
+            method: "GET",
         });
         if (responseObj.status === 200) {
             let data = await responseObj.json();
@@ -308,10 +346,13 @@ document.querySelector("#getOrders").addEventListener("click", () => {
     getOrders();
 })
 
+/**
+Async function that uses fetch get request to redirect to "Orders" page. 
+*/
 async function getOrders() {
     try {
         let response = await fetch("/getOrders", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/getOrders");

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var buttons;
 var packagesDisplayed = false;
@@ -17,11 +17,11 @@ function ajaxGET(url, callback) {
 }
 
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -31,8 +31,8 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
@@ -55,7 +55,7 @@ function getPackage() {
                         str += (`<div class='card'>
                             <div id='title'>${row.package_name} 
                             </div><div class='pImage'><img width='100' height='100' src="${row.package_image}">
-                            </div><div class='price'> $${row.package_price} 
+                            </div><div class='price'> $${row.package_price}.00 
                             </div><div class='description'>${row.description_of_package}
                             </div><div><button type='button' class='packages' id='${row.package_id}'>Add</button><button type='button' class='packagesDisplay' id='${row.package_name}'>More info</button></div></div></div></div>`);
                     }
@@ -106,7 +106,7 @@ function getCart() {
         for (let i = 0; i < dataParsed.rows.length; i++) {
             string += (
                 `<tr><td class='packageIds'>${rows[i].package_id}</td>
-                <td>${rows[i].price}</td>
+                <td>$${rows[i].price}.00</td>
                 <td><input class="cart-quantity-input" id='${rows[i].package_id}' type="number" value='${rows[i].product_quantity}'></td>
                 <td><button class ='btn btn-danger' id='${rows[i].package_id}' type='button'>REMOVE</button></td></tr>`
             )
@@ -118,7 +118,7 @@ function getCart() {
             updatePrice();
         } else {
             document.querySelector(".subtotal2").innerHTML = string;
-            document.querySelector(".display-cart2").style.opacity = 0.75;
+            document.querySelector(".display-cart2").style.opacity = 1;
             document.querySelector(".display-cart2").style.zIndex = 1;
             updatePrice();
         }
@@ -171,8 +171,6 @@ function addPackage() {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
-                    } else {
-                        console.log("success")
                     }
                 }
             }, queryString);
@@ -214,14 +212,14 @@ function displayPackage() {
             showPackage();
         }
     };
-    window.addEventListener('click', onClick);
+    window.addEventListener("click", onClick);
 }
 
 
 async function showPackage() {
     try {
         let response = await fetch("/packageInfo", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/packageInfo");
@@ -235,6 +233,11 @@ displayPackage();
 
 addPackage();
 
+/**
+* Function that removes all items from the shopping cart.
+* Uses post request to update the database.
+* @param {event} event - clear all button
+*/
 function remove() {
     var buttonId;
     var queryString;
@@ -247,15 +250,14 @@ function remove() {
                     let dataParsed = JSON.parse(data);
                     if (dataParsed.status == "fail") {
                         console.log("fail");
-                    } else {
-                        console.log("success")
                     }
                 }
             }, queryString);
             getCart();
         }
     };
-    window.addEventListener('click', onClick);
+    window.addEventListener("click", onClick);
 }
 
 remove();
+

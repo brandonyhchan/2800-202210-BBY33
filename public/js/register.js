@@ -1,10 +1,17 @@
-'use strict';
+"use strict";
+
+/**
+This function makes a post request to the server and takes 3 input.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+@param {string} data - data sent to the server side.
+*/
 function ajaxPOST(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
 
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -16,14 +23,15 @@ function ajaxPOST(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
-document.querySelector("#submit").addEventListener("click", function (e) {
-    e.preventDefault();
-
+/**
+ * Anonymous function added to submit button that registers a new user
+ */
+document.querySelector("#submit").addEventListener("click", function () {
     let first_name = document.getElementById("first_name");
     let last_name = document.getElementById("last_name");
     let user_name = document.getElementById("username");
@@ -44,10 +52,13 @@ document.querySelector("#submit").addEventListener("click", function (e) {
     }, queryString);
 });
 
+/**
+ * Redirects to login page after successful register.
+ */
 async function getLogin() {
     try {
         let response = await fetch("/", {
-            method: 'GET'
+            method: "GET"
         })
         if (response.status === 200) {
             window.location.replace("/");
@@ -58,3 +69,12 @@ async function getLogin() {
 }
 
 document.getElementById("redirect").addEventListener("click", getLogin);
+
+/**
+ * Clears all input fields in the form
+ */
+function clear() {
+    document.getElementById("input_container").reset();
+}
+
+document.getElementById("clear").addEventListener("click", clear);

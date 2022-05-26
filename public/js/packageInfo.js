@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Controls the tabbed image gallery in desktop view.
@@ -40,14 +40,17 @@ function showImage(n) {
 
 }
 
-
-
+/**
+This function makes a get request to the server and takes 2 inputs.
+@param {string} url - the path on the server side that is requested.
+@param {callback} callback - some function that is executed after posting.
+*/
 function ajaxGET(url, callback, data) {
-    let params = typeof data == 'string' ? data : Object.keys(data).map(
+    let params = typeof data == "string" ? data : Object.keys(data).map(
         function(k) {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+            return encodeURIComponent(k) + "=" + encodeURIComponent(data[k])
         }
-    ).join('&');
+    ).join("&");
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -57,11 +60,14 @@ function ajaxGET(url, callback, data) {
         }
     }
     xhr.open("POST", url);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(params);
 }
 
+/**
+ * Function that gets the description of the target package.
+ */
 function getPackage() {
     var packageName = packageView;
     var queryString;
@@ -72,23 +78,26 @@ function getPackage() {
             if (dataParsed.status == "fail") {
                 console.log("fail");
             } else {
-                
+
                 let string = "";
-                string += `<h2 id="package-name">${dataParsed.rows[0].package_name}</h2>
+                string += `<h3 id="package-name">${dataParsed.rows[0].package_name}</h3>
                 <br>
-                <p id="price">Price: $${dataParsed.rows[0].package_price}</p>
+                <h3 id="price">$${dataParsed.rows[0].package_price}.00</h3>
                 <br>
-                <p id="description">${dataParsed.rows[0].description_of_package}</p>
+                <p id="description">${dataParsed.rows[0].package_info}</p>
                 <br><button class="add-to-cart" id="${dataParsed.rows[0].PACKAGE_ID}">Add to Cart</button><p id="msg"></p>`
                 document.getElementById("image").setAttribute("src", dataParsed.rows[0].package_image);
                 document.getElementById("package-description").innerHTML = string;
             }
         }
     }, queryString);
-};
+}
 
 getPackage();
 
+/**
+ * Function to add selected package to shopping cart.
+ */
 function addPackage() {
     var packageId;
     var queryString;
@@ -96,20 +105,16 @@ function addPackage() {
         if (event.target.className == "add-to-cart") {
             packageId = event.target.id;
             queryString = "packageID=" + packageId;
-            ajaxGET("/add-packages", function (data) {
+            ajaxGET("/add-packages", function(data) {
 
                 if (data) {
                     let dataParsed = JSON.parse(data);
-                    if (dataParsed.status == "fail") {
-                        document.getElementById("msg").innerHTML = dataParsed.msg;
-                    } else {
-                        document.getElementById("msg").innerHTML = dataParsed.msg;
-                    }
+                    document.getElementById("msg").innerHTML = dataParsed.msg;
                 }
             }, queryString);
         }
     };
-    window.addEventListener('click', onClick);
-};
+    window.addEventListener("click", onClick);
+}
 
 addPackage();
