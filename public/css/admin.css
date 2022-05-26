@@ -212,8 +212,9 @@
             padding: 5%;
             justify-content: center;
             text-align: center;
-            width: 100%;
+            width: 100vw;
             min-width: 420px;
+            margin: 0;
         }
         .page-header {
             grid-row: 2 / 3;
