@@ -199,6 +199,8 @@
             grid-template-rows: auto;
             overflow-x: scroll;
             width: 100vw;
+            justify-content: center;
+            place-items: center;
         }
         #control-panel-header {
             text-align: center;
@@ -213,7 +215,7 @@
             justify-content: center;
             text-align: center;
             width: 100%;
-            min-width: 420px;
+            min-width: 475px;
         }
         .page-header {
             grid-row: 2 / 3;
