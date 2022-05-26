@@ -14,7 +14,7 @@
     opacity: 0;
 }
 
-#removeall.remove{
+#removeall.remove {
     margin-left: auto;
     margin-right: auto;
 }
@@ -48,7 +48,7 @@
     display: none;
 }
 
-button{
+button {
     background-color: rgb(14, 76, 109);
     color: white;
     border-style: none;
@@ -168,32 +168,26 @@ td {
     background-color: red;
 }
 
-#mobile-status, #desk-status {
+#mobile-status,
+#desk-status {
     color: red;
 }
-
 
 @media only screen and (max-width: 720px) {
     .cart-container {
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: 20% 50% 30%;
-        grid-template-areas:
-            "cart"
-            "map"
-            "subtotal";
-
+        grid-template-areas: "cart" "map" "subtotal";
     }
     .display-cart {
         display: none;
     }
-
     #heading2 {
         display: flex;
         justify-content: center;
         font-size: 25px;
     }
-
     .display-cart2 {
         display: block;
         grid-area: subtotal;
@@ -208,19 +202,17 @@ td {
         bottom: 0;
         margin-bottom: 15%;
     }
-
     #mobile {
         display: inline-block;
     }
-
     #desktop {
         display: none;
     }
-
     #mobile-cart-container {
         margin: 2%;
+        overflow-y: scroll;
+        height: 100%;
     }
-
     #close-m,
     #mobile-purchase.buy {
         display: flex;
@@ -233,12 +225,10 @@ td {
         font-family: 'Fonttype';
         text-align: center;
     }
-
     #close-m:hover,
     #mobile-purchase.buy:hover {
         background-color: rgb(114, 186, 213);
     }
-
     #title {
         grid-column: 1/3;
         margin-bottom: 1%;
@@ -246,25 +236,21 @@ td {
     .subtotal2 {
         margin-top: 3%;
     }
-
     #cart-layout-mobile {
         position: relative;
         top: 40px;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-
     #mobile-purchase.buy {
         margin-left: auto;
         margin-right: auto;
         padding: 4%;
     }
-
     #total2 {
         margin-top: 0;
         padding-top: 0;
     }
-
     .quantity {
         width: 30%;
     }

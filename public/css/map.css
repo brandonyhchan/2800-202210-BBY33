@@ -352,7 +352,8 @@ td {
     transform: translateY(-10rem);
 }
 
-#mobile-status, #desk-status {
+#mobile-status,
+#desk-status {
     color: red;
 }
 
@@ -424,6 +425,8 @@ td {
     }
     #mobile-cart-container {
         margin: 2%;
+        overflow-y: scroll;
+        height: 100%;
     }
     #close-m,
     #mobile-purchase.buy {
@@ -476,7 +479,6 @@ td {
     }
     #cart-layout-mobile {
         position: relative;
-        top: 40px;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
