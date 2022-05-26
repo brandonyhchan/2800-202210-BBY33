@@ -1194,11 +1194,11 @@ app.post("/charity-create", upload.array("files"), function (req, res) {
     if (req.session.loggedIn) {
         res.setHeader("Content-Type", "application/json");
 
-        let country = req.body.country;
+        var country = req.body.country;
         packageN = req.body.package;
-        let packagePrice = req.body.price;
-        let packageDesc = req.body.description;
-        let longDesc = req.body.longdescription;
+        var packagePrice = req.body.price;
+        var packageDesc = req.body.description;
+        var longDesc = req.body.longdescription;
         var existingPackage = "";
         connection.execute(
             `SELECT COUNTRY_ID FROM bby_33_country WHERE country = ?`, [country], (err, results) => {
