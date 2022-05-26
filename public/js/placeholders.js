@@ -479,7 +479,8 @@ ready(() => {
      */
     document.querySelectorAll(".purchase").forEach(function(currentElement) {
         currentElement.addEventListener("click", () => {
-            if ((document.querySelector(".subtotal2").innerText) === 'Package\tPrice\tQuantity') {
+            if ((document.querySelector(".subtotal2").innerText) === 'Package\tPrice\tQuantity' 
+            || document.querySelector(".subtotal").innerText === 'Package\tPrice\tQuantity') {
                 document.querySelector("#desk-status").innerText = "Cannot Checkout Empty Cart";
                 document.querySelector("#mobile-status").innerText = "Cannot Checkout Empty Cart";
             } else {
