@@ -1039,9 +1039,6 @@ app.post("/get-packages", function (req, res) {
         connection.query(
             "SELECT bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id FROM bby_33_package WHERE COUNTRY_ID = ?", [countryID],
             function(error, results) {
-                if (error) {
-                    console.log(error);
-                }
                 res.send({
                     status: "success",
                     rows: results
@@ -1144,9 +1141,6 @@ app.post("/display-package", function (req, res) {
         connection.query(
             "SELECT bby_33_package.PACKAGE_ID, bby_33_package.package_name, bby_33_package.package_price, bby_33_package.description_of_package, bby_33_package.package_image, bby_33_package.package_id, bby_33_package.package_info FROM bby_33_package WHERE package_name = ?", [packageName],
             function(error, results) {
-                if (error) {
-                    console.log(error);
-                }
                 res.send({
                     status: "success",
                     rows: results
@@ -1369,9 +1363,6 @@ app.get("/get-orders", function (req, res) {
                 connection.query(
                     "SELECT bby_33_order.ORDER_ID, bby_33_order.order_date FROM bby_33_order WHERE bby_33_order.user_id = ? ", [userid],
                     function(error, results) {
-                        if (error) {
-                            console.log(error);
-                        }
                         res.send({
                             status: "success",
                             rows: results
