@@ -87,3 +87,4 @@ It has the following subfolders:
 - partner4.png was obtained online from https://imagine1day.org/
 - stock-profile.png was obtained online from https://www.shutterstock.com/search/profile
 - 404image.jpg was obtained online from https://www.istockphoto.com/illustrations/lost-package
+- headshot.png was obtained online from https://www.oakdenehollins.com/our-team
