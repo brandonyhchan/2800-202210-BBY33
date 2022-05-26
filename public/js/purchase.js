@@ -3,6 +3,11 @@
 var buttons;
 var packagesDisplayed = false;
 
+/**
+    This function makes a get request to the server and takes 2 inputs.
+    @param {string} url - the path on the server side that is requested.
+    @param {callback} callback - some function that is executed after posting.
+*/
 function ajaxGET(url, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -16,6 +21,12 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
+ /**
+    This function makes a post request to the server and takes 3 input.
+    @param {string} url - the path on the server side that is requested.
+    @param {callback} callback - some function that is executed after posting.
+    @param {string} data - data sent to the server side.
+*/
 function ajaxPOST(url, callback, data) {
     let params = typeof data == "string" ? data : Object.keys(data).map(
         function (k) {
@@ -36,6 +47,10 @@ function ajaxPOST(url, callback, data) {
     xhr.send(params);
 }
 
+/**
+ * This function gets the list of packages for each country from the db
+ * and displays them.
+ */
 function getPackage() {
     var countryId;
     var queryString;
@@ -78,6 +93,9 @@ function getPackage() {
 
 getPackage();
 
+/**
+ * This function dynamically changes the price of the total cart.
+ */
 function updatePrice() {
     var total = 0;
     ajaxGET("/get-cart", (data) => {
@@ -94,6 +112,11 @@ function updatePrice() {
     })
 }
 
+/**
+    * Function that uses get request to server to display the contents of user's shopping cart
+    * Displays as a table and adds buttons/event listeners for changing quantities and 
+    * removing items as well as checkout button.
+*/
 function getCart() {
     ajaxGET("/get-cart", (data) => {
         let dataParsed = JSON.parse(data);
@@ -131,6 +154,8 @@ function getCart() {
         for (let j = 0; j < removeBtns.length; j++) {
             removeBtns[j].addEventListener('click', deleteItem);
         }
+        document.querySelector("#desk-status").innerText = "";
+        document.querySelector("#mobile-status").innerText = "";
     })
 
     if (window.innerWidth > 720) {
@@ -144,6 +169,10 @@ function getCart() {
     }
 }
 
+/**
+ * This function deletes an item from the cart
+ * @param {event} event - determines what item has been selected.
+ */
 function deleteItem(event) {
     let packID = event.target.id;
     let queryString = "packageID=" + packID;
@@ -158,6 +187,9 @@ function deleteItem(event) {
     }, queryString);
 }
 
+/**
+ * This function makes a post request to db to add package to user's cart.
+ */
 function addPackage() {
     var packageId;
     var queryString;
@@ -181,6 +213,10 @@ function addPackage() {
     window.addEventListener('click', onClick);
 }
 
+/**
+ * This function dynamically changes the quantity displayed for a changed item
+ * and changes the quantity in the db.
+ */
 function updateQuantity(event) {
     if (isNaN(parseInt(event.target.value)) || parseInt(event.target.value) <= 0) {
         event.target.value = 1
@@ -203,6 +239,10 @@ function updateQuantity(event) {
 
 }
 
+/**
+ * This function determines what package is being selected for redirecting
+ * to more info on that specific package.
+ */
 function displayPackage() {
     var packageId;
     let onClick = (event) => {
@@ -215,7 +255,9 @@ function displayPackage() {
     window.addEventListener("click", onClick);
 }
 
-
+/**
+ * Makes a get request to redirect user to package info page.
+ */
 async function showPackage() {
     try {
         let response = await fetch("/packageInfo", {
