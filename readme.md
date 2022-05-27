@@ -8,6 +8,7 @@
 * [Technologies](#technologies)
 * [Acknowledgements](#acknowledgements)
 * [Photo Resources](#photo-resources)
+* [Testing Logs](#testing-logs)
 * [Contact Information](#contact-us)
 
 ## Team members
@@ -105,6 +106,10 @@ It has the following subfolders:
 - stock-profile.png was obtained online from https://www.shutterstock.com/search/profile
 - 404image.jpg was obtained online from https://www.istockphoto.com/illustrations/lost-package
 - headshot.png was obtained online from https://www.oakdenehollins.com/our-team
+
+## Testing Logs
+To view our testing history, please visit the following link:
+https://docs.google.com/spreadsheets/d/1guOXD15PEpmMVmrzfuiUPji2x4Qf4w44iQw-Kjg7X14/edit#gid=1934262631
 
 ## Contact Us
 - Artem Khan (akhan195@my.bcit.ca)
